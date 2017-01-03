@@ -170,54 +170,83 @@
     </section>
     
     <section title="Authorization Session">
+      <t>A client initates an authorization session by sending a token request
+        to the token endpoint as described in Section 3.2 of <xref target="RFC6749"/>.</t>
       
-      <section title="Error Response">
+      <section title="Token Request">
+        <t>
+          The client may indicate that it supports strong authentication by
+          including the following parameter in the token request to the token
+          endpoint.
+          
+          <list style="hanging">
+            <t hangText="mfa_supported"><vspace blankLines="1"/>
+              OPTIONAL.  Indicates that the client support strong authentication.</t>
+          </list>
+        </t>
+        
+        <figure>
+          <preamble>
+            The following is a non-normative example of a token request (with
+            extra line breaks for display purposes only):
+          </preamble>
+          <artwork><![CDATA[
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=johndoe&password=A3ddj3w&mfa_supported=1
+]]></artwork>
+        </figure>
+      </section>
+      
+      <section title="Token Error Response">
         <t>In addition to the error codes defined in Section 5.2 of
           <xref target="RFC6749"/>, the following error codes are specific
           multi-factor authorization flows: 
 
           <list style="hanging"> 
             <t hangText="mfa_required"> <vspace blankLines="1"/>
-              The authorization server requires multi-factor authentication.</t>
+              The authorization server requires strong authentication.</t>
           </list> 
         </t>
         
-        <t>When the error code is set to mfa_required, the following parameters
-          are included with the response:
+        <t>In addition to the response parameters specified by OAuth 2.0, the
+          following parameters MUST be included in the response when the error
+          code is set to mfa_required:
         
           <list style="hanging">
             <t hangText="mfa_token"> <vspace blankLines="1"/>
               REQUIRED.  The MFA token used to continue the authorization session.</t>
           </list>
         </t>
-      </section>
-      
-    </section>
-    
-    <section title="Initiating Authorization using 1st Factor">
-      
-      <section title="Resource Owner Password Credentials">
-        <section title="Access Token Request">
-          <t>The client makes a request as described in in Section 4.3.2 of
-            <xref target="RFC6749"/>.</t>
-        </section>
         
-        <section title="Access Token Response">
-          <t>If the access token request is valid and authorized, the
-            authorization server issues an access token and optional refresh
-            token as described in in Section 5.1 of <xref target="RFC6749"/>.
-            If the request failed client authentication or is invalid, the
-            authorization server returns an error response as described in
-            Section 5.2 of <xref target="RFC6749"/>.</t>
-            
-          <t>If the access token request is unauthorized because policy
-            requires a second factor of authentication,...</t>
-        </section>
+        <figure>
+          <preamble>
+            The following is a non-normative example token error response:
+          </preamble>
+          <artwork><![CDATA[
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+  "error":"mfa_required",
+  "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
+    OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
+    xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
+    RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
+    yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
+    .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
+}
+]]></artwork>
+        </figure>
       </section>
-      
     </section>
     
-    <section title="Obtaining Authorization using 2nd Factor">
+    <section title="Obtaining Authorization using Strong Authentication">
       
       <section title="OTP Device">
         <section title="Access Token Request">
