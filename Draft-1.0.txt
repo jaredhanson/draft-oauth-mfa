@@ -97,14 +97,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    brokerage firm (resource server).  The application is authorized to
    obtain real-time stock quotes as well as place orders, and is issued
    both an access token and refresh token.  As a matter of policy, the
-   access token can be used at the stock quote API and is valid for 24
+   access token can be used to obtain stock quotes and is valid for 24
    hours.  Every 24 hour period, the refresh token is used to obtain a
-   new access token.  The access token can also be used to place an
-   order, but is subject to more stringent security requirements.  Using
-   this extension, the refresh token can be used to initiate an
-   authorization transaction which, once confirmed by the user, allows
-   issuance of an access token that demonstrates strong authentication
-   and has a limited lifetime.
+   new access token, so that access to stock quotes is uninterrupted.
+   The access token can also be used to place an order, but is subject
+   to more stringent security requirements.  Using this extension, the
+   refresh token can be used to initiate an authorization transaction
+   which, once confirmed by the user, allows issuance of an access token
+   that demonstrates strong authentication and has a limited lifetime.
 
 
 
@@ -178,7 +178,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
         authentication credential.
 
    (E)  The client requests an access token from the authorization
-        server's token endpoint by including the string authentication
+        server's token endpoint by including the strong authentication
         credentials received from the resource owner along with the MFA
         token received during the prior access token request.  When
         making the request, the client authenticates with the

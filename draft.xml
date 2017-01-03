@@ -63,14 +63,15 @@
         application (client) access to her account at a brokerage firm (resource
         server).  The application is authorized to obtain real-time stock quotes
         as well as place orders, and is issued both an access token and refresh
-        token.  As a matter of policy, the access token can be used at the stock
-        quote API and is valid for 24 hours.  Every 24 hour period, the refresh
-        token is used to obtain a new access token.  The access token can also
-        be used to place an order, but is subject to more stringent security
-        requirements.  Using this extension, the refresh token can be used to
-        initiate an authorization transaction which, once confirmed by the user,
-        allows issuance of an access token that demonstrates strong
-        authentication and has a limited lifetime.</t>
+        token.  As a matter of policy, the access token can be used to obtain
+        stock quotes and is valid for 24 hours.  Every 24 hour period, the
+        refresh token is used to obtain a new access token, so that access to
+        stock quotes is uninterrupted.  The access token can also be used to
+        place an order, but is subject to more stringent security requirements.
+        Using this extension, the refresh token can be used to initiate an
+        authorization transaction which, once confirmed by the user, allows
+        issuance of an access token that demonstrates strong authentication and
+        has a limited lifetime.</t>
         
         <section title="Notational Conventions">
           <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -98,18 +99,28 @@
 |  Owner   |
 |          |
 +----------+
-     v
-     |    Resource Owner
-    (A) Password Credentials
-     |
-     v
-+---------+                                  +---------------+
-|         |>--(B)---- Resource Owner ------->|               |
-|         |         Password Credentials     | Authorization |
-| Client  |                                  |     Server    |
-|         |<--(C)---- Access Token ---------<|               |
-|         |    (w/ Optional Refresh Token)   |               |
-+---------+                                  +---------------+
+   v    v
+   |    |
+  (A)  (D)
+   |    |
+   v    v
++---------+                                      +---------------+
+|         |>-(B)--- Authorization Grant -------->|               |
+|         |                                      |               |
+|         |<-(C)-------- MFA Token -------------<|               |
+|         |                                      | Authorization |
+|         |>-(E)-- Strong Authn Credential ----->|     Server    |
+|         |             & MFA Token              |               |
+|         |                                      |               |
+| Client  |<-(F)------- Access Token -----------<|               |
+|         |                                      +---------------+
+|         |
+|         |                                      +---------------+
+|         |>-(G)------- Access Token ----------->|               |
+|         |                                      |    Resource   |
+|         |<-(H)---- Protected Resource --------<|     Server    |
+|         |                                      |               |
++---------+                                      +---------------+
 ]]></artwork>
       </figure>
       <t>
@@ -145,6 +156,14 @@
             The authorization server authenticates the client and validates the
             resource owner strong authentication credentials, and if valid,
             issues an access token.
+          </t>
+          <t>
+            The client requests the protected resource from the resource server
+            and authenticates by presenting the access token.
+          </t>
+          <t>
+            The resource server validates the access token, and if valid, serves
+            the request.
           </t>
         </list>
       </t>
