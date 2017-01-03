@@ -25,6 +25,7 @@
     </abstract>
   </front>
   <middle>
+    
     <section title="Introduction">
       <t>Strong authentication is a method of access control that grants access
         only after multiple factors of authentication have been presented.  The
@@ -87,7 +88,66 @@
             </list> 
           </t>
         </section>
-        
+    </section>
+    
+    <section title="Protocol Flow">
+      <figure title='Abstract Protocol Flow' anchor='Figure-1'>
+        <artwork><![CDATA[
++----------+
+| Resource |
+|  Owner   |
+|          |
++----------+
+     v
+     |    Resource Owner
+    (A) Password Credentials
+     |
+     v
++---------+                                  +---------------+
+|         |>--(B)---- Resource Owner ------->|               |
+|         |         Password Credentials     | Authorization |
+| Client  |                                  |     Server    |
+|         |<--(C)---- Access Token ---------<|               |
+|         |    (w/ Optional Refresh Token)   |               |
++---------+                                  +---------------+
+]]></artwork>
+      </figure>
+      <t>
+        <list style='format (%C)'>
+          <t>
+            The client obtains authorization from the resource owner.  The
+            authorization can be obtained directly from the resource owner (as
+            shown), or preferably indirectly via the authorization server as an
+            intermediary.  The resource owner's authorization is represented as
+            an authorization grant.
+          </t>
+          <t>
+            The client requests an access token by authenticating with the
+            authorization server and presenting the authorization grant.
+          </t>
+          <t>
+            The authorization server authenticates the client and validates the
+            authorization grant, and if strong authentication is required,
+            returns an error along with an MFA token.
+          </t>
+          <t>
+            The resource owner provides the client with a strong authentication
+            credential.
+          </t>
+          <t>
+            The client requests an access token from the authorization server's
+            token endpoint by including the string authentication credentials
+            received from the resource owner along with the MFA token received
+            during the prior access token request.  When making the request, the
+            client authenticates with the authorization server.
+          </t>
+          <t>
+            The authorization server authenticates the client and validates the
+            resource owner strong authentication credentials, and if valid,
+            issues an access token.
+          </t>
+        </list>
+      </t>
     </section>
     
     <section title="Authorization Session">

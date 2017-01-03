@@ -129,9 +129,68 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
       A short-lived token representing an authorization session.
 
-2.  Authorization Session
+2.  Protocol Flow
 
-2.1.  Error Response
+   +----------+
+   | Resource |
+   |  Owner   |
+   |          |
+   +----------+
+        v
+        |    Resource Owner
+       (A) Password Credentials
+        |
+        v
+   +---------+                                  +---------------+
+   |         |>--(B)---- Resource Owner ------->|               |
+   |         |         Password Credentials     | Authorization |
+   | Client  |                                  |     Server    |
+   |         |<--(C)---- Access Token ---------<|               |
+   |         |    (w/ Optional Refresh Token)   |               |
+   +---------+                                  +---------------+
+
+                     Figure 1: Abstract Protocol Flow
+
+   (A)  The client obtains authorization from the resource owner.  The
+        authorization can be obtained directly from the resource owner
+        (as shown), or preferably indirectly via the authorization
+        server as an intermediary.  The resource owner's authorization
+        is represented as an authorization grant.
+
+   (B)  The client requests an access token by authenticating with the
+        authorization server and presenting the authorization grant.
+
+
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 3]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
+
+   (C)  The authorization server authenticates the client and validates
+        the authorization grant, and if strong authentication is
+        required, returns an error along with an MFA token.
+
+   (D)  The resource owner provides the client with a strong
+        authentication credential.
+
+   (E)  The client requests an access token from the authorization
+        server's token endpoint by including the string authentication
+        credentials received from the resource owner along with the MFA
+        token received during the prior access token request.  When
+        making the request, the client authenticates with the
+        authorization server.
+
+   (F)  The authorization server authenticates the client and validates
+        the resource owner strong authentication credentials, and if
+        valid, issues an access token.
+
+3.  Authorization Session
+
+3.1.  Error Response
 
    In addition to the error codes defined in Section 5.2 of [RFC6749],
    the following error codes are specific multi-factor authorization
@@ -149,11 +208,11 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
       REQUIRED.  The MFA token used to continue the authorization
       session.
 
-3.  Initiating Authorization using 1st Factor
+4.  Initiating Authorization using 1st Factor
 
-3.1.  Resource Owner Password Credentials
+4.1.  Resource Owner Password Credentials
 
-3.1.1.  Access Token Request
+4.1.1.  Access Token Request
 
    The client makes a request as described in in Section 4.3.2 of
    [RFC6749].
@@ -162,15 +221,12 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-
-
-
-Hanson                    Expires July 7, 2017                  [Page 3]
+Hanson                    Expires July 7, 2017                  [Page 4]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
-3.1.2.  Access Token Response
+4.1.2.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -181,11 +237,11 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    If the access token request is unauthorized because policy requires a
    second factor of authentication,...
 
-4.  Obtaining Authorization using 2nd Factor
+5.  Obtaining Authorization using 2nd Factor
 
-4.1.  OTP Device
+5.1.  OTP Device
 
-4.1.1.  Access Token Request
+5.1.1.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -206,7 +262,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
-4.1.2.  Access Token Response
+5.1.2.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -221,14 +277,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 4]
+Hanson                    Expires July 7, 2017                  [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
-4.2.  Out-of-Band Device
+5.2.  Out-of-Band Device
 
-4.2.1.  Access Token Request
+5.2.1.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -249,7 +305,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
-4.2.2.  Access Token Response
+5.2.2.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -257,7 +313,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
-5.  Normative References
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -277,7 +333,7 @@ Author's Address
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 5]
+Hanson                    Expires July 7, 2017                  [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
@@ -333,4 +389,4 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 6]
+Hanson                    Expires July 7, 2017                  [Page 7]
