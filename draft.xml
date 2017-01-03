@@ -5,9 +5,9 @@
 <!ENTITY xmlns SYSTEM 'bibxml/reference.W3C.REC-xml-names-19990114.xml'>      
 <!ENTITY rdfsg SYSTEM 'bibxml/reference.W3C.WD-rdf-syntax-grammar-20031010.xml'>      
 ]>
-<rfc docName="draft-hanson-oauth-2fa-latest">
+<rfc docName="draft-hanson-oauth-mfa-latest">
   <front>
-    <title>OAuth 2.0 2nd Factor Credentials Grant</title>
+    <title>OAuth 2.0 Multi-Factor Authentication</title>
     <author initials="J." surname="Hanson" fullname="Jared Hanson">
       <organization>Auth0 Inc.</organization>
       <address>       
@@ -42,7 +42,7 @@
         an authorization grant, which represents the authorization granted by
         the resource owner (or by a privileged administrator).</t>
         
-      <t>This specification defineds a general framework for the use of strong
+      <t>This specification defines a general framework for the use of strong
         authentication within OAuth 2.0.  It provides a generic mechanism for
         indicating when strong authentication is required.  It defines
         additional extension grant types that allow strong authentication
@@ -52,24 +52,42 @@
         implement correspondingly strong authorization policies, including
         step-up authentication and transaction confirmation.</t>
         
-      <t>Authorization servers that implment support for resource owner
+      <t>Authorization servers that implement support for resource owner
         password credentials can augment existing password infrastructure by
         requiring a strong second factor prior to issuing access tokens.</t>
         
       <t>Transaction confirmation can be used to increase the level of assurance
-        prior to issuing tokens for highly privledged operations, such as a bank
+        prior to issuing tokens for highly privileged operations, such as a bank
         withdrawl.  For example, an end-user (resource owner) can grant an
         application (client) access to her account at a brokerage firm (resource
         server).  The application is authorized to obtain real-time stock quotes
         as well as place orders, and is issued both an access token and refresh
         token.  As a matter of policy, the access token can be used at the stock
-        quote API and are valid for 24 hours.  Every 24 hour period, the refresh
+        quote API and is valid for 24 hours.  Every 24 hour period, the refresh
         token is used to obtain a new access token.  The access token can also
-        be used to place an order, but is subject to more stringent requirements.
-        Using this extension, the refresh token can be used to initiate an
-        authorization transaction which, once confirmed by the user, allows
-        issuance of an access token that demonstrates strong authentication and
-        has a limited lifetime.</t>
+        be used to place an order, but is subject to more stringent security
+        requirements.  Using this extension, the refresh token can be used to
+        initiate an authorization transaction which, once confirmed by the user,
+        allows issuance of an access token that demonstrates strong
+        authentication and has a limited lifetime.</t>
+        
+        <section title="Notational Conventions">
+          <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+            "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+            "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+        </section>
+        
+        <section title="Terminology">
+          <t>
+            This specification also defines the following terms:
+            
+            <list style="hanging"> 
+            <t hangText="MFA Token:"><vspace blankLines="1"/>
+              A short-lived token representing an authorization session.</t>
+            </list> 
+          </t>
+        </section>
+        
     </section>
     
     <section title="Authorization Session">
@@ -192,6 +210,7 @@
   </middle>
   <back>
     <references title="Normative References">
+      <?rfc include="reference.RFC.2119"?>
       <?rfc include="reference.RFC.6749"?>
     </references>
   </back>

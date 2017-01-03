@@ -7,8 +7,8 @@ Internet-Draft                                                Auth0 Inc.
 Expires: July 7, 2017                                    January 3, 2017
 
 
-                 OAuth 2.0 2nd Factor Credentials Grant
-                     draft-hanson-oauth-2fa-latest
+                 OAuth 2.0 Multi-Factor Authentication
+                     draft-hanson-oauth-mfa-latest
 
 Abstract
 
@@ -55,7 +55,7 @@ Copyright Notice
 
 Hanson                    Expires July 7, 2017                  [Page 1]
 
-Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 1.  Introduction
@@ -76,7 +76,7 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    exchanging an authorization grant, which represents the authorization
    granted by the resource owner (or by a privileged administrator).
 
-   This specification defineds a general framework for the use of strong
+   This specification defines a general framework for the use of strong
    authentication within OAuth 2.0.  It provides a generic mechanism for
    indicating when strong authentication is required.  It defines
    additional extension grant types that allow strong authentication
@@ -86,33 +86,48 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    implement correspondingly strong authorization policies, including
    step-up authentication and transaction confirmation.
 
-   Authorization servers that implment support for resource owner
+   Authorization servers that implement support for resource owner
    password credentials can augment existing password infrastructure by
    requiring a strong second factor prior to issuing access tokens.
 
    Transaction confirmation can be used to increase the level of
-   assurance prior to issuing tokens for highly privledged operations,
+   assurance prior to issuing tokens for highly privileged operations,
    such as a bank withdrawl.  For example, an end-user (resource owner)
    can grant an application (client) access to her account at a
    brokerage firm (resource server).  The application is authorized to
    obtain real-time stock quotes as well as place orders, and is issued
    both an access token and refresh token.  As a matter of policy, the
-   access token can be used at the stock quote API and are valid for 24
+   access token can be used at the stock quote API and is valid for 24
    hours.  Every 24 hour period, the refresh token is used to obtain a
    new access token.  The access token can also be used to place an
-   order, but is subject to more stringent requirements.  Using this
-   extension, the refresh token can be used to initiate an authorization
-   transaction which, once confirmed by the user, allows issuance of an
-   access token that demonstrates strong authentication and has a
-   limited lifetime.
+   order, but is subject to more stringent security requirements.  Using
+   this extension, the refresh token can be used to initiate an
+   authorization transaction which, once confirmed by the user, allows
+   issuance of an access token that demonstrates strong authentication
+   and has a limited lifetime.
 
 
 
 
 Hanson                    Expires July 7, 2017                  [Page 2]
 
-Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
+
+1.1.  Notational Conventions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   [RFC2119].
+
+1.2.  Terminology
+
+   This specification also defines the following terms:
+
+   MFA Token:
+
+      A short-lived token representing an authorization session.
 
 2.  Authorization Session
 
@@ -143,6 +158,18 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    The client makes a request as described in in Section 4.3.2 of
    [RFC6749].
 
+
+
+
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 3]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
+
 3.1.2.  Access Token Response
 
    If the access token request is valid and authorized, the
@@ -157,18 +184,6 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 4.  Obtaining Authorization using 2nd Factor
 
 4.1.  OTP Device
-
-
-
-
-
-
-
-
-Hanson                    Expires July 7, 2017                  [Page 3]
-
-Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
-
 
 4.1.1.  Access Token Request
 
@@ -199,6 +214,18 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
+
+
+
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 4]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
+
 4.2.  Out-of-Band Device
 
 4.2.1.  Access Token Request
@@ -219,13 +246,6 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 
    mfa_token
 
-
-
-Hanson                    Expires July 7, 2017                  [Page 4]
-
-Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
-
-
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
@@ -239,11 +259,28 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 
 5.  Normative References
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <http://www.rfc-editor.org/info/rfc6749>.
 
 Author's Address
+
+
+
+
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 5]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
 
    Jared Hanson
    Auth0 Inc.
@@ -277,4 +314,23 @@ Author's Address
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 6]
