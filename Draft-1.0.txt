@@ -62,11 +62,63 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 
    This specification...
 
-2.  Obtaining Authorization using 2nd Factor
+2.  Authorization Session
 
-2.1.  OTP Device
+2.1.  Error Response
 
-2.1.1.  Access Token Request
+   In addition to the error codes defined in Section 5.2 of [RFC6749],
+   the following error codes are specific multi-factor authorization
+   flows:
+
+   mfa_required
+
+      The authorization server requires multi-factor authentication.
+
+   When the error code is set to mfa_required, the following parameters
+   are included with the response:
+
+   mfa_token
+
+      REQUIRED.  The MFA token used to continue the authorization
+      session.
+
+3.  Initiating Authorization using 1st Factor
+
+3.1.  Resource Owner Password Credentials
+
+3.1.1.  Access Token Request
+
+   The client makes a request as described in in Section 4.3.2 of
+   [RFC6749].
+
+3.1.2.  Access Token Response
+
+   If the access token request is valid and authorized, the
+   authorization server issues an access token and optional refresh
+   token as described in in Section 5.1 of [RFC6749].  If the request
+   failed client authentication or is invalid, the authorization server
+   returns an error response as described in Section 5.2 of [RFC6749].
+
+   If the access token request is unauthorized because policy requires a
+   second factor of authentication,...
+
+
+
+
+
+
+
+
+Hanson                    Expires July 6, 2017                  [Page 2]
+
+Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
+
+
+4.  Obtaining Authorization using 2nd Factor
+
+4.1.  OTP Device
+
+4.1.1.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -87,7 +139,7 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
-2.1.2.  Access Token Response
+4.1.2.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -95,9 +147,9 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
-2.2.  Out-of-Band Device
+4.2.  Out-of-Band Device
 
-2.2.1.  Access Token Request
+4.2.1.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -106,18 +158,17 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 
    grant_type
 
-
-
-
-Hanson                    Expires July 6, 2017                  [Page 2]
-
-Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
-
-
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
       type/2fa-oob".
 
    oob_code
+
+
+
+Hanson                    Expires July 6, 2017                  [Page 3]
+
+Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
+
 
       REQUIRED.  The out-of-band verification code.
 
@@ -126,7 +177,7 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
-2.2.2.  Access Token Response
+4.2.2.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -134,7 +185,7 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
-3.  Normative References
+5.  Normative References
 
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -165,4 +216,9 @@ Author's Address
 
 
 
-Hanson                    Expires July 6, 2017                  [Page 3]
+
+
+
+
+
+Hanson                    Expires July 6, 2017                  [Page 4]

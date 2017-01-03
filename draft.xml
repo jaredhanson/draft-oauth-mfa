@@ -25,6 +25,55 @@
     <section title="Introduction">
       <t>This specification...</t>
     </section>
+    
+    <section title="Authorization Session">
+      
+      <section title="Error Response">
+        <t>In addition to the error codes defined in Section 5.2 of
+          <xref target="RFC6749"/>, the following error codes are specific
+          multi-factor authorization flows: 
+
+          <list style="hanging"> 
+            <t hangText="mfa_required"> <vspace blankLines="1"/>
+              The authorization server requires multi-factor authentication.</t>
+          </list> 
+        </t>
+        
+        <t>When the error code is set to mfa_required, the following parameters
+          are included with the response:
+        
+          <list style="hanging">
+            <t hangText="mfa_token"> <vspace blankLines="1"/>
+              REQUIRED.  The MFA token used to continue the authorization session.</t>
+          </list>
+        </t>
+      </section>
+      
+    </section>
+    
+    <section title="Initiating Authorization using 1st Factor">
+      
+      <section title="Resource Owner Password Credentials">
+        <section title="Access Token Request">
+          <t>The client makes a request as described in in Section 4.3.2 of
+            <xref target="RFC6749"/>.</t>
+        </section>
+        
+        <section title="Access Token Response">
+          <t>If the access token request is valid and authorized, the
+            authorization server issues an access token and optional refresh
+            token as described in in Section 5.1 of <xref target="RFC6749"/>.
+            If the request failed client authentication or is invalid, the
+            authorization server returns an error response as described in
+            Section 5.2 of <xref target="RFC6749"/>.</t>
+            
+          <t>If the access token request is unauthorized because policy
+            requires a second factor of authentication,...</t>
+        </section>
+      </section>
+      
+    </section>
+    
     <section title="Obtaining Authorization using 2nd Factor">
       
       <section title="OTP Device">
