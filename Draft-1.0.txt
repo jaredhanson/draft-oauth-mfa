@@ -136,30 +136,30 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    |  Owner   |
    |          |
    +----------+
-        v
-        |    Resource Owner
-       (A) Password Credentials
-        |
-        v
-   +---------+                                  +---------------+
-   |         |>--(B)---- Resource Owner ------->|               |
-   |         |         Password Credentials     | Authorization |
-   | Client  |                                  |     Server    |
-   |         |<--(C)---- Access Token ---------<|               |
-   |         |    (w/ Optional Refresh Token)   |               |
-   +---------+                                  +---------------+
+      v    v
+      |    |
+     (A)  (D)
+      |    |
+      v    v
+   +---------+                                      +---------------+
+   |         |>-(B)--- Authorization Grant -------->|               |
+   |         |                                      |               |
+   |         |<-(C)-------- MFA Token -------------<|               |
+   |         |                                      | Authorization |
+   |         |>-(E)-- Strong Authn Credential ----->|     Server    |
+   |         |             & MFA Token              |               |
+   |         |                                      |               |
+   | Client  |<-(F)------- Access Token -----------<|               |
+   |         |                                      +---------------+
+   |         |
+   |         |                                      +---------------+
+   |         |>-(G)------- Access Token ----------->|               |
+   |         |                                      |    Resource   |
+   |         |<-(H)---- Protected Resource --------<|     Server    |
+   |         |                                      |               |
+   +---------+                                      +---------------+
 
                      Figure 1: Abstract Protocol Flow
-
-   (A)  The client obtains authorization from the resource owner.  The
-        authorization can be obtained directly from the resource owner
-        (as shown), or preferably indirectly via the authorization
-        server as an intermediary.  The resource owner's authorization
-        is represented as an authorization grant.
-
-   (B)  The client requests an access token by authenticating with the
-        authorization server and presenting the authorization grant.
-
 
 
 
@@ -170,6 +170,15 @@ Hanson                    Expires July 7, 2017                  [Page 3]
 Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
+   (A)  The client obtains authorization from the resource owner.  The
+        authorization can be obtained directly from the resource owner
+        (as shown), or preferably indirectly via the authorization
+        server as an intermediary.  The resource owner's authorization
+        is represented as an authorization grant.
+
+   (B)  The client requests an access token by authenticating with the
+        authorization server and presenting the authorization grant.
+
    (C)  The authorization server authenticates the client and validates
         the authorization grant, and if strong authentication is
         required, returns an error along with an MFA token.
@@ -179,14 +188,20 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
    (E)  The client requests an access token from the authorization
         server's token endpoint by including the strong authentication
-        credentials received from the resource owner along with the MFA
+        credential received from the resource owner along with the MFA
         token received during the prior access token request.  When
         making the request, the client authenticates with the
         authorization server.
 
    (F)  The authorization server authenticates the client and validates
-        the resource owner strong authentication credentials, and if
+        the resource owner strong authentication credential, and if
         valid, issues an access token.
+
+   (G)  The client requests the protected resource from the resource
+        server and authenticates by presenting the access token.
+
+   (H)  The resource server validates the access token, and if valid,
+        serves the request.
 
 3.  Authorization Session
 
@@ -203,6 +218,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    When the error code is set to mfa_required, the following parameters
    are included with the response:
 
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 4]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
+
    mfa_token
 
       REQUIRED.  The MFA token used to continue the authorization
@@ -216,15 +239,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
    The client makes a request as described in in Section 4.3.2 of
    [RFC6749].
-
-
-
-
-
-Hanson                    Expires July 7, 2017                  [Page 4]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
-
 
 4.1.2.  Access Token Response
 
@@ -259,6 +273,15 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
    mfa_token
 
+
+
+
+
+Hanson                    Expires July 7, 2017                  [Page 5]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+
+
       REQUIRED.  The MFA token received from the first factor access
       token response.
 
@@ -269,18 +292,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    token as described in in Section 5.1 of [RFC6749].  If the request
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
-
-
-
-
-
-
-
-
-Hanson                    Expires July 7, 2017                  [Page 5]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
-
 
 5.2.  Out-of-Band Device
 
@@ -320,17 +331,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
-              RFC 6749, DOI 10.17487/RFC6749, October 2012,
-              <http://www.rfc-editor.org/info/rfc6749>.
-
-Author's Address
-
-
-
-
-
-
 
 
 Hanson                    Expires July 7, 2017                  [Page 6]
@@ -338,17 +338,17 @@ Hanson                    Expires July 7, 2017                  [Page 6]
 Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <http://www.rfc-editor.org/info/rfc6749>.
+
+Author's Address
+
    Jared Hanson
    Auth0 Inc.
 
    Email: jaredhanson@gmail.com
    URI:   http://www.jaredhanson.net/
-
-
-
-
-
-
 
 
 

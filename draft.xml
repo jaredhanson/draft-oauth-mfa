@@ -147,14 +147,14 @@
           </t>
           <t>
             The client requests an access token from the authorization server's
-            token endpoint by including the string authentication credentials
+            token endpoint by including the strong authentication credential
             received from the resource owner along with the MFA token received
             during the prior access token request.  When making the request, the
             client authenticates with the authorization server.
           </t>
           <t>
             The authorization server authenticates the client and validates the
-            resource owner strong authentication credentials, and if valid,
+            resource owner strong authentication credential, and if valid,
             issues an access token.
           </t>
           <t>
