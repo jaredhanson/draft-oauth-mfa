@@ -62,6 +62,84 @@ Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
 
    This specification...
 
+2.  Obtaining Authorization using 2nd Factor
+
+2.1.  OTP Device
+
+2.1.1.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameters using the "application/x-www-form-urlencoded"
+   format per Appendix B with a character encoding of UTF-8 in the HTTP
+   request entity-body:
+
+   grant_type
+
+      REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
+      type/2fa-otp".
+
+   otp
+
+      REQUIRED.  The one-time password.
+
+   mfa_token
+
+      REQUIRED.  The MFA token received from the first factor access
+      token response.
+
+2.1.2.  Access Token Response
+
+   If the access token request is valid and authorized, the
+   authorization server issues an access token and optional refresh
+   token as described in in Section 5.1 of [RFC6749].  If the request
+   failed client authentication or is invalid, the authorization server
+   returns an error response as described in Section 5.2 of [RFC6749].
+
+2.2.  Out-of-Band Device
+
+2.2.1.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameters using the "application/x-www-form-urlencoded"
+   format per Appendix B with a character encoding of UTF-8 in the HTTP
+   request entity-body:
+
+   grant_type
+
+
+
+
+Hanson                    Expires July 6, 2017                  [Page 2]
+
+Internet-Draft   OAuth 2.0 2nd Factor Credentials Grant     January 2017
+
+
+      REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
+      type/2fa-oob".
+
+   oob_code
+
+      REQUIRED.  The out-of-band verification code.
+
+   mfa_token
+
+      REQUIRED.  The MFA token received from the first factor access
+      token response.
+
+2.2.2.  Access Token Response
+
+   If the access token request is valid and authorized, the
+   authorization server issues an access token and optional refresh
+   token as described in in Section 5.1 of [RFC6749].  If the request
+   failed client authentication or is invalid, the authorization server
+   returns an error response as described in Section 5.2 of [RFC6749].
+
+3.  Normative References
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <http://www.rfc-editor.org/info/rfc6749>.
+
 Author's Address
 
    Jared Hanson
@@ -87,26 +165,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hanson                    Expires July 6, 2017                  [Page 2]
+Hanson                    Expires July 6, 2017                  [Page 3]
