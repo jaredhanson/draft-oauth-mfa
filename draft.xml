@@ -17,13 +17,59 @@
     </author>
     <date/>
     <abstract>
-      <t>This specification describes a method in which resource owner password
-        credentials can be augmented with a second authentication factor.</t>
+      <t>This specification provides a framework for the use of strong
+        authentication with OAuth 2.0.  Mechanisms are specified for initiating
+        an authorization session.  New authorization grant types are defined
+        that allow clients to obtain access tokens within the context of a
+        strongly authenticated authorization session.</t>
     </abstract>
   </front>
   <middle>
     <section title="Introduction">
-      <t>This specification...</t>
+      <t>Strong authentication is a method of access control that grants access
+        only after multiple factors of authentication have been presented.  The
+        factors typically fall into the following categories: knowledge
+        (something you know), possession (something you have), and inherence
+        (something you are).</t>
+      
+      <t>OAuth 2.0 <xref target="RFC6749"/> is an authorization framework that
+        enables a third-party application to obtain limited access to a
+        protected HTTP resource. In OAuth, those third-party applications are
+        called clients; they access protected resources by presenting an access
+        token to the HTTP resource.  Access tokens are issued to clients by an
+        authorization server with the (sometimes implicit) approval of the
+        resource owner. These access tokens are typically obtained by exchanging
+        an authorization grant, which represents the authorization granted by
+        the resource owner (or by a privileged administrator).</t>
+        
+      <t>This specification defineds a general framework for the use of strong
+        authentication within OAuth 2.0.  It provides a generic mechanism for
+        indicating when strong authentication is required.  It defines
+        additional extension grant types that allow strong authentication
+        credentials to be presented in order to obtain access tokens.</t>
+      
+      <t>This use of strong authentication allows authorization servers to
+        implement correspondingly strong authorization policies, including
+        step-up authentication and transaction confirmation.</t>
+        
+      <t>Authorization servers that implment support for resource owner
+        password credentials can augment existing password infrastructure by
+        requiring a strong second factor prior to issuing access tokens.</t>
+        
+      <t>Transaction confirmation can be used to increase the level of assurance
+        prior to issuing tokens for highly privledged operations, such as a bank
+        withdrawl.  For example, an end-user (resource owner) can grant an
+        application (client) access to her account at a brokerage firm (resource
+        server).  The application is authorized to obtain real-time stock quotes
+        as well as place orders, and is issued both an access token and refresh
+        token.  As a matter of policy, the access token can be used at the stock
+        quote API and are valid for 24 hours.  Every 24 hour period, the refresh
+        token is used to obtain a new access token.  The access token can also
+        be used to place an order, but is subject to more stringent requirements.
+        Using this extension, the refresh token can be used to initiate an
+        authorization transaction which, once confirmed by the user, allows
+        issuance of an access token that demonstrates strong authentication and
+        has a limited lifetime.</t>
     </section>
     
     <section title="Authorization Session">
