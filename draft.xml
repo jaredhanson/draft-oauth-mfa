@@ -92,114 +92,118 @@
             </list> 
           </t>
         </section>
+        
+        <section title="Protocol Flow">
+          <figure title='Abstract Protocol Flow' anchor='Figure-1'>
+            <artwork><![CDATA[
+  +----------+
+  | Resource |
+  |  Owner   |
+  |          |
+  +----------+
+     v    v
+     |    |
+    (A)  (D)
+     |    |
+     v    v
+  +---------+                                      +---------------+
+  |         |>-(B)--- Authorization Grant -------->|               |
+  |         |                                      |               |
+  |         |<-(C)-------- MFA Token -------------<|               |
+  |         |                                      | Authorization |
+  |         |>-(E)---- Strong Authz Grant -------->|     Server    |
+  |         |             & MFA Token              |               |
+  |         |                                      |               |
+  | Client  |<-(F)------- Access Token -----------<|               |
+  |         |                                      +---------------+
+  |         |
+  |         |                                      +---------------+
+  |         |>-(G)------- Access Token ----------->|               |
+  |         |                                      |    Resource   |
+  |         |<-(H)---- Protected Resource --------<|     Server    |
+  |         |                                      |               |
+  +---------+                                      +---------------+
+  ]]></artwork>
+          </figure>
+          <t>
+            The abstract strong authorization flow illustrated in <xref target='Figure-1' />
+            describes the interaction between the resource owner, resource server, client, and
+            authorization server and includes the following steps:
+          </t>
+          <t>
+            <list style='format (%C)'>
+              <t>
+                The client obtains authorization from the resource owner.  The
+                authorization can be obtained directly from the resource owner (as
+                shown), or preferably indirectly via the authorization server as an
+                intermediary.  The resource owner's authorization is represented as
+                an authorization grant.
+              </t>
+              <t>
+                The client requests an access token by authenticating with the
+                authorization server and presenting the authorization grant.
+              </t>
+              <t>
+                The authorization server authenticates the client and validates the
+                authorization grant, and if strong authorization is required,
+                returns an error along with an MFA token.
+              </t>
+              <t>
+                The resource owner provides the client with a strong authorization
+                grant.
+              </t>
+              <t>
+                The client requests an access token from the authorization server's
+                token endpoint by including the strong authorization grant received
+                from the resource owner along with the MFA token received during the
+                prior access token request.  When making the request, the client
+                authenticates with the authorization server.
+              </t>
+              <t>
+                The authorization server authenticates the client and validates the
+                MFA token and strong authorization grant, and if both are valid,
+                issues an access token.
+              </t>
+              <t>
+                The client requests the protected resource from the resource server
+                and authenticates by presenting the access token.
+              </t>
+              <t>
+                The resource server validates the access token, and if valid, serves
+                the request.
+              </t>
+            </list>
+          </t>
+        </section>
     </section>
     
-    <section title="Framework">
+    <section title="Protocol Endpoints">
+      <t>
+        The strong authorization process utilizes two authorization server
+        endpoints (HTTP resources):
+      </t>
+      <t>
+        <list style='symbols'>
+          <t>
+            Token endpoint - used by the client to exchange a strong
+            authorization grant for an access token, as described in Section
+            3.2 of <xref target="RFC6749"/>.
+          </t>
+          <t>
+            MFA Challenge endpoint - used by the client to obtain a strong
+            authorization challenge, the answer to which can be used as a
+            strong authorization grant.
+          </t>
+        </list>
+      </t>
       
-      <section title="Protocol Flow">
-        <figure title='Abstract Protocol Flow' anchor='Figure-1'>
-          <artwork><![CDATA[
-+----------+
-| Resource |
-|  Owner   |
-|          |
-+----------+
-   v    v
-   |    |
-  (A)  (D)
-   |    |
-   v    v
-+---------+                                      +---------------+
-|         |>-(B)--- Authorization Grant -------->|               |
-|         |                                      |               |
-|         |<-(C)-------- MFA Token -------------<|               |
-|         |                                      | Authorization |
-|         |>-(E)---- Strong Authz Grant -------->|     Server    |
-|         |             & MFA Token              |               |
-|         |                                      |               |
-| Client  |<-(F)------- Access Token -----------<|               |
-|         |                                      +---------------+
-|         |
-|         |                                      +---------------+
-|         |>-(G)------- Access Token ----------->|               |
-|         |                                      |    Resource   |
-|         |<-(H)---- Protected Resource --------<|     Server    |
-|         |                                      |               |
-+---------+                                      +---------------+
-]]></artwork>
-        </figure>
-        <t>
-          The abstract strong authorization flow illustrated in <xref target='Figure-1' />
-          describes the interaction between the resource owner, resource server, client, and
-          authorization server and includes the following steps:
-        </t>
-        <t>
-          <list style='format (%C)'>
-            <t>
-              The client obtains authorization from the resource owner.  The
-              authorization can be obtained directly from the resource owner (as
-              shown), or preferably indirectly via the authorization server as an
-              intermediary.  The resource owner's authorization is represented as
-              an authorization grant.
-            </t>
-            <t>
-              The client requests an access token by authenticating with the
-              authorization server and presenting the authorization grant.
-            </t>
-            <t>
-              The authorization server authenticates the client and validates the
-              authorization grant, and if strong authorization is required,
-              returns an error along with an MFA token.
-            </t>
-            <t>
-              The resource owner provides the client with a strong authorization
-              grant.
-            </t>
-            <t>
-              The client requests an access token from the authorization server's
-              token endpoint by including the strong authorization grant received
-              from the resource owner along with the MFA token received during the
-              prior access token request.  When making the request, the client
-              authenticates with the authorization server.
-            </t>
-            <t>
-              The authorization server authenticates the client and validates the
-              MFA token and strong authorization grant, and if both are valid,
-              issues an access token.
-            </t>
-            <t>
-              The client requests the protected resource from the resource server
-              and authenticates by presenting the access token.
-            </t>
-            <t>
-              The resource server validates the access token, and if valid, serves
-              the request.
-            </t>
-          </list>
-        </t>
+      <section title='Token Endpoint'>
+        
       </section>
       
-      <section title="Protocol Endpoints">
-        <t>
-          The strong authorization process utilizes two authorization server
-          endpoints (HTTP resources):
-        </t>
-        <t>
-          <list style='symbols'>
-            <t>
-              Token endpoint - used by the client to exchange a strong
-              authorization grant for an access token, as described in Section
-              3.2 of <xref target="RFC6749"/>.
-            </t>
-            <t>
-              MFA Challenge endpoint - used by the client to obtain a strong
-              authorization challenge, the answer to which can be used as a
-              strong authorization grant.
-            </t>
-          </list>
-        </t>
+      <section title='MFA Challenge Endpoint'>
+        
       </section>
-      
     </section>
     
     <section title="Authorization Session">

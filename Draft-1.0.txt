@@ -132,9 +132,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
       A short-lived token representing an authorization session.
 
-2.  Framework
+1.3.  Protocol Flow
 
-2.1.  Protocol Flow
+
 
 
 
@@ -170,33 +170,33 @@ Hanson                  Expires September 2, 2017               [Page 3]
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
-   +----------+
-   | Resource |
-   |  Owner   |
-   |          |
-   +----------+
-      v    v
-      |    |
-     (A)  (D)
-      |    |
-      v    v
-   +---------+                                      +---------------+
-   |         |>-(B)--- Authorization Grant -------->|               |
-   |         |                                      |               |
-   |         |<-(C)-------- MFA Token -------------<|               |
-   |         |                                      | Authorization |
-   |         |>-(E)---- Strong Authz Grant -------->|     Server    |
-   |         |             & MFA Token              |               |
-   |         |                                      |               |
-   | Client  |<-(F)------- Access Token -----------<|               |
-   |         |                                      +---------------+
-   |         |
-   |         |                                      +---------------+
-   |         |>-(G)------- Access Token ----------->|               |
-   |         |                                      |    Resource   |
-   |         |<-(H)---- Protected Resource --------<|     Server    |
-   |         |                                      |               |
-   +---------+                                      +---------------+
+     +----------+
+     | Resource |
+     |  Owner   |
+     |          |
+     +----------+
+        v    v
+        |    |
+       (A)  (D)
+        |    |
+        v    v
+     +---------+                                      +---------------+
+     |         |>-(B)--- Authorization Grant -------->|               |
+     |         |                                      |               |
+     |         |<-(C)-------- MFA Token -------------<|               |
+     |         |                                      | Authorization |
+     |         |>-(E)---- Strong Authz Grant -------->|     Server    |
+     |         |             & MFA Token              |               |
+     |         |                                      |               |
+     | Client  |<-(F)------- Access Token -----------<|               |
+     |         |                                      +---------------+
+     |         |
+     |         |                                      +---------------+
+     |         |>-(G)------- Access Token ----------->|               |
+     |         |                                      |    Resource   |
+     |         |<-(H)---- Protected Resource --------<|     Server    |
+     |         |                                      |               |
+     +---------+                                      +---------------+
 
                      Figure 1: Abstract Protocol Flow
 
@@ -245,7 +245,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    (H)  The resource server validates the access token, and if valid,
         serves the request.
 
-2.2.  Protocol Endpoints
+2.  Protocol Endpoints
 
    The strong authorization process utilizes two authorization server
    endpoints (HTTP resources):
@@ -257,6 +257,10 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    o  MFA Challenge endpoint - used by the client to obtain a strong
       authorization challenge, the answer to which can be used as a
       strong authorization grant.
+
+2.1.  Token Endpoint
+
+2.2.  MFA Challenge Endpoint
 
 3.  Authorization Session
 
@@ -271,16 +275,15 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
    mfa_supported
 
-      OPTIONAL.  Indicates that the client support strong
-      authentication.
-
-
 
 
 Hanson                  Expires September 2, 2017               [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+      OPTIONAL.  Indicates that the client support strong
+      authentication.
 
    The following is a non-normative example of a token request (with
    extra line breaks for display purposes only):
@@ -327,9 +330,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
        yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
        .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
    }
-
-
-
 
 
 
