@@ -281,11 +281,11 @@ Pragma: no-cache
                 <vspace />
                 REQUIRED. The MFA token received from the authorization server.
               </t>
-              <t hangText='mfa_type'>
+              <t hangText='challenge_type'>
                 <vspace />
-                OPTIONAL. The MFA type strings that the client supports. The value
-                of the mfa_type parameter is expressed as a list of space-
-                delimited, case-insensitive strings.
+                OPTIONAL. The MFA challenge type strings that the client supports.
+                The value of the challenge_type parameter is expressed as a list
+                of space-delimited, case-insensitive strings.
               </t>
             </list>
           </t>
@@ -305,7 +305,7 @@ Host: server.example.com
 Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 Content-Type: application/x-www-form-urlencoded
 
-mfa_token=eyJhbGciOiJ...&mfa_type=otp%20oob
+mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
 ]]></artwork>
           </figure>
           <t>
@@ -337,99 +337,68 @@ mfa_token=eyJhbGciOiJ...&mfa_type=otp%20oob
               </t>
               <t>
                 restore the authorization session based on the claims in the MFA
-                token.  The session SHOULD include, but is not limited to, the
-                authenticated user and previously valid authentication methods.
+                token.
               </t>
             </list>
+          </t>
+        </section>
+        
+        <section title='MFA Challenge Response' anchor="token-res">
+          <t>
+            If the MFA challenge request is valid and authorized, the
+            authorization server selects an authorization mechanism that would
+            satisfy the authorization session, issues a challenge, and
+            constructs the response by adding the following parameters to the
+            entity-body of the HTTP response with a 200 (OK) status code:
+          </t>
+          <t>
+            <list style='hanging' hangIndent='6'>
+              <t hangText='challenge_type'>
+                <vspace />
+                REQUIRED. The type of the MFA challenge issued.  Value is case
+                insensitive.
+              </t>
+            </list>
+          </t>
+          <t>
+            The parameters are included in the entity body of the HTTP response
+            using the <spanx style='verb'>application/json</spanx> media type as
+            defined by <xref target='RFC4627'/>.  The response MAY include
+            additional parameters that are interpreted according to a challenge
+            type definition.
           </t>
         </section>
       </section>
     </section>
     
-    <section title="Authorization Session">
-      <t>A client initates an authorization session by sending a token request
-        to the token endpoint as described in Section 3.2 of <xref target="RFC6749"/>.</t>
-      
-      <section title="Token Request">
-        <t>
-          The client may indicate that it supports strong authentication by
-          including the following parameter in the token request to the token
-          endpoint.
-          
-          <list style="hanging">
-            <t hangText="mfa_supported"><vspace blankLines="1"/>
-              OPTIONAL.  Indicates that the client support strong authentication.</t>
-          </list>
-        </t>
-        
-        <figure>
-          <preamble>
-            The following is a non-normative example of a token request (with
-            extra line breaks for display purposes only):
-          </preamble>
-          <artwork><![CDATA[
-POST /token HTTP/1.1
-Host: server.example.com
-Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-Content-Type: application/x-www-form-urlencoded
-
-grant_type=password&username=johndoe&password=A3ddj3w&mfa_supported=1
-]]></artwork>
-        </figure>
-      </section>
-      
-      <section title="Token Error Response">
-        <t>In addition to the error codes defined in Section 5.2 of
-          <xref target="RFC6749"/>, the following error codes are specific
-          multi-factor authorization flows: 
-
-          <list style="hanging"> 
-            <t hangText="mfa_required"> <vspace blankLines="1"/>
-              The authorization server requires strong authentication.</t>
-          </list> 
-        </t>
-        
-        <t>In addition to the response parameters specified by OAuth 2.0, the
-          following parameters MUST be included in the response when the error
-          code is set to mfa_required:
-        
-          <list style="hanging">
-            <t hangText="mfa_token"> <vspace blankLines="1"/>
-              REQUIRED.  The MFA token used to continue the authorization session.</t>
-          </list>
-        </t>
-        
-        <figure>
-          <preamble>
-            The following is a non-normative example token error response:
-          </preamble>
-          <artwork><![CDATA[
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-Cache-Control: no-store
-Pragma: no-cache
-
-{
-  "error":"mfa_required",
-  "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
-    OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
-    xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
-    RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
-    yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
-    .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
-}
-]]></artwork>
-        </figure>
-      </section>
-    </section>
-    
-    <section title="Obtaining Authorization using Strong Authentication">
+    <section title="Obtaining Authorization using Strong Authorization">
       
       <section title="OTP Credentials Grant">
         <t>An one-time password is generated by an OTP device, which includes
           hardware devices as well as software-based OTP generators on devices
           such as mobile phones.
         </t>
+        
+        <section title="MFA Challenge Response">
+          <t>
+            If the resource owner has a registered OTP device, the
+            authorization server signals the device, if possible, and responds
+            with a challenge containing the following parameters:
+          
+            <list style="hanging">
+              <t hangText="challenge_type"><vspace blankLines="1"/>
+                REQUIRED.  Value MUST be set to "otp".</t>
+            </list>
+          </t>
+        </section>
+        
+        <section title="User Interaction">
+          <t>
+            After receiving an OTP challenge, the client prompts or otherwise
+            interacts with the resource owner to obtain a one-time password
+            generated by a device in the posession of the resource owner.
+          </t>
+        </section>
         
         <section title="Access Token Request">
           <t>
@@ -464,9 +433,37 @@ Pragma: no-cache
       </section>
       
       <section title="Out-of-Band Verification Code Grant">
-        <t>An out-of-band verification code is obtained by challenging an out-of-band
-          authenticator.
+        <t>An out-of-band verification code is used to obtain authorization via
+          an out-of-band mechanism.
         </t>
+        
+        <section title="MFA Challenge Response">
+          <t>
+            The authorization server orchestrates an out-of-band authorization
+            interaction, and responds with a challenge containing the following
+            parameters:
+          
+            <list style="hanging">
+              <t hangText="challenge_type"><vspace blankLines="1"/>
+                REQUIRED.  Value MUST be set to "oob".</t>
+                
+              <t hangText="oob_code"> <vspace blankLines="1"/>
+                REQUIRED.  The out-of-band transaction code generated by the
+                authorization server.  The out-of-band transaction code MUST
+                expire shortly after it is issued to mitigate the risk of leaks.
+                A maximum authorization code lifetime of 10 minutes is
+                RECOMMENDED.</t>
+            </list>
+          </t>
+        </section>
+        
+        <section title="User Interaction">
+          <t>
+            After receiving an out-of-band challenge, the client prompts or
+            otherwise interacts with the resource owner to inform them of the
+            ongoing authorization ceremony.
+          </t>
+        </section>
         
         <section title="Access Token Request">
           <t>
@@ -497,6 +494,25 @@ Pragma: no-cache
             If the request failed client authentication or is invalid, the
             authorization server returns an error response as described in
             Section 5.2 of <xref target="RFC6749"/>.</t>
+            
+          <t>
+            In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
+            the following error codes are specific for the out-of-band
+            verification code grant:
+        
+            <list style="hanging"> 
+              <t hangText="authorization_pending"> <vspace blankLines="1"/>
+                The authorization request is still pending as the authorization
+                ceremony has not yet completed.  The client should repeat the
+                Access Token Request to the token endpoint.</t>
+              <t hangText="slow_down"> <vspace blankLines="1"/>
+                The client is polling too quickly and should back off at a
+                reasonable rate.</t>
+              <t hangText="expired_token"> <vspace blankLines="1"/>
+                The "oob_code" has expired.  The client will need to initiate
+                a new authorization session.</t>
+            </list> 
+          </t>
         </section>
       </section>
       
@@ -505,6 +521,7 @@ Pragma: no-cache
   <back>
     <references title="Normative References">
       <?rfc include="reference.RFC.2119"?>
+      <?rfc include="reference.RFC.4627"?>
       <?rfc include="reference.RFC.6749"?>
     </references>
   </back>
