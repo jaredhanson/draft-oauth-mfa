@@ -433,8 +433,27 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
       </section>
       
       <section title="Out-of-Band Verification Code Grant">
-        <t>An out-of-band verification code is used to obtain authorization via
-          an out-of-band mechanism.
+        <t>
+          An out-of-band verification code is used to obtain authorization via
+          an out-of-band authorization ceremony.  Such ceremonys may include
+          out-of-band authenticators or multi-party authorization.
+        </t>
+        
+        <t>An out-of-band authenticator is a device that can communicate
+          securely with the authorization server over a secondary channel,
+          such as SMS or push notification.
+        </t>
+        
+        <t>
+          Multi-party authorization requires approval from a second authorized
+          user, in addition to the resource owner, before an action is allowed
+          to take place.
+        </t>
+        
+        <t>
+          Out-of-band mechanisms are intentially open-ended, to allow for
+          flexibility in how authorization is obtained.  The details of any
+          out-out-band mechanism are beyond the scope of this specification.
         </t>
         
         <section title="MFA Challenge Response">
