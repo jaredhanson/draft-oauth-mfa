@@ -204,11 +204,11 @@
           3.2 of <xref target="RFC6749"/>.
         </t>
         <t>
-          The token endpoint is also used by the client to initiate an
-          authorization session.  If the authorization server determines that an
-          access token request is unauthorized, due to an insufficiently strong
-          authorization grant, the authorization server responds with an error
-          response as described in Section 5.2 of <xref target="RFC6749"/>.
+          The token endpoint is also used by the client to initiate (or
+          continue) an authorization session.  If the authorization server
+          determines that a token request is unauthorized, due to an
+          insufficiently strong authorization grant, the authorization server
+          responds with an error response as described in Section 5.2 of <xref target="RFC6749"/>.
         </t>
         <t>
           In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
@@ -218,7 +218,7 @@
           <list style="hanging"> 
             <t hangText="mfa_required"> <vspace blankLines="1"/>
               The authorization grant is insufficiently strong,  The token
-              request MAY succeed if repeated using a strong authoirzation
+              request MAY succeed if repeated using a strong authorization
               grant.</t>
           </list> 
         </t>
@@ -231,6 +231,28 @@
               REQUIRED.  The MFA token used to continue the authorization session.</t>
           </list>
         </t>
+        <figure>
+          <preamble>
+            The following is a non-normative example token error response
+            indicating that strong authorization is required:
+          </preamble>
+          <artwork><![CDATA[
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+  "error":"mfa_required",
+  "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
+    OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
+    xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
+    RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
+    yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
+    .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
+}
+]]></artwork>
+        </figure>
       </section>
       
       <section title='MFA Challenge Endpoint'>
@@ -241,6 +263,86 @@
           authorization grant which can be used to obtain an access token by
           presenting it at the token endpoint.
         </t>
+        <t>
+          Use of the MFA challenge endpoint is OPTIONAL; if a client knows of
+          a suitable authenticator through an out-of-band mechanism, it can
+          obtain a strong authorization grant directly.
+        </t>
+        
+        <section title='MFA Challenge Request' anchor="token-req">
+          <t>
+            The client makes a request to the MFA challenge endpoint by sending
+            the following parameters using the <spanx style='verb'>application/x-www-form-urlencoded</spanx>
+            format with a character encoding of UTF-8 in the HTTP request entity-body:
+          </t>
+          <t>
+            <list style='hanging' hangIndent='6'>
+              <t hangText='mfa_token'>
+                <vspace />
+                REQUIRED. The MFA token received from the authorization server.
+              </t>
+              <t hangText='mfa_type'>
+                <vspace />
+                OPTIONAL. The MFA type strings that the client supports. The value
+                of the mfa_type parameter is expressed as a list of space-
+                delimited, case-insensitive strings.
+              </t>
+            </list>
+          </t>
+          <t>
+            If the client was issued client credentials (or assigned other
+            authentication requirements), the client MUST authenticate with the
+            authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
+          </t>
+          <figure>
+            <preamble>
+              For example, the client makes the following HTTPS request (line
+              breaks are for display purposes only)::
+            </preamble>
+            <artwork><![CDATA[
+POST /challenge HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+mfa_token=eyJhbGciOiJ...&mfa_type=otp%20oob
+]]></artwork>
+          </figure>
+          <t>
+            If the client was issued client credentials (or assigned other
+            authentication requirements), the client MUST authenticate with the
+            authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
+          </t>
+          <t>
+            The authorization server MUST:
+          </t>
+          <t>
+            <list style='symbols'>
+              <t>
+                require client authentication for confidential clients or for
+                any client that was issued client credentials (or with other
+                authentication requirements),
+              </t>
+              <t>
+                authenticate the client if client authentication is included,
+              </t>
+              <t>
+                ensure the MFA token was issued to the authenticated
+                confidential client, or if the client is public, ensure the MFA
+                token was issued to <spanx style='verb'>client_id</spanx> in the
+                request,
+              </t>
+              <t>
+                verify that the MFA token is valid, and
+              </t>
+              <t>
+                restore the authorization session based on the claims in the MFA
+                token.  The session SHOULD include, but is not limited to, the
+                authenticated user and previously valid authentication methods.
+              </t>
+            </list>
+          </t>
+        </section>
       </section>
     </section>
     

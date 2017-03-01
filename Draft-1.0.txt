@@ -264,16 +264,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    presenting its authorization grant or refresh token, as described in
    Section 3.2 of [RFC6749].
 
-   The token endpoint is also used by the client to initiate an
-   authorization session.  If the authorization server determines that
-   an access token request is unauthorized, due to an insufficiently
-   strong authorization grant, the authorization server responds with an
-   error response as described in Section 5.2 of [RFC6749].
+   The token endpoint is also used by the client to initiate (or
+   continue) an authorization session.  If the authorization server
+   determines that a token request is unauthorized, due to an
+   insufficiently strong authorization grant, the authorization server
+   responds with an error response as described in Section 5.2 of
+   [RFC6749].
 
    In addition to the error codes defined in Section 5.2 of [RFC6749],
    the following error codes are specific for the strong authorization
    flow:
-
 
 
 
@@ -285,7 +285,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    mfa_required
 
       The authorization grant is insufficiently strong, The token
-      request MAY succeed if repeated using a strong authoirzation
+      request MAY succeed if repeated using a strong authorization
       grant.
 
    In addition to the response parameters defined in Section 5.2 of
@@ -297,6 +297,24 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       REQUIRED.  The MFA token used to continue the authorization
       session.
 
+   The following is a non-normative example token error response
+   indicating that strong authorization is required:
+
+   HTTP/1.1 403 Forbidden
+   Content-Type: application/json;charset=UTF-8
+   Cache-Control: no-store
+   Pragma: no-cache
+
+   {
+     "error":"mfa_required",
+     "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
+       OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
+       xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
+       RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
+       yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
+       .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
+   }
+
 2.2.  MFA Challenge Endpoint
 
    The MFA challenge endpoint is used by the client to obtain a strong
@@ -304,6 +322,81 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    obtained by interacting with the resource owner, is a strong
    authorization grant which can be used to obtain an access token by
    presenting it at the token endpoint.
+
+   Use of the MFA challenge endpoint is OPTIONAL; if a client knows of a
+   suitable authenticator through an out-of-band mechanism, it can
+   obtain a strong authorization grant directly.
+
+
+
+
+
+
+
+Hanson                  Expires September 2, 2017               [Page 6]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
+2.2.1.  MFA Challenge Request
+
+   The client makes a request to the MFA challenge endpoint by sending
+   the following parameters using the "application/x-www-form-
+   urlencoded" format with a character encoding of UTF-8 in the HTTP
+   request entity-body:
+
+   mfa_token
+         REQUIRED.  The MFA token received from the authorization
+         server.
+
+   mfa_type
+         OPTIONAL.  The MFA type strings that the client supports.  The
+         value of the mfa_type parameter is expressed as a list of
+         space- delimited, case-insensitive strings.
+
+   If the client was issued client credentials (or assigned other
+   authentication requirements), the client MUST authenticate with the
+   authorization server as described in Section 3.2.1 of [RFC6749].
+
+   For example, the client makes the following HTTPS request (line
+   breaks are for display purposes only)::
+
+   POST /challenge HTTP/1.1
+   Host: server.example.com
+   Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+   Content-Type: application/x-www-form-urlencoded
+
+   mfa_token=eyJhbGciOiJ...&mfa_type=otp%20oob
+
+   If the client was issued client credentials (or assigned other
+   authentication requirements), the client MUST authenticate with the
+   authorization server as described in Section 3.2.1 of [RFC6749].
+
+   The authorization server MUST:
+
+   o  require client authentication for confidential clients or for any
+      client that was issued client credentials (or with other
+      authentication requirements),
+
+   o  authenticate the client if client authentication is included,
+
+   o  ensure the MFA token was issued to the authenticated confidential
+      client, or if the client is public, ensure the MFA token was
+      issued to "client_id" in the request,
+
+   o  verify that the MFA token is valid, and
+
+
+
+
+Hanson                  Expires September 2, 2017               [Page 7]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
+   o  restore the authorization session based on the claims in the MFA
+      token.  The session SHOULD include, but is not limited to, the
+      authenticated user and previously valid authentication methods.
 
 3.  Authorization Session
 
@@ -331,13 +424,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
    grant_type=password&username=johndoe&password=A3ddj3w&mfa_supported=1
 
-
-
-Hanson                  Expires September 2, 2017               [Page 6]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
-
 3.2.  Token Error Response
 
    In addition to the error codes defined in Section 5.2 of [RFC6749],
@@ -356,6 +442,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
       REQUIRED.  The MFA token used to continue the authorization
       session.
+
+
+
+Hanson                  Expires September 2, 2017               [Page 8]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
 
    The following is a non-normative example token error response:
 
@@ -382,18 +475,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    hardware devices as well as software-based OTP generators on devices
    such as mobile phones.
 
-
-
-
-
-
-
-
-Hanson                  Expires September 2, 2017               [Page 7]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
-
 4.1.1.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
@@ -414,6 +495,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
       REQUIRED.  The MFA token received when initiating the
       authorization session.
+
+
+
+
+
+
+Hanson                  Expires September 2, 2017               [Page 9]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
 
 4.1.2.  Access Token Response
 
@@ -442,14 +533,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
    oob_code
 
-
-
-
-Hanson                  Expires September 2, 2017               [Page 8]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
-
       REQUIRED.  The out-of-band verification code.
 
    mfa_token
@@ -471,6 +554,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
+
+
+
+Hanson                  Expires September 2, 2017              [Page 10]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
 
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -501,4 +591,26 @@ Author's Address
 
 
 
-Hanson                  Expires September 2, 2017               [Page 9]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                  Expires September 2, 2017              [Page 11]
