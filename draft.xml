@@ -7,7 +7,7 @@
 ]>
 <rfc docName="draft-hanson-oauth-mfa-latest">
   <front>
-    <title>OAuth 2.0 Multi-Factor Authentication</title>
+    <title>OAuth 2.0 Multi-Factor Authorization</title>
     <author initials="J." surname="Hanson" fullname="Jared Hanson">
       <organization>Auth0 Inc.</organization>
       <address>       
@@ -18,20 +18,22 @@
     <date/>
     <abstract>
       <t>This specification provides a framework for the use of strong
-        authentication with OAuth 2.0.  Mechanisms are specified for initiating
+        authorization with OAuth 2.0.  Mechanisms are specified for initiating
         an authorization session.  New authorization grant types are defined
         that allow clients to obtain access tokens within the context of a
-        strongly authenticated authorization session.</t>
+        strongly authorized session.</t>
     </abstract>
   </front>
   <middle>
     
     <section title="Introduction">
-      <t>Strong authentication is a method of access control that grants access
-        only after multiple factors of authentication have been presented.  The
-        factors typically fall into the following categories: knowledge
-        (something you know), possession (something you have), and inherence
-        (something you are).</t>
+      <t>Strong authorization is a method of access control that grants access
+        only after multiple factors of authentication and/or authorization have
+        been presented.  Authentication factors typically fall into the
+        following categories: knowledge (something you know), possession
+        (something you have), and inherence (something you are).  Strong
+        authorization factors include transaction confirmation and multi-party
+        authorization.</t>
       
       <t>OAuth 2.0 <xref target="RFC6749"/> is an authorization framework that
         enables a third-party application to obtain limited access to a
@@ -44,18 +46,19 @@
         the resource owner (or by a privileged administrator).</t>
         
       <t>This specification defines a general framework for the use of strong
-        authentication within OAuth 2.0.  It provides a generic mechanism for
-        indicating when strong authentication is required.  It defines
-        additional extension grant types that allow strong authentication
-        credentials to be presented in order to obtain access tokens.</t>
+        authorization within OAuth 2.0.  It provides a generic mechanism for
+        indicating when strong authorization is required.  It defines additional
+        extension grant types that allow strong authorization credentials to be
+        presented in order to obtain access tokens.</t>
       
-      <t>This use of strong authentication allows authorization servers to
+      <t>This use of strong authorization allows authorization servers to
         implement correspondingly strong authorization policies, including
         step-up authentication and transaction confirmation.</t>
         
       <t>Authorization servers that implement support for resource owner
         password credentials can augment existing password infrastructure by
-        requiring a strong second factor prior to issuing access tokens.</t>
+        requiring a strong second factor of authentication prior to issuing
+        access tokens.</t>
         
       <t>Transaction confirmation can be used to increase the level of assurance
         prior to issuing tokens for highly privileged operations, such as a bank
@@ -69,9 +72,9 @@
         stock quotes is uninterrupted.  The access token can also be used to
         place an order, but is subject to more stringent security requirements.
         Using this extension, the refresh token can be used to initiate an
-        authorization transaction which, once confirmed by the user, allows
-        issuance of an access token that demonstrates strong authentication and
-        has a limited lifetime.</t>
+        authorization session which, once confirmed by the user, allows issuance
+        of an access token that demonstrates strong authentication and has a
+        limited lifetime.</t>
         
         <section title="Notational Conventions">
           <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -91,9 +94,11 @@
         </section>
     </section>
     
-    <section title="Protocol Flow">
-      <figure title='Abstract Protocol Flow' anchor='Figure-1'>
-        <artwork><![CDATA[
+    <section title="Framework">
+      
+      <section title="Protocol Flow">
+        <figure title='Abstract Protocol Flow' anchor='Figure-1'>
+          <artwork><![CDATA[
 +----------+
 | Resource |
 |  Owner   |
@@ -109,7 +114,7 @@
 |         |                                      |               |
 |         |<-(C)-------- MFA Token -------------<|               |
 |         |                                      | Authorization |
-|         |>-(E)-- Strong Authn Credential ----->|     Server    |
+|         |>-(E)---- Strong Authz Grant -------->|     Server    |
 |         |             & MFA Token              |               |
 |         |                                      |               |
 | Client  |<-(F)------- Access Token -----------<|               |
@@ -122,51 +127,79 @@
 |         |                                      |               |
 +---------+                                      +---------------+
 ]]></artwork>
-      </figure>
-      <t>
-        <list style='format (%C)'>
-          <t>
-            The client obtains authorization from the resource owner.  The
-            authorization can be obtained directly from the resource owner (as
-            shown), or preferably indirectly via the authorization server as an
-            intermediary.  The resource owner's authorization is represented as
-            an authorization grant.
-          </t>
-          <t>
-            The client requests an access token by authenticating with the
-            authorization server and presenting the authorization grant.
-          </t>
-          <t>
-            The authorization server authenticates the client and validates the
-            authorization grant, and if strong authentication is required,
-            returns an error along with an MFA token.
-          </t>
-          <t>
-            The resource owner provides the client with a strong authentication
-            credential.
-          </t>
-          <t>
-            The client requests an access token from the authorization server's
-            token endpoint by including the strong authentication credential
-            received from the resource owner along with the MFA token received
-            during the prior access token request.  When making the request, the
-            client authenticates with the authorization server.
-          </t>
-          <t>
-            The authorization server authenticates the client and validates the
-            resource owner strong authentication credential, and if valid,
-            issues an access token.
-          </t>
-          <t>
-            The client requests the protected resource from the resource server
-            and authenticates by presenting the access token.
-          </t>
-          <t>
-            The resource server validates the access token, and if valid, serves
-            the request.
-          </t>
-        </list>
-      </t>
+        </figure>
+        <t>
+          The abstract strong authorization flow illustrated in <xref target='Figure-1' />
+          describes the interaction between the resource owner, resource server, client, and
+          authorization server and includes the following steps:
+        </t>
+        <t>
+          <list style='format (%C)'>
+            <t>
+              The client obtains authorization from the resource owner.  The
+              authorization can be obtained directly from the resource owner (as
+              shown), or preferably indirectly via the authorization server as an
+              intermediary.  The resource owner's authorization is represented as
+              an authorization grant.
+            </t>
+            <t>
+              The client requests an access token by authenticating with the
+              authorization server and presenting the authorization grant.
+            </t>
+            <t>
+              The authorization server authenticates the client and validates the
+              authorization grant, and if strong authorization is required,
+              returns an error along with an MFA token.
+            </t>
+            <t>
+              The resource owner provides the client with a strong authorization
+              grant.
+            </t>
+            <t>
+              The client requests an access token from the authorization server's
+              token endpoint by including the strong authorization grant received
+              from the resource owner along with the MFA token received during the
+              prior access token request.  When making the request, the client
+              authenticates with the authorization server.
+            </t>
+            <t>
+              The authorization server authenticates the client and validates the
+              MFA token and strong authorization grant, and if both are valid,
+              issues an access token.
+            </t>
+            <t>
+              The client requests the protected resource from the resource server
+              and authenticates by presenting the access token.
+            </t>
+            <t>
+              The resource server validates the access token, and if valid, serves
+              the request.
+            </t>
+          </list>
+        </t>
+      </section>
+      
+      <section title="Protocol Endpoints">
+        <t>
+          The strong authorization process utilizes two authorization server
+          endpoints (HTTP resources):
+        </t>
+        <t>
+          <list style='symbols'>
+            <t>
+              Token endpoint - used by the client to exchange a strong
+              authorization grant for an access token, as described in Section
+              3.2 of <xref target="RFC6749"/>.
+            </t>
+            <t>
+              MFA Challenge endpoint - used by the client to obtain a strong
+              authorization challenge, the answer to which can be used as a
+              strong authorization grant.
+            </t>
+          </list>
+        </t>
+      </section>
+      
     </section>
     
     <section title="Authorization Session">

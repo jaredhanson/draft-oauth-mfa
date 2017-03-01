@@ -4,19 +4,19 @@
 
 Network Working Group                                          J. Hanson
 Internet-Draft                                                Auth0 Inc.
-Expires: July 7, 2017                                    January 3, 2017
+Expires: September 2, 2017                                 March 1, 2017
 
 
-                 OAuth 2.0 Multi-Factor Authentication
+                  OAuth 2.0 Multi-Factor Authorization
                      draft-hanson-oauth-mfa-latest
 
 Abstract
 
    This specification provides a framework for the use of strong
-   authentication with OAuth 2.0.  Mechanisms are specified for
+   authorization with OAuth 2.0.  Mechanisms are specified for
    initiating an authorization session.  New authorization grant types
    are defined that allow clients to obtain access tokens within the
-   context of a strongly authenticated authorization session.
+   context of a strongly authorized session.
 
 Status of This Memo
 
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 7, 2017.
+   This Internet-Draft will expire on September 2, 2017.
 
 Copyright Notice
 
@@ -53,18 +53,20 @@ Copyright Notice
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 1]
+Hanson                  Expires September 2, 2017               [Page 1]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 1.  Introduction
 
-   Strong authentication is a method of access control that grants
-   access only after multiple factors of authentication have been
-   presented.  The factors typically fall into the following categories:
-   knowledge (something you know), possession (something you have), and
-   inherence (something you are).
+   Strong authorization is a method of access control that grants access
+   only after multiple factors of authentication and/or authorization
+   have been presented.  Authentication factors typically fall into the
+   following categories: knowledge (something you know), possession
+   (something you have), and inherence (something you are).  Strong
+   authorization factors include transaction confirmation and multi-
+   party authorization.
 
    OAuth 2.0 [RFC6749] is an authorization framework that enables a
    third-party application to obtain limited access to a protected HTTP
@@ -77,18 +79,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    granted by the resource owner (or by a privileged administrator).
 
    This specification defines a general framework for the use of strong
-   authentication within OAuth 2.0.  It provides a generic mechanism for
-   indicating when strong authentication is required.  It defines
-   additional extension grant types that allow strong authentication
+   authorization within OAuth 2.0.  It provides a generic mechanism for
+   indicating when strong authorization is required.  It defines
+   additional extension grant types that allow strong authorization
    credentials to be presented in order to obtain access tokens.
 
-   This use of strong authentication allows authorization servers to
+   This use of strong authorization allows authorization servers to
    implement correspondingly strong authorization policies, including
    step-up authentication and transaction confirmation.
 
    Authorization servers that implement support for resource owner
    password credentials can augment existing password infrastructure by
-   requiring a strong second factor prior to issuing access tokens.
+   requiring a strong second factor of authentication prior to issuing
+   access tokens.
 
    Transaction confirmation can be used to increase the level of
    assurance prior to issuing tokens for highly privileged operations,
@@ -102,17 +105,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    new access token, so that access to stock quotes is uninterrupted.
    The access token can also be used to place an order, but is subject
    to more stringent security requirements.  Using this extension, the
-   refresh token can be used to initiate an authorization transaction
-   which, once confirmed by the user, allows issuance of an access token
-   that demonstrates strong authentication and has a limited lifetime.
+   refresh token can be used to initiate an authorization session which,
 
 
 
-
-Hanson                    Expires July 7, 2017                  [Page 2]
+Hanson                  Expires September 2, 2017               [Page 2]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+   once confirmed by the user, allows issuance of an access token that
+   demonstrates strong authentication and has a limited lifetime.
 
 1.1.  Notational Conventions
 
@@ -129,7 +132,43 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
       A short-lived token representing an authorization session.
 
-2.  Protocol Flow
+2.  Framework
+
+2.1.  Protocol Flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                  Expires September 2, 2017               [Page 3]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
 
    +----------+
    | Resource |
@@ -146,7 +185,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
    |         |                                      |               |
    |         |<-(C)-------- MFA Token -------------<|               |
    |         |                                      | Authorization |
-   |         |>-(E)-- Strong Authn Credential ----->|     Server    |
+   |         |>-(E)---- Strong Authz Grant -------->|     Server    |
    |         |             & MFA Token              |               |
    |         |                                      |               |
    | Client  |<-(F)------- Access Token -----------<|               |
@@ -161,14 +200,10 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
                      Figure 1: Abstract Protocol Flow
 
-
-
-
-
-Hanson                    Expires July 7, 2017                  [Page 3]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
-
+   The abstract strong authorization flow illustrated in Figure 1
+   describes the interaction between the resource owner, resource
+   server, client, and authorization server and includes the following
+   steps:
 
    (A)  The client obtains authorization from the resource owner.  The
         authorization can be obtained directly from the resource owner
@@ -180,21 +215,28 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
         authorization server and presenting the authorization grant.
 
    (C)  The authorization server authenticates the client and validates
-        the authorization grant, and if strong authentication is
+        the authorization grant, and if strong authorization is
         required, returns an error along with an MFA token.
 
+
+
+
+Hanson                  Expires September 2, 2017               [Page 4]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
    (D)  The resource owner provides the client with a strong
-        authentication credential.
+        authorization grant.
 
    (E)  The client requests an access token from the authorization
-        server's token endpoint by including the strong authentication
-        credential received from the resource owner along with the MFA
-        token received during the prior access token request.  When
-        making the request, the client authenticates with the
-        authorization server.
+        server's token endpoint by including the strong authorization
+        grant received from the resource owner along with the MFA token
+        received during the prior access token request.  When making the
+        request, the client authenticates with the authorization server.
 
    (F)  The authorization server authenticates the client and validates
-        the resource owner strong authentication credential, and if
+        the MFA token and strong authorization grant, and if both are
         valid, issues an access token.
 
    (G)  The client requests the protected resource from the resource
@@ -202,6 +244,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
    (H)  The resource server validates the access token, and if valid,
         serves the request.
+
+2.2.  Protocol Endpoints
+
+   The strong authorization process utilizes two authorization server
+   endpoints (HTTP resources):
+
+   o  Token endpoint - used by the client to exchange a strong
+      authorization grant for an access token, as described in
+      Section 3.2 of [RFC6749].
+
+   o  MFA Challenge endpoint - used by the client to obtain a strong
+      authorization challenge, the answer to which can be used as a
+      strong authorization grant.
 
 3.  Authorization Session
 
@@ -221,9 +276,10 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 4]
+
+Hanson                  Expires September 2, 2017               [Page 5]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
    The following is a non-normative example of a token request (with
@@ -277,9 +333,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 5]
+Hanson                  Expires September 2, 2017               [Page 6]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 4.  Obtaining Authorization using Strong Authentication
@@ -333,9 +389,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 6]
+Hanson                  Expires September 2, 2017               [Page 7]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authentication     January 2017
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
    grant_type
@@ -389,4 +445,4 @@ Author's Address
 
 
 
-Hanson                    Expires July 7, 2017                  [Page 7]
+Hanson                  Expires September 2, 2017               [Page 8]
