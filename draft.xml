@@ -309,11 +309,6 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
 ]]></artwork>
           </figure>
           <t>
-            If the client was issued client credentials (or assigned other
-            authentication requirements), the client MUST authenticate with the
-            authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
-          </t>
-          <t>
             The authorization server MUST:
           </t>
           <t>
