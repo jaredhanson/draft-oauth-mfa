@@ -198,11 +198,49 @@
       </t>
       
       <section title='Token Endpoint'>
+        <t>
+          The token endpoint is used by the client to obtain an access token by
+          presenting its authorization grant or refresh token, as described in Section
+          3.2 of <xref target="RFC6749"/>.
+        </t>
+        <t>
+          The token endpoint is also used by the client to initiate an
+          authorization session.  If the authorization server determines that an
+          access token request is unauthorized, due to an insufficiently strong
+          authorization grant, the authorization server responds with an error
+          response as described in Section 5.2 of <xref target="RFC6749"/>.
+        </t>
+        <t>
+          In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
+          the following error codes are specific for the strong authorization
+          flow:
+          
+          <list style="hanging"> 
+            <t hangText="mfa_required"> <vspace blankLines="1"/>
+              The authorization grant is insufficiently strong,  The token
+              request MAY succeed if repeated using a strong authoirzation
+              grant.</t>
+          </list> 
+        </t>
+        <t>In addition to the response parameters defined in Section 5.2 of <xref target="RFC6749"/>,
+          the following parameters MUST be included in the response when the
+          error code is set to mfa_required:
         
+          <list style="hanging">
+            <t hangText="mfa_token"> <vspace blankLines="1"/>
+              REQUIRED.  The MFA token used to continue the authorization session.</t>
+          </list>
+        </t>
       </section>
       
       <section title='MFA Challenge Endpoint'>
-        
+        <t>
+          The MFA challenge endpoint is used by the client to obtain a strong
+          authorization challenge.  The answer to this challenge, typically
+          obtained by interacting with the resource owner, is a strong
+          authorization grant which can be used to obtain an access token by
+          presenting it at the token endpoint.
+        </t>
       </section>
     </section>
     
