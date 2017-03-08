@@ -250,9 +250,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    The strong authorization process utilizes two authorization server
    endpoints (HTTP resources):
 
-   o  Token endpoint - used by the client to exchange a strong
-      authorization grant for an access token, as described in
-      Section 3.2 of [RFC6749].
+   o  Token endpoint - used by the client to exchange an authorization
+      grant, including strong authorization grants, for an access token,
+      typically with client authentication.
 
    o  MFA Challenge endpoint - used by the client to obtain a strong
       authorization challenge, the answer to which can be used as a
@@ -264,16 +264,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    presenting its authorization grant or refresh token, as described in
    Section 3.2 of [RFC6749].
 
-   The token endpoint is also used by the client to initiate (or
-   continue) an authorization session.  If the authorization server
-   determines that a token request is unauthorized, due to an
-   insufficiently strong authorization grant, the authorization server
-   responds with an error response as described in Section 5.2 of
-   [RFC6749].
+   The token endpoint is also used by the client to initiate or continue
+   an authorization session.  If the token request is authorized, the
+   authorization server responds with a success response as described in
+   Section 5.1 of [RFC6749].  Otherwise it responds with an error as
+   described in Section 5.2 of [RFC6749].
 
    In addition to the error codes defined in Section 5.2 of [RFC6749],
    the following error codes are specific for the strong authorization
    flow:
+
 
 
 
@@ -285,7 +285,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    mfa_required
 
       The authorization grant is insufficiently strong, The token
-      request MAY succeed if repeated using a strong authorization
+      request MAY succeed if continued using a strong authorization
       grant.
 
    In addition to the response parameters defined in Section 5.2 of

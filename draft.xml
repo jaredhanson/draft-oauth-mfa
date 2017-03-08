@@ -186,9 +186,9 @@
       <t>
         <list style='symbols'>
           <t>
-            Token endpoint - used by the client to exchange a strong
-            authorization grant for an access token, as described in Section
-            3.2 of <xref target="RFC6749"/>.
+            Token endpoint - used by the client to exchange an authorization
+            grant, including strong authorization grants, for an access token,
+            typically with client authentication.
           </t>
           <t>
             MFA Challenge endpoint - used by the client to obtain a strong
@@ -205,11 +205,11 @@
           3.2 of <xref target="RFC6749"/>.
         </t>
         <t>
-          The token endpoint is also used by the client to initiate (or
-          continue) an authorization session.  If the authorization server
-          determines that a token request is unauthorized, due to an
-          insufficiently strong authorization grant, the authorization server
-          responds with an error response as described in Section 5.2 of <xref target="RFC6749"/>.
+          The token endpoint is also used by the client to initiate or
+          continue an authorization session.  If the token request is
+          authorized, the authorization server responds with a success response
+          as described in Section 5.1 of <xref target="RFC6749"/>.  Otherwise it
+          responds with an error as described in Section 5.2 of <xref target="RFC6749"/>.
         </t>
         <t>
           In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
@@ -219,7 +219,7 @@
           <list style="hanging"> 
             <t hangText="mfa_required"> <vspace blankLines="1"/>
               The authorization grant is insufficiently strong,  The token
-              request MAY succeed if repeated using a strong authorization
+              request MAY succeed if continued using a strong authorization
               grant.</t>
           </list> 
         </t>
