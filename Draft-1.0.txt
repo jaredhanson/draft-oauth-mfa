@@ -355,6 +355,11 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
          expressed as a list of space-delimited, case-insensitive
          strings.
 
+   client_id
+         REQUIRED, if the client is not authenticating with the
+         authorization server as described in Section 3.2.1 of
+         [RFC6749].
+
    If the client was issued client credentials (or assigned other
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
@@ -381,11 +386,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       client, or if the client is public, ensure the MFA token was
       issued to "client_id" in the request,
 
-   o  verify that the MFA token is valid, and
-
-   o  restore the authorization session based on the claims in the MFA
-      token.
-
 
 
 
@@ -393,6 +393,11 @@ Hanson                  Expires September 9, 2017               [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+   o  verify that the MFA token is valid, and
+
+   o  restore the authorization session based on the claims in the MFA
+      token.
 
 2.2.2.  MFA Challenge Response
 
@@ -410,6 +415,66 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    using the "application/json" media type as defined by [RFC4627].  The
    response MAY include additional parameters that are interpreted
    according to a challenge type definition.
+
+2.2.3.  MFA Challenge Error Response
+
+   If the MFA challenge request failed client authentication or is
+   invalid, the authorization server responds with an HTTP 400 (Bad
+   Request) status code (unless specified otherwise) and includes the
+   following parameters with the response:
+
+   error
+         REQUIRED.  A single ASCII error code from the following:
+
+         invalid_request
+               The request is missing a required parameter, includes an
+               unsupported parameter value (other than challenge type),
+               repeats a parameter, includes multiple credentials,
+               utilizes more than one mechanism for authenticating the
+               client, or is otherwise malformed.
+
+         invalid_client
+               Client authentication failed (e.g. unknown client, no
+               client authentication included, or unsupported
+               authentication method).  The authorization server MAY
+               return an HTTP 401 (Unauthorized) status code to indicate
+               which HTTP authentication schemes are supported.  If the
+               client attempted to authenticate via the "Authorization"
+               request header field, the authorization server MUST
+               respond with an HTTP 401 (Unauthorized) status code, and
+
+
+
+Hanson                  Expires September 9, 2017               [Page 8]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
+               include the "WWW-Authenticate" response header field
+               matching the authentication scheme used by the client.
+
+         expired_token
+               The provided MFA token is invalid, expired, or revoked.
+               The client will need to initiate a new authorization
+               session.
+
+         unauthorized_client
+               The authenticated client is not authorized to recieve a
+               strong authorization challenge.
+
+         unsupported_challenge_type
+               The challenge types supported by the client are not
+               supported by the authorization server.
+
+   error_description
+         OPTIONAL.  A human-readable ASCII text providing additional
+         information, used to assist the client developer in
+         understanding the error that occurred.
+
+   error_uri
+         OPTIONAL.  A URI identifying a human-readable web page with
+         information about the error, used to provide the client
+         developer with additional information about the error.
 
 3.  Obtaining Authorization using Strong Authorization
 
@@ -429,6 +494,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
       REQUIRED.  Value MUST be set to "otp".
 
+
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017               [Page 9]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 3.1.2.  User Interaction
 
    After receiving an OTP challenge, the client prompts or otherwise
@@ -441,14 +518,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    following parameters using the "application/x-www-form-urlencoded"
    format per Appendix B with a character encoding of UTF-8 in the HTTP
    request entity-body:
-
-
-
-
-Hanson                  Expires September 9, 2017               [Page 8]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
    grant_type
 
@@ -486,6 +555,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    user, in addition to the resource owner, before an action is allowed
    to take place.
 
+
+
+Hanson                  Expires September 9, 2017              [Page 10]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
    Out-of-band mechanisms are intentionally open-ended, to allow for
    flexibility in how authorization is obtained.  The details of any
    out-out-band mechanism are beyond the scope of this specification.
@@ -497,14 +573,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    parameters:
 
    challenge_type
-
-
-
-
-Hanson                  Expires September 9, 2017               [Page 9]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
       REQUIRED.  Value MUST be set to "oob".
 
@@ -543,6 +611,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       REQUIRED.  The MFA token received when initiating the
       authorization session.
 
+
+
+Hanson                  Expires September 9, 2017              [Page 11]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 3.2.4.  Access Token Response
 
    If the access token request is valid and authorized, the
@@ -554,13 +629,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    In addition to the error codes defined in Section 5.2 of [RFC6749],
    the following error codes are specific for the out-of-band
    verification code grant:
-
-
-
-Hanson                  Expires September 9, 2017              [Page 10]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
    authorization_pending
 
@@ -594,6 +662,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <http://www.rfc-editor.org/info/rfc6749>.
 
+
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 12]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 Author's Address
 
    Jared Hanson
@@ -613,4 +693,36 @@ Author's Address
 
 
 
-Hanson                  Expires September 9, 2017              [Page 11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 13]

@@ -288,6 +288,11 @@ Pragma: no-cache
                 The value of the challenge_type parameter is expressed as a list
                 of space-delimited, case-insensitive strings.
               </t>
+              <t hangText='client_id'>
+                <vspace />
+                REQUIRED, if the client is not authenticating with the
+                authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
+              </t>
             </list>
           </t>
           <t>
@@ -362,6 +367,74 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             defined by <xref target='RFC4627'/>.  The response MAY include
             additional parameters that are interpreted according to a challenge
             type definition.
+          </t>
+        </section>
+        
+        <section title='MFA Challenge Error Response' anchor="token-err-res">
+          <t>
+            If the MFA challenge request failed client authentication or is
+            invalid, the authorization server responds with an HTTP 400 (Bad
+            Request) status code (unless specified otherwise) and includes the
+            following parameters with the response:
+          </t>
+          <t>
+            <list style='hanging' hangIndent='6'>
+              <t hangText='error'>
+                <vspace />
+                REQUIRED. A single ASCII error code from the following:
+                
+                <list style='hanging' hangIndent='6'>
+                  <t hangText='invalid_request'>
+                    <vspace />
+                    The request is missing a required parameter, includes an
+                    unsupported parameter value (other than challenge type),
+                    repeats a parameter, includes multiple credentials, utilizes
+                    more than one mechanism for authenticating the client, or is
+                    otherwise malformed.
+                  </t>
+                  <t hangText='invalid_client'>
+                    <vspace />
+                    Client authentication failed (e.g. unknown client, no client
+                    authentication included, or unsupported authentication
+                    method). The authorization server MAY return an HTTP 401
+                    (Unauthorized) status code to indicate which HTTP
+                    authentication schemes are supported. If the client
+                    attempted to authenticate via the <spanx style='verb'>Authorization</spanx>
+                    request header field, the authorization server MUST respond
+                    with an HTTP 401 (Unauthorized) status code, and include the
+                    <spanx style='verb'>WWW-Authenticate</spanx> response header
+                    field matching the authentication scheme used by the client.
+                  </t>
+                  <t hangText='expired_token'>
+                    <vspace />
+                    The provided MFA token is invalid, expired, or revoked.  The
+                    client will need to initiate a new authorization session.
+                  </t>
+                  <t hangText='unauthorized_client'>
+                    <vspace />
+                    The authenticated client is not authorized to recieve a strong
+                    authorization challenge.
+                  </t>
+                  <t hangText='unsupported_challenge_type'>
+                    <vspace />
+                    The challenge types supported by the client are not
+                    supported by the authorization server.
+                  </t>
+                </list>
+              </t>
+              <t hangText='error_description'>
+                <vspace />
+                OPTIONAL. A human-readable ASCII text providing additional
+                information, used to assist the client developer in
+                understanding the error that occurred.
+              </t>
+              <t hangText='error_uri'>
+                <vspace />
+                OPTIONAL. A URI identifying a human-readable web page with
+                information about the error, used to provide the client
+                developer with additional information about the error.
+              </t>
+            </list>
           </t>
         </section>
       </section>
