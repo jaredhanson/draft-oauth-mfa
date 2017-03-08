@@ -46,10 +46,11 @@
         the resource owner (or by a privileged administrator).</t>
         
       <t>This specification defines a general framework for the use of strong
-        authorization within OAuth 2.0.  It provides a generic mechanism for
-        indicating when strong authorization is required.  It defines additional
-        extension grant types that allow strong authorization credentials to be
-        presented in order to obtain access tokens.</t>
+        authorization within OAuth 2.0.  It provides a mechanism for indicating
+        when strong authorization is required.  It also provides a generic
+        mechanism for obtaining a strong authorization challenge.  It defines
+        additional extension grant types that allow strong authorization grants
+        to be presented in order to obtain access tokens.</t>
       
       <t>This use of strong authorization allows authorization servers to
         implement correspondingly strong authorization policies, including
