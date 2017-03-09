@@ -553,6 +553,19 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                 A maximum out-of-band transaction code lifetime of 10 minutes is
                 RECOMMENDED.</t>
                 
+              <t hangText="binding_method"> <vspace blankLines="1"/>
+                OPTIONAL.  The method used to bind the out-of-band channel with
+                the primary channel.  The following methods are defined:
+                
+                <list style='hanging' hangIndent='6'>
+                  <t hangText='prompt'>
+                    <vspace />
+                    The resource owner should be prompted to enter a code
+                    received via an out-of-band authenticator.
+                  </t>
+                </list>
+              </t>
+                
               <t hangText="expires_in"> <vspace blankLines="1"/>
                 OPTIONAL.  The duration in seconds of the out-of-band
                 transaction code lifetime.</t>
@@ -596,6 +609,10 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
 
               <t hangText="oob_code"> <vspace blankLines="1"/>
                 REQUIRED.  The out-of-band verification code.</t>
+                
+              <t hangText="binding_code"> <vspace blankLines="1"/>
+                REQUIRED, if the binding method of the out-of-band challenge
+                is set to prompt.</t>
 
               <t hangText="mfa_token"> <vspace blankLines="1"/>
                 REQUIRED.  The MFA token received when initiating the

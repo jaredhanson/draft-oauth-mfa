@@ -599,16 +599,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       A maximum out-of-band transaction code lifetime of 10 minutes is
       RECOMMENDED.
 
+   binding_method
+
+      OPTIONAL.  The method used to bind the out-of-band channel with
+      the primary channel.  The following methods are defined:
+
+      prompt
+            The resource owner should be prompted to enter a code
+            received via an out-of-band authenticator.
+
    expires_in
-
-      OPTIONAL.  The duration in seconds of the out-of-band transaction
-      code lifetime.
-
-   interval
-
-      OPTIONAL.  The minimum amount of time in seconds that the client
-      SHOULD wait between polling requests to the token endpoint.
-
 
 
 
@@ -617,6 +617,14 @@ Hanson                  Expires September 9, 2017              [Page 11]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+      OPTIONAL.  The duration in seconds of the out-of-band transaction
+      code lifetime.
+
+   interval
+
+      OPTIONAL.  The minimum amount of time in seconds that the client
+      SHOULD wait between polling requests to the token endpoint.
 
 3.2.2.  User Interaction
 
@@ -649,10 +657,22 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
       REQUIRED.  The out-of-band verification code.
 
+   binding_code
+
+      REQUIRED, if the binding method of the out-of-band challenge is
+      set to prompt.
+
    mfa_token
 
       REQUIRED.  The MFA token received when initiating the
       authorization session.
+
+
+
+Hanson                  Expires September 9, 2017              [Page 12]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
 
    client_id
 
@@ -662,17 +682,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    If the client was issued client credentials (or assigned other
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
-
-
-
-
-
-
-
-Hanson                  Expires September 9, 2017              [Page 12]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
 3.2.4.  Access Token Response
 
@@ -714,21 +723,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               DOI 10.17487/RFC4627, July 2006,
               <http://www.rfc-editor.org/info/rfc4627>.
 
-   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
-              RFC 6749, DOI 10.17487/RFC6749, October 2012,
-              <http://www.rfc-editor.org/info/rfc6749>.
-
-
-
-
-
-
 
 
 Hanson                  Expires September 9, 2017              [Page 13]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <http://www.rfc-editor.org/info/rfc6749>.
 
 Author's Address
 
@@ -737,10 +741,6 @@ Author's Address
 
    Email: jaredhanson@gmail.com
    URI:   http://www.jaredhanson.net/
-
-
-
-
 
 
 
