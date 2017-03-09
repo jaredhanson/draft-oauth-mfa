@@ -643,8 +643,8 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
    expired_token
 
-      The "oob_code" has expired.  The client will need to initiate a
-      new authorization session.
+      The "mfa_token" or "oob_code" has expired.  The client will need
+      to initiate a new authorization session.
 
 4.  Normative References
 
