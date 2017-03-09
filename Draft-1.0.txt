@@ -599,6 +599,25 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       A maximum out-of-band transaction code lifetime of 10 minutes is
       RECOMMENDED.
 
+   expires_in
+
+      OPTIONAL.  The duration in seconds of the out-of-band transaction
+      code lifetime.
+
+   interval
+
+      OPTIONAL.  The minimum amount of time in seconds that the client
+      SHOULD wait between polling requests to the token endpoint.
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 11]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 3.2.2.  User Interaction
 
    After receiving an out-of-band challenge, the client prompts or
@@ -610,14 +629,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    For example, if confirmation is being obtained via an out-of-band
    authenticator, the resource owner will need to perform an
    authorization gesture on the device in her posession.  If multi-party
-
-
-
-Hanson                  Expires September 9, 2017              [Page 11]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
-
    authorization is being performed, the resource owner will need to
    wait until the request is granted by a party with sufficient
    authorization rights.
@@ -652,6 +663,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
 
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 12]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 3.2.4.  Access Token Response
 
    If the access token request is valid and authorized, the
@@ -665,14 +687,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    verification code grant:
 
    authorization_pending
-
-
-
-
-Hanson                  Expires September 9, 2017              [Page 12]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
       The authorization request is still pending as the authorization
       ceremony has not yet completed.  The client should repeat the
@@ -704,6 +718,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <http://www.rfc-editor.org/info/rfc6749>.
 
+
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 13]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 Author's Address
 
    Jared Hanson
@@ -725,4 +751,34 @@ Author's Address
 
 
 
-Hanson                  Expires September 9, 2017              [Page 13]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                  Expires September 9, 2017              [Page 14]
