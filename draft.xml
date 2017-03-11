@@ -256,7 +256,7 @@ Pragma: no-cache
         </figure>
       </section>
       
-      <section title='MFA Challenge Endpoint'>
+      <section title='MFA Challenge Endpoint' anchor="mfa-challenge-endpoint">
         <t>
           The MFA challenge endpoint is used by the client to obtain a strong
           authorization challenge.  The answer to this challenge, typically
@@ -661,12 +661,31 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
       </section>
       
     </section>
+    
+    <section title="Discovery Metadata">
+      <t>
+        Support for the strong authorization flow MAY be declared in the OAuth
+        2.0 Authorization Server Metadata <xref target="I-D.ietf-oauth-discovery"/>
+        with the following metadata:
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="mfa_challenge_endpoint">
+            <vspace/>
+            OPTIONAL.
+            URL of the authorization server's MFA challenge endpoint defined in
+            <xref target="mfa-challenge-endpoint"/>.
+          </t>
+        </list>
+      </t>
+    </section>
   </middle>
   <back>
     <references title="Normative References">
       <?rfc include="reference.RFC.2119"?>
       <?rfc include="reference.RFC.4627"?>
       <?rfc include="reference.RFC.6749"?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-discovery-05.xml'?>
     </references>
   </back>
 </rfc>
