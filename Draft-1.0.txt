@@ -4,7 +4,7 @@
 
 Network Working Group                                          J. Hanson
 Internet-Draft                                                Auth0 Inc.
-Expires: September 12, 2017                               March 11, 2017
+Expires: September 22, 2017                               March 21, 2017
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 12, 2017.
+   This Internet-Draft will expire on September 22, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hanson                 Expires September 12, 2017               [Page 1]
+Hanson                 Expires September 22, 2017               [Page 1]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -109,7 +109,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 2]
+Hanson                 Expires September 22, 2017               [Page 2]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -165,7 +165,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 3]
+Hanson                 Expires September 22, 2017               [Page 3]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -221,7 +221,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 4]
+Hanson                 Expires September 22, 2017               [Page 4]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -277,7 +277,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 5]
+Hanson                 Expires September 22, 2017               [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -333,7 +333,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 6]
+Hanson                 Expires September 22, 2017               [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -389,7 +389,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 7]
+Hanson                 Expires September 22, 2017               [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -445,7 +445,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 8]
+Hanson                 Expires September 22, 2017               [Page 8]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -501,7 +501,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017               [Page 9]
+Hanson                 Expires September 22, 2017               [Page 9]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -557,7 +557,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017              [Page 10]
+Hanson                 Expires September 22, 2017              [Page 10]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -613,7 +613,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017              [Page 11]
+Hanson                 Expires September 22, 2017              [Page 11]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -669,7 +669,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
 
-Hanson                 Expires September 12, 2017              [Page 12]
+Hanson                 Expires September 22, 2017              [Page 12]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
@@ -711,6 +711,84 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       The "oob_code" or "mfa_token" has expired.  The client will need
       to initiate a new authorization session.
 
+3.3.  Recovery Code Grant
+
+   Recovery codes are a physical or electronic set of secrets shared
+   between the resource owner and the authorization server.  Recovery
+   codes are typically used in the event another authenticator device is
+   lost or malfunctions.
+
+
+
+
+
+
+
+
+Hanson                 Expires September 22, 2017              [Page 13]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
+3.3.1.  User Interaction
+
+   A user typically signals to the client that they wish to enter a
+   recovery flow after realizing that an authenticator device has been
+   lost or is malfunctioning.
+
+   Upon receiving this signal from the user, the client prompts or
+   otherwise interacts with the resource owner to obtain a recovery
+   code.  Such codes are typically already in the resource owners
+   posession, having been previously generated and delivered when
+   enrolling an authenticator device.
+
+3.3.2.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameters using the "application/x-www-form-urlencoded"
+   format per Appendix B with a character encoding of UTF-8 in the HTTP
+   request entity-body:
+
+   grant_type
+
+      REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
+      type/mfa-recovery-code".
+
+   recovery_code
+
+      REQUIRED.  The recovery code.
+
+   mfa_token
+
+      REQUIRED.  The MFA token received when initiating the
+      authorization session.
+
+   client_id
+
+      REQUIRED, if the client is not authenticating with the
+      authorization server as described in Section 3.2.1 of [RFC6749].
+
+   If the client was issued client credentials (or assigned other
+   authentication requirements), the client MUST authenticate with the
+   authorization server as described in Section 3.2.1 of [RFC6749].
+
+3.3.3.  Access Token Response
+
+   If the access token request is valid and authorized, the
+   authorization server issues an access token and optional refresh
+   token as described in in Section 5.1 of [RFC6749].  If the request
+
+
+
+
+Hanson                 Expires September 22, 2017              [Page 14]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
+   failed client authentication or is invalid, the authorization server
+   returns an error response as described in Section 5.2 of [RFC6749].
+
 4.  Discovery Metadata
 
    Support for the strong authorization flow MAY be declared in the
@@ -720,15 +798,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    mfa_challenge_endpoint
       OPTIONAL.  URL of the authorization server's MFA challenge
       endpoint defined in Section 2.2.
-
-
-
-
-
-Hanson                 Expires September 12, 2017              [Page 13]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
-
 
 5.  Normative References
 
@@ -768,17 +837,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hanson                 Expires September 12, 2017              [Page 14]
+Hanson                 Expires September 22, 2017              [Page 15]
