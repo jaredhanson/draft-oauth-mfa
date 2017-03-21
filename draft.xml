@@ -676,7 +676,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           <t>
             Upon receiving this signal from the user, the client prompts or
             otherwise interacts with the resource owner to obtain a recovery
-            code.  Such codes are typically already in the resource owners
+            code.  Such codes are typically already in the resource owner's
             posession, having been previously generated and delivered when
             enrolling an authenticator device.
           </t>
