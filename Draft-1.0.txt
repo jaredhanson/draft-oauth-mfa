@@ -789,6 +789,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
+   In addition to the parameters defined in Section 5.1 of [RFC6749],
+   the following additional parameters are specific for the recovery
+   code grant:
+
+   recovery_code
+
+      OPTIONAL.  A newly issued recovery code, in which case the client
+      MUST discard the old recovery code and replace it with the new
+      recovery code.
+
 4.  Discovery Metadata
 
    Support for the strong authorization flow MAY be declared in the
@@ -820,6 +830,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               Authorization Server Metadata", draft-ietf-oauth-
               discovery-05 (work in progress), January 2017.
 
+
+
+
+
+
+
+
+Hanson                 Expires September 22, 2017              [Page 15]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
+
+
 Author's Address
 
    Jared Hanson
@@ -837,4 +859,38 @@ Author's Address
 
 
 
-Hanson                 Expires September 22, 2017              [Page 15]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                 Expires September 22, 2017              [Page 16]

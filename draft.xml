@@ -721,6 +721,19 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             If the request failed client authentication or is invalid, the
             authorization server returns an error response as described in
             Section 5.2 of <xref target="RFC6749"/>.</t>
+            
+          <t>
+            In addition to the parameters defined in Section 5.1 of <xref target="RFC6749"/>,
+            the following additional parameters are specific for the recovery
+            code grant:
+      
+            <list style="hanging">
+              <t hangText="recovery_code"> <vspace blankLines="1"/>
+                OPTIONAL.  A newly issued recovery code, in which case the
+                client MUST discard the old recovery code and replace it with
+                the new recovery code.</t>
+            </list>
+          </t>
         </section>
       </section>
       
