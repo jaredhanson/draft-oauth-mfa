@@ -421,6 +421,18 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     supported by the authorization server or not available to
                     the resource owner.
                   </t>
+                  <t hangText='server_error'>
+                    <vspace />
+                    The authorization server encountered an unexpected condition
+                    that prevented it from fulfilling the request.
+                  </t>
+                  <t hangText='bad_gateway'>
+                    <vspace />
+                    The authorization server received an invalid response from
+                    an upstream server it accessed in attempting to fulfull the
+                    request.  This typically occurs when challenging an OOB
+                    authenticator and the gateway is down, for example SMS.
+                  </t>
                 </list>
               </t>
               <t hangText='error_description'>
