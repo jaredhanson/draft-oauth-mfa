@@ -668,6 +668,9 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
               <t hangText="expired_token"> <vspace blankLines="1"/>
                 The "oob_code" or "mfa_token" has expired.  The client will need
                 to initiate a new authorization session.</t>
+              <t hangText="access_denied"> <vspace blankLines="1"/>
+                The resource owner or authorization server denied the
+                request.</t>
             </list> 
           </t>
         </section>
