@@ -721,7 +721,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       The "oob_code" or "mfa_token" has expired.  The client will need
       to initiate a new authorization session.
 
-
+   access_denied
 
 
 
@@ -729,6 +729,8 @@ Hanson                 Expires September 30, 2017              [Page 13]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+      The resource owner or authorization server denied the request.
 
 3.3.  Recovery Code Grant
 
@@ -775,9 +777,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
       REQUIRED, if the client is not authenticating with the
       authorization server as described in Section 3.2.1 of [RFC6749].
 
-   If the client was issued client credentials (or assigned other
-   authentication requirements), the client MUST authenticate with the
-   authorization server as described in Section 3.2.1 of [RFC6749].
+
 
 
 
@@ -785,6 +785,10 @@ Hanson                 Expires September 30, 2017              [Page 14]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
+
+   If the client was issued client credentials (or assigned other
+   authentication requirements), the client MUST authenticate with the
+   authorization server as described in Section 3.2.1 of [RFC6749].
 
 3.3.3.  Access Token Response
 
@@ -830,10 +834,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <http://www.rfc-editor.org/info/rfc6749>.
 
-   [I-D.ietf-oauth-discovery]
-              Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
-              Authorization Server Metadata", draft-ietf-oauth-
-              discovery-05 (work in progress), January 2017.
 
 
 
@@ -842,6 +842,11 @@ Hanson                 Expires September 30, 2017              [Page 15]
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization        March 2017
 
 
+   [I-D.ietf-oauth-discovery]
+              Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
+              Authorization Server Metadata", draft-ietf-oauth-
+              discovery-05 (work in progress), January 2017.
+
 Author's Address
 
    Jared Hanson
@@ -849,11 +854,6 @@ Author's Address
 
    Email: jaredhanson@gmail.com
    URI:   http://www.jaredhanson.net/
-
-
-
-
-
 
 
 
