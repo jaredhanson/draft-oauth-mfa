@@ -418,7 +418,8 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                   <t hangText='unsupported_challenge_type'>
                     <vspace />
                     The challenge types supported by the client are not
-                    supported by the authorization server.
+                    supported by the authorization server or not available to
+                    the resource owner.
                   </t>
                 </list>
               </t>
