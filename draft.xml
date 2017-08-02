@@ -437,10 +437,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     <vspace />
                     The resource owner is currenly not associated to
                     any authenticator. It must associate at least one
-                    in order to be able to continue. When this
-                    error is returned "supported_challenge_types" MAY
-                    also be returned to indicate the challenge types 
-                    supported by the authorization server.
+                    in order to be able to continue.
                   </t>
                 </list>
               </t>
@@ -455,35 +452,6 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                 OPTIONAL. A URI identifying a human-readable web page with
                 information about the error, used to provide the client
                 developer with additional information about the error.
-              </t>
-              <t hangText='supported_challenge_types'>
-              <vspace />
-                OPTIONAL. An array of challenges for which the authorization 
-                server supports association. The authorization server MAY use 
-                this parameter together with 'mfa_association_required' error 
-                to indicate the challenge types supported for association.
-              </t>
-              <t hangText='supported_oob_channels'>
-                OPTIONAL. An array of out-of-band channel string for which the 
-                authorization server supports association. These out-of-band 
-                channels are defined as follows:
-
-                  *  "sms": SMS channel to the user at a registered number.
-
-                  *  "tel": Telephone call to the user at a registered number.
-
-                  *  "email": E-mail sent to the user at a registered address.
-
-                  *  "auth0": Push notification to Guardian app on user's mobile
-                    device.
-
-                  *  "duo": Push notification to Duo Mobile app on user's mobile
-                    device.
-
-                 Authorization servers MAY allow for other values as defined in
-                 the out-of-band channel extension process.  This parameter is
-                 used when the authenticator server indicates support for challenge 
-                 types including the value "oob".
               </t>
             </list>
           </t>
