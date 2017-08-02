@@ -444,8 +444,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
               <t hangText='error_description'>
                 <vspace />
                 OPTIONAL. A human-readable ASCII text providing additional
-                information, used to assist t
-                client developer in
+                information, used to assist the client developer in
                 understanding the error that occurred.
               </t>
               <t hangText='error_uri'>
