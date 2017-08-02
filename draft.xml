@@ -433,6 +433,12 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     request.  This typically occurs when challenging an OOB
                     authenticator and the gateway is down, for example SMS.
                   </t>
+                  <t hangText='mfa_association_required'>
+                    <vspace />
+                    The resource owner is currenly not associated to
+                    any authenticator. Association is required to
+                    continue.
+                  </t>
                 </list>
               </t>
               <t hangText='error_description'>
