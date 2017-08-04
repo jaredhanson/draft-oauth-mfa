@@ -293,6 +293,17 @@ Pragma: no-cache
                 REQUIRED, if the client is not authenticating with the
                 authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
               </t>
+              <t hangText='authenticator_id'>
+                <vspace />
+                OPTIONAL. The authenticator ids to send the challenge to. 
+                The value of the authenticator_id parameter is expressed as a list
+                of space-delimited, case-insensitive strings. If no provided
+                the Authorization server MUST choose at least one authenticator to 
+                send the challenge.
+                
+                It is important to validate that the provided authenticator belong to
+                the Resource Owner before sending the challenge.
+              </t>
             </list>
           </t>
           <t>
