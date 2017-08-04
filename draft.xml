@@ -297,7 +297,7 @@ Pragma: no-cache
                 <vspace />
                 OPTIONAL. The authenticator ids to send the challenge to. 
                 The value of the authenticator_id parameter is expressed as a list
-                of space-delimited, case-insensitive strings. If no provided
+                of space-delimited, case-sensitive strings. If no provided
                 the Authorization server MUST choose at least one authenticator to 
                 send the challenge.
                 
