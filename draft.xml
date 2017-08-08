@@ -288,21 +288,16 @@ Pragma: no-cache
                 The value of the challenge_type parameter is expressed as a list
                 of space-delimited, case-insensitive strings.
               </t>
+              <t hangText='authenticator_id'>
+                <vspace />
+                OPTIONAL. The identifier of the authenticator to challenge.  The
+                authorization server MUST ensure that the authenticator is
+                associated with the resource owner.
+              </t>
               <t hangText='client_id'>
                 <vspace />
                 REQUIRED, if the client is not authenticating with the
                 authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
-              </t>
-              <t hangText='authenticator_id'>
-                <vspace />
-                OPTIONAL. The authenticator ids to send the challenge to. 
-                The value of the authenticator_id parameter is expressed as a list
-                of space-delimited, case-sensitive strings. If no provided
-                the Authorization server MUST choose at least one authenticator to 
-                send the challenge.
-                
-                It is important to validate that the provided authenticator belong to
-                the Resource Owner before sending the challenge.
               </t>
             </list>
           </t>
@@ -432,6 +427,12 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     supported by the authorization server or not available to
                     the resource owner.
                   </t>
+                  <t hangText='association_required'>
+                    <vspace />
+                    The resource owner is not associated with any authenticator.
+                    The authorization session MAY be continued by completing
+                    authenticator association.
+                  </t>
                   <t hangText='server_error'>
                     <vspace />
                     The authorization server encountered an unexpected condition
@@ -443,12 +444,6 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     an upstream server it accessed in attempting to fulfull the
                     request.  This typically occurs when challenging an OOB
                     authenticator and the gateway is down, for example SMS.
-                  </t>
-                  <t hangText='association_required'>
-                    <vspace />
-                    The resource owner is currenly not associated to
-                    any authenticator. Association is required to
-                    continue.
                   </t>
                 </list>
               </t>
