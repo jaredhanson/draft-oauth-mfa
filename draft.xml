@@ -398,6 +398,11 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                     more than one mechanism for authenticating the client, or is
                     otherwise malformed.
                   </t>
+                  <t hangText='invalid_authenticator'>
+                    <vspace />
+                    The requested authenticator does not exist or is not associated
+                    with the resource owner.
+                  </t>
                   <t hangText='invalid_client'>
                     <vspace />
                     Client authentication failed (e.g. unknown client, no client
