@@ -681,7 +681,9 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                 Access Token Request to the token endpoint.</t>
               <t hangText="slow_down"> <vspace blankLines="1"/>
                 The client is polling too quickly and should back off at a
-                reasonable rate.</t>
+                reasonable rate. 
+                Use HTTP 429 (Too Many Requests) status code.
+              </t>
               <t hangText="expired_token"> <vspace blankLines="1"/>
                 The "oob_code" or "mfa_token" has expired.  The client will need
                 to initiate a new authorization session.</t>
