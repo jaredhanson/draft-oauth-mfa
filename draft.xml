@@ -63,7 +63,7 @@
         
       <t>Transaction confirmation can be used to increase the level of assurance
         prior to issuing tokens for highly privileged operations, such as a bank
-        withdrawl.  For example, an end-user (resource owner) can grant an
+        withdrawal.  For example, an end-user (resource owner) can grant an
         application (client) access to her account at a brokerage firm (resource
         server).  The application is authorized to obtain real-time stock quotes
         as well as place orders, and is issued both an access token and refresh
@@ -423,7 +423,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                   </t>
                   <t hangText='unauthorized_client'>
                     <vspace />
-                    The authenticated client is not authorized to recieve a strong
+                    The authenticated client is not authorized to receive a strong
                     authorization challenge.
                   </t>
                   <t hangText='unsupported_challenge_type'>
@@ -446,7 +446,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
                   <t hangText='bad_gateway'>
                     <vspace />
                     The authorization server received an invalid response from
-                    an upstream server it accessed in attempting to fulfull the
+                    an upstream server it accessed in attempting to fulfill the
                     request.  This typically occurs when challenging an OOB
                     authenticator and the gateway is down, for example SMS.
                   </t>
@@ -544,7 +544,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
       <section title="Out-of-Band Verification Code Grant">
         <t>
           An out-of-band verification code is used to obtain authorization via
-          an out-of-band authorization ceremony.  Such ceremonys may include
+          an out-of-band authorization ceremony.  Such ceremonies may include
           confirmation via an out-of-band authenticator or multi-party
           authorization.
         </t>
