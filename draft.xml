@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rfc docName="draft-hanson-oauth-mfa-latest"
+<?xml version="1.0" encoding="utf-8"?>
+<rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   submissionType="IETF"
   category="info"
   ipr="trust200902">
   <front>
     <title>OAuth 2.0 Multi-Factor Authorization</title>
-    <author initials="J." surname="Hanson" fullname="Jared Hanson">
-      <organization>Auth0 Inc.</organization>
+    <seriesInfo name="Internet-Draft" value="draft-hanson-oauth-mfa-00"/>
+    <author fullname="Jared Hanson" initials="J." surname="Hanson" >
+      <organization>Okta</organization>
       <address>       
-        <email>jaredhanson@gmail.com</email> 
-        <uri>http://www.jaredhanson.net/</uri>       
+        <email>jared.hanson@okta.com</email>
+        <uri>https://www.jaredhanson.me/</uri>
       </address>
     </author>
     <date/>
