@@ -9,7 +9,14 @@
     <seriesInfo name="Internet-Draft" value="draft-hanson-oauth-mfa-00"/>
     <author fullname="Jared Hanson" initials="J." surname="Hanson" >
       <organization>Okta</organization>
-      <address>       
+      <address>
+        <postal>
+          <street>100 First Street</street>
+          <city>San Francisco</city>
+          <region>CA</region>
+          <code>94105</code>
+          <country>US</country>
+        </postal>
         <email>jared.hanson@okta.com</email>
         <uri>https://www.jaredhanson.me/</uri>
       </address>
