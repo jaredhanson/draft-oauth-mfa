@@ -2,7 +2,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   submissionType="IETF"
-  category="info"
+  category="std"
   ipr="trust200902">
   <front>
     <title>OAuth 2.0 Multi-Factor Authorization</title>

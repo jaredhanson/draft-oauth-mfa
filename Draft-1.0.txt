@@ -4,7 +4,7 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Informational                           12 October 2022
+Intended status: Standards Track                         12 October 2022
 Expires: 15 April 2023
 
 
