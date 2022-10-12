@@ -2,7 +2,7 @@
 
 
 
-Network Working Group                                          J. Hanson
+Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
 Intended status: Informational                           12 October 2022
 Expires: 15 April 2023
@@ -873,11 +873,11 @@ Author's Address
 
    Jared Hanson
    Okta
+   100 First Street
+   San Francisco, CA 94105
+   United States of America
    Email: jared.hanson@okta.com
    URI:   https://www.jaredhanson.me/
-
-
-
 
 
 

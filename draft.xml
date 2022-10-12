@@ -22,6 +22,9 @@
       </address>
     </author>
     <date/>
+    <area>Security</area>
+    <workgroup>Web Authorization Protocol</workgroup>
+    
     <abstract>
       <t>This specification provides a framework for the use of strong
         authorization with OAuth 2.0.  Mechanisms are specified for initiating
