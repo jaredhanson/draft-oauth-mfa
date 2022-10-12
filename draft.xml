@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY rfc2119 SYSTEM 'bibxml/reference.RFC.2119.xml'>      
-<!ENTITY rfc4287 SYSTEM 'bibxml/reference.RFC.4287.xml'>      
-<!ENTITY xmlns SYSTEM 'bibxml/reference.W3C.REC-xml-names-19990114.xml'>      
-<!ENTITY rdfsg SYSTEM 'bibxml/reference.W3C.WD-rdf-syntax-grammar-20031010.xml'>      
-]>
-<rfc docName="draft-hanson-oauth-mfa-latest">
+<rfc docName="draft-hanson-oauth-mfa-latest"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  submissionType="IETF"
+  category="info"
+  ipr="trust200902">
   <front>
     <title>OAuth 2.0 Multi-Factor Authorization</title>
     <author initials="J." surname="Hanson" fullname="Jared Hanson">
@@ -791,11 +789,12 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
     </section>
   </middle>
   <back>
-    <references title="Normative References">
-      <?rfc include="reference.RFC.2119"?>
-      <?rfc include="reference.RFC.4627"?>
-      <?rfc include="reference.RFC.6749"?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-discovery-05.xml'?>
+    <references>
+      <name>Normative References</name>
+      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4627.xml"/>
+      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6749.xml"/>
+      <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-oauth-discovery.xml"/>
     </references>
   </back>
 </rfc>
