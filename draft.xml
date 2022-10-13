@@ -377,8 +377,9 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           
           <t>All additional parameters are specified by the authorization
             challenge type.  This document defines the <tt>"otp"</tt> type in
-            <xref target="otp-authz-challenge"/> and the <tt>"recovery"</tt> type.</t>
-          
+            <xref target="otp-authz-challenge"/>, the <tt>"oob"</tt> type in
+            <xref target="oob-authz-challenge"/>, and the
+            <tt>"recovery-code"</tt> type in TODO.</t>
           <t>
             The parameters are included in the entity body of the HTTP response
             using the <spanx style='verb'>application/json</spanx> media type as
@@ -579,7 +580,9 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           out-out-band mechanism are beyond the scope of this specification.
         </t>
         
-        <section title="MFA Challenge Response">
+        <section anchor="oob-authz-challenge">
+          <name>Authorization Challenge</name>
+          
           <t>
             The authorization server orchestrates an out-of-band authorization
             interaction, and responds with a challenge containing the following
