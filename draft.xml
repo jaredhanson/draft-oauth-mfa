@@ -92,10 +92,22 @@
             "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
         </section>
         
-        <section title="Terminology">
+        <section>
+          <name>Terminology</name>
+          
           <t>This specification also defines the following terms:</t>
           
           <dl newline="true">
+            <dt>Authorization Challenge</dt>
+            <dd>A challenge issued to a client requesting an additional
+              credential that is required in order to issue an access token.</dd>
+            
+            <dt>Authorization Challenge Response</dt>
+            <dd>A credential obtained in response to an authorization challenge,
+              typically by interacting with the resource owner.  This credential
+              is used as an authorization grant at the token endpoint to request
+              an access token.</dd>
+            
             <dt>MFA Token</dt>
             <dd>A short lived token representing an authorization session, used
               to keep state across a sequence of authorization challenges and
