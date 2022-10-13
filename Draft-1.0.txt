@@ -182,19 +182,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    This specification also defines the following terms:
 
    Authorization Challenge
-      A challenge issued to the client requesting an additional
-      credential that is required in order to issue an access token.
+      A challenge issued to a client requesting an additional
+      authorization grant that is required in order to issue an access
+      token.
 
-   Authorization Challenge Response
-      A credential obtained in response to an authorization challenge,
-      typically by interacting with the resource owner.  This credential
-      is used as an authorization grant at the token endpoint to request
-      an access token.
+   Authorization Session
+      A sequence of access token requests to the token endpoint, each
+      presenting an authorization grant.  The sequence MAY involve
+      requests to additional endpoints, as needed by specific grant
+      types.
 
    MFA Token
       A short lived token representing an authorization session, used to
-      keep state across a sequence of authorization challenges and
-      responses.
+      keep state during an authorization session.
 
 1.3.  Protocol Flow
 
