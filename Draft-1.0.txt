@@ -181,8 +181,10 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
    This specification also defines the following terms:
 
-   MFA Token:
-      A short-lived token representing an authorization session.
+   MFA Token
+      A short lived token representing an authorization session, used to
+      keep state across a sequence of authorization challenges and
+      responses.
 
 1.3.  Protocol Flow
 
@@ -215,8 +217,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
      +---------+                                      +---------------+
 
                       Figure 1: Abstract Protocol Flow
-
-
 
 
 

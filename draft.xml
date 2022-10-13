@@ -93,14 +93,14 @@
         </section>
         
         <section title="Terminology">
-          <t>
-            This specification also defines the following terms:
-            
-            <list style="hanging"> 
-            <t hangText="MFA Token:"><vspace blankLines="1"/>
-              A short-lived token representing an authorization session.</t>
-            </list> 
-          </t>
+          <t>This specification also defines the following terms:</t>
+          
+          <dl newline="true">
+            <dt>MFA Token</dt>
+            <dd>A short lived token representing an authorization session, used
+              to keep state across a sequence of authorization challenges and
+              responses.</dd>
+          </dl>
         </section>
         
         <section title="Protocol Flow">
