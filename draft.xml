@@ -367,15 +367,18 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             constructs the response by adding the following parameters to the
             entity-body of the HTTP response with a 200 (OK) status code:
           </t>
-          <t>
-            <list style='hanging' hangIndent='6'>
-              <t hangText='challenge_type'>
-                <vspace />
-                REQUIRED. The type of the MFA challenge issued.  Value is case
-                insensitive.
-              </t>
-            </list>
-          </t>
+          
+          <dl newline="true">
+            <!-- TODO: Make challenge_type case sensitive, to match grant_type. -->
+            <dt>challenge_type</dt>
+            <dd>REQUIRED.  The type of the authorization challenge issued.
+              Value is case insensitive.</dd>
+          </dl>
+          
+          <t>All additional parameters are specified by the authorization
+            challenge type.  This document defines the <tt>"otp"</tt> type in
+            <xref target="otp-authz-challenge"/> and the <tt>"recovery"</tt> type.</t>
+          
           <t>
             The parameters are included in the entity body of the HTTP response
             using the <spanx style='verb'>application/json</spanx> media type as
@@ -488,7 +491,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           such as mobile phones.
         </t>
         
-        <section>
+        <section anchor="otp-authz-challenge">
           <name>Authorization Challenge</name>
           
           <t>If the authorization server requires an OTP credential as an
