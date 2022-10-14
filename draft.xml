@@ -227,12 +227,25 @@
       <t>Not every authorization grant type utilizes both endpoints.  Extension
         grant types MAY define additional endpoints as needed.</t>
       
-      <section title='Token Endpoint'>
-        <t>
-          The token endpoint is used by the client to obtain an access token by
-          presenting its authorization grant or refresh token, as described in Section
-          3.2 of <xref target="RFC6749"/>.
-        </t>
+      <section>
+        <name>Token Endpoint</name>
+        
+        <t>The token endpoint is used by the client to obtain an access token by
+          presenting its authorization grant or refresh token, as described in
+          <xref target="RFC6749" section="3.2">OAuth 2.0</xref>.</t>
+        
+        <t>If the access token request is valid and authorized, the
+          authorization server issues an access token and optional refresh token
+          as described in <xref target="RFC6749" section="5.1">OAuth 2.0</xref>.
+          If the request failed client authentication or is invalid, the
+          authorization server returns an error response as described in
+          <xref target="RFC6749" section="5.2">OAuth 2.0</xref>.</t>
+          
+        <t>If the access token request is valid but not sufficiently authorized,
+          the authorization server MAY issue an authorization challenge error
+          response as as described in <xref target="authorization-challenge-error-response"/>.</t>
+        
+        
         <t>
           The token endpoint is also used by the client to initiate or
           continue an authorization session.  If the token request is
@@ -283,6 +296,14 @@ Pragma: no-cache
 }
 ]]></artwork>
         </figure>
+        
+        <section anchor="authorization-challenge-error-response">
+          <name>Authorization Challenge Error Response</name>
+          <t>TODO
+          </t>    
+        </section>
+        
+        
       </section>
       
       <section title='MFA Challenge Endpoint' anchor="mfa-challenge-endpoint">
