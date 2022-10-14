@@ -246,25 +246,6 @@
           response as as described in <xref target="authorization-challenge-error-response"/>.</t>
         
         
-        <t>
-          The token endpoint is also used by the client to initiate or
-          continue an authorization session.  If the token request is
-          authorized, the authorization server responds with a success response
-          as described in Section 5.1 of <xref target="RFC6749"/>.  Otherwise it
-          responds with an error as described in Section 5.2 of <xref target="RFC6749"/>.
-        </t>
-        <t>
-          In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
-          the following error codes are specific for the strong authorization
-          flow:
-          
-          <list style="hanging"> 
-            <t hangText="mfa_required"> <vspace blankLines="1"/>
-              The authorization grant is insufficiently strong,  The token
-              request MAY succeed if continued using a strong authorization
-              grant.</t>
-          </list> 
-        </t>
         <t>In addition to the response parameters defined in Section 5.2 of <xref target="RFC6749"/>,
           the following parameters MUST be included in the response when the
           error code is set to mfa_required:
@@ -299,8 +280,18 @@ Pragma: no-cache
         
         <section anchor="authorization-challenge-error-response">
           <name>Authorization Challenge Error Response</name>
-          <t>TODO
-          </t>    
+          
+          <t>An authorization challenge error response is a particular type of
+            error response as defined in
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref> where the
+            error code is set to the following value:</t>
+          
+          <dl newline="true">
+            <dt>mfa_required</dt>
+            <dd>The authorization grant is insufficiently authorized, but
+              another access token request MAY succeed if an additional
+              authorization grant is presented.</dd>
+          </dl>
         </section>
         
         
