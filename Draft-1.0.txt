@@ -316,19 +316,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    endpoints (HTTP resources):
 
    *  Token endpoint - used by the client to exchange an authorization
-      grant, including strong authorization grants, for an access token,
-      typically with client authentication.
+      grant for an access token, typically with client authentication.
+      This endpoint will be called multiple times within a multi-factor
+      authorization session.
 
-   *  MFA Challenge endpoint - used by the client to obtain a strong
-      authorization challenge, the answer to which can be used as a
-      strong authorization grant.
+   *  Authorization challenge endpoint - used by the client to obtain an
+      authorization challenge, the response to which can be used as an
+      authorization grant.
 
 2.1.  Token Endpoint
 
    The token endpoint is used by the client to obtain an access token by
    presenting its authorization grant or refresh token, as described in
    Section 3.2 of [RFC6749].
-
 
 
 
