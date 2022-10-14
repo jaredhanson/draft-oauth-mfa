@@ -99,9 +99,9 @@
           
           <dl newline="true">
             <dt>Authorization Challenge</dt>
-            <dd>A challenge issued to a client requesting an additional
-              authorization grant that is required in order to issue an access
-              token.</dd>
+            <dd>A challenge issued by an authorization server to a client
+              requesting an additional authorization grant that is required in
+              order to issue an access token.</dd>
               
             <dt>Authorization Session</dt>
             <dd>A sequence of access token requests to the token endpoint, each
@@ -151,6 +151,7 @@
   +-------------+                                     +---------------+
 ]]></artwork>
           </figure>
+          
           <t>
             The abstract OAuth 2.0 multi-factor authorization flow illustrated
             in <xref target="abstract-protocol-flow"/> describes the interaction

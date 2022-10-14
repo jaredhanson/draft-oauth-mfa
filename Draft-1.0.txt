@@ -182,9 +182,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    This specification also defines the following terms:
 
    Authorization Challenge
-      A challenge issued to a client requesting an additional
-      authorization grant that is required in order to issue an access
-      token.
+      A challenge issued by an authorization server to a client
+      requesting an additional authorization grant that is required in
+      order to issue an access token.
 
    Authorization Session
       A sequence of access token requests to the token endpoint, each
