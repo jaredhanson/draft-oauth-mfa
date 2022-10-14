@@ -70,7 +70,7 @@ Table of Contents
        2.2.1.  MFA Challenge Request . . . . . . . . . . . . . . . .   8
        2.2.2.  MFA Challenge Response  . . . . . . . . . . . . . . .   9
        2.2.3.  MFA Challenge Error Response  . . . . . . . . . . . .   9
-   3.  Obtaining Strong Authorization  . . . . . . . . . . . . . . .  11
+   3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  11
      3.1.  OTP Credentials Grant . . . . . . . . . . . . . . . . . .  11
        3.1.1.  Authorization Challenge . . . . . . . . . . . . . . .  11
        3.1.2.  User Interaction  . . . . . . . . . . . . . . . . . .  11
@@ -248,9 +248,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    |             |                                     +---------------+
    |             |
    |             |                                     +---------------+
-   |             |--(G)------- Access Token ---------->|               |
+   |             |--(I)------- Access Token ---------->|               |
    |             |                                     |   Resource    |
-   |             |<-(H)---- Protected Resource --------|    Server     |
+   |             |<-(J)---- Protected Resource --------|    Server     |
    |             |                                     |               |
    +-------------+                                     +---------------+
 
@@ -579,7 +579,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
          information about the error, used to provide the client
          developer with additional information about the error.
 
-3.  Obtaining Strong Authorization
+3.  Obtaining Authorization
 
 3.1.  OTP Credentials Grant
 
