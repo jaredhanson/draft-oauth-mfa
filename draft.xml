@@ -209,20 +209,23 @@
       <name>Protocol Endpoints</name>
       
       <t>
-        The strong authorization process utilizes two authorization server
+        The multi-factor authorization process utilizes two authorization server
         endpoints (HTTP resources):
       </t>
       
       <ul>
         <li>Token endpoint - used by the client to exchange an authorization
           grant for an access token, typically with client authentication.  This
-          endpoint will be called multiple times within a multi-factor
-          authorization session.</li>
+          endpoint will be called multiple times within an authorization
+          session.</li>
         
         <li>Authorization challenge endpoint - used by the client to obtain an
           authorization challenge, the response to which can be used as an
           authorization grant.</li>
       </ul>
+      
+      <t>Not every authorization grant type utilizes both endpoints.  Extension
+        grant types MAY define additional endpoints as needed.</t>
       
       <section title='Token Endpoint'>
         <t>

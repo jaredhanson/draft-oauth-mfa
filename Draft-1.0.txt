@@ -65,16 +65,16 @@ Table of Contents
      1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
      1.3.  Protocol Flow . . . . . . . . . . . . . . . . . . . . . .   4
    2.  Protocol Endpoints  . . . . . . . . . . . . . . . . . . . . .   6
-     2.1.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .   6
-     2.2.  MFA Challenge Endpoint  . . . . . . . . . . . . . . . . .   7
+     2.1.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .   7
+     2.2.  MFA Challenge Endpoint  . . . . . . . . . . . . . . . . .   8
        2.2.1.  MFA Challenge Request . . . . . . . . . . . . . . . .   8
        2.2.2.  MFA Challenge Response  . . . . . . . . . . . . . . .   9
-       2.2.3.  MFA Challenge Error Response  . . . . . . . . . . . .   9
+       2.2.3.  MFA Challenge Error Response  . . . . . . . . . . . .  10
    3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  11
      3.1.  OTP Credentials Grant . . . . . . . . . . . . . . . . . .  11
        3.1.1.  Authorization Challenge . . . . . . . . . . . . . . .  11
        3.1.2.  User Interaction  . . . . . . . . . . . . . . . . . .  11
-       3.1.3.  Access Token Request  . . . . . . . . . . . . . . . .  11
+       3.1.3.  Access Token Request  . . . . . . . . . . . . . . . .  12
        3.1.4.  Access Token Response . . . . . . . . . . . . . . . .  12
      3.2.  Out-of-Band Verification Code Grant . . . . . . . . . . .  12
        3.2.1.  Authorization Challenge . . . . . . . . . . . . . . .  13
@@ -312,23 +312,23 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 2.  Protocol Endpoints
 
-   The strong authorization process utilizes two authorization server
-   endpoints (HTTP resources):
+   The multi-factor authorization process utilizes two authorization
+   server endpoints (HTTP resources):
 
    *  Token endpoint - used by the client to exchange an authorization
       grant for an access token, typically with client authentication.
-      This endpoint will be called multiple times within a multi-factor
+      This endpoint will be called multiple times within an
       authorization session.
 
    *  Authorization challenge endpoint - used by the client to obtain an
       authorization challenge, the response to which can be used as an
       authorization grant.
 
-2.1.  Token Endpoint
+   Not every authorization grant type utilizes both endpoints.
+   Extension grant types MAY define additional endpoints as needed.
 
-   The token endpoint is used by the client to obtain an access token by
-   presenting its authorization grant or refresh token, as described in
-   Section 3.2 of [RFC6749].
+
+
 
 
 
@@ -337,6 +337,12 @@ Hanson                    Expires 17 April 2023                 [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+2.1.  Token Endpoint
+
+   The token endpoint is used by the client to obtain an access token by
+   presenting its authorization grant or refresh token, as described in
+   Section 3.2 of [RFC6749].
 
    The token endpoint is also used by the client to initiate or continue
    an authorization session.  If the token request is authorized, the
@@ -379,13 +385,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
        .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
    }
 
-2.2.  MFA Challenge Endpoint
 
-   The MFA challenge endpoint is used by the client to obtain a strong
-   authorization challenge.  The answer to this challenge, typically
-   obtained by interacting with the resource owner, is a strong
-   authorization grant which can be used to obtain an access token by
-   presenting it at the token endpoint.
 
 
 
@@ -393,6 +393,14 @@ Hanson                    Expires 17 April 2023                 [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+2.2.  MFA Challenge Endpoint
+
+   The MFA challenge endpoint is used by the client to obtain a strong
+   authorization challenge.  The answer to this challenge, typically
+   obtained by interacting with the resource owner, is a strong
+   authorization grant which can be used to obtain an access token by
+   presenting it at the token endpoint.
 
    Use of the MFA challenge endpoint is OPTIONAL; if a client knows of a
    suitable authenticator through an out-of-band mechanism, it can
@@ -432,14 +440,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only)::
 
-   POST /challenge HTTP/1.1
-   Host: server.example.com
-   Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-   Content-Type: application/x-www-form-urlencoded
-
-   mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
-
-   The authorization server MUST:
 
 
 
@@ -449,6 +449,15 @@ Hanson                    Expires 17 April 2023                 [Page 8]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   POST /challenge HTTP/1.1
+   Host: server.example.com
+   Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+   Content-Type: application/x-www-form-urlencoded
+
+   mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
+
+   The authorization server MUST:
 
    *  require client authentication for confidential clients or for any
       client that was issued client credentials (or with other
@@ -487,15 +496,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    response MAY include additional parameters that are interpreted
    according to a challenge type definition.
 
-2.2.3.  MFA Challenge Error Response
-
-   If the MFA challenge request failed client authentication or is
-   invalid, the authorization server responds with an HTTP 400 (Bad
-   Request) status code (unless specified otherwise) and includes the
-   following parameters with the response:
-
-   error
-         REQUIRED.  A single ASCII error code from the following:
 
 
 
@@ -505,6 +505,16 @@ Hanson                    Expires 17 April 2023                 [Page 9]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+2.2.3.  MFA Challenge Error Response
+
+   If the MFA challenge request failed client authentication or is
+   invalid, the authorization server responds with an HTTP 400 (Bad
+   Request) status code (unless specified otherwise) and includes the
+   following parameters with the response:
+
+   error
+         REQUIRED.  A single ASCII error code from the following:
 
          invalid_request
                The request is missing a required parameter, includes an
@@ -543,16 +553,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
                supported by the authorization server or not available to
                the resource owner.
 
-         association_required
-               The resource owner is not associated with any
-               authenticator.  The authorization session MAY be
-               continued by completing authenticator association.
-
-         server_error
-               The authorization server encountered an unexpected
-               condition that prevented it from fulfilling the request.
-
-
 
 
 
@@ -561,6 +561,15 @@ Hanson                    Expires 17 April 2023                [Page 10]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+         association_required
+               The resource owner is not associated with any
+               authenticator.  The authorization session MAY be
+               continued by completing authenticator association.
+
+         server_error
+               The authorization server encountered an unexpected
+               condition that prevented it from fulfilling the request.
 
          bad_gateway
                The authorization server received an invalid response
@@ -602,21 +611,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    interacts with the resource owner to obtain a one-time password
    generated by a device in the possession of the resource owner.
 
-3.1.3.  Access Token Request
-
-   The client makes a request to the token endpoint by adding the
-   following parameters using the "application/x-www-form-urlencoded"
-   format per Appendix B with a character encoding of UTF-8 in the HTTP
-   request entity-body:
-
-
-
 
 
 Hanson                    Expires 17 April 2023                [Page 11]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+3.1.3.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameters using the "application/x-www-form-urlencoded"
+   format per Appendix B with a character encoding of UTF-8 in the HTTP
+   request entity-body:
 
    grant_type
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
@@ -660,19 +667,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    user, in addition to the resource owner, before an action is allowed
    to take place.
 
-   Out-of-band mechanisms are intentionally open-ended, to allow for
-   flexibility in how authorization is obtained.  The details of any
-   out-out-band mechanism are beyond the scope of this specification.
-
-
-
-
 
 
 Hanson                    Expires 17 April 2023                [Page 12]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   Out-of-band mechanisms are intentionally open-ended, to allow for
+   flexibility in how authorization is obtained.  The details of any
+   out-out-band mechanism are beyond the scope of this specification.
 
 3.2.1.  Authorization Challenge
 
@@ -714,12 +718,8 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    owner or other party will depend on the specific out-of-band
    mechanism.
 
-   For example, if confirmation is being obtained via an out-of-band
-   authenticator, the resource owner will need to perform an
-   authorization gesture on the device in her posession.  If multi-party
-   authorization is being performed, the resource owner will need to
-   wait until the request is granted by a party with sufficient
-   authorization rights.
+
+
 
 
 
@@ -729,6 +729,13 @@ Hanson                    Expires 17 April 2023                [Page 13]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   For example, if confirmation is being obtained via an out-of-band
+   authenticator, the resource owner will need to perform an
+   authorization gesture on the device in her posession.  If multi-party
+   authorization is being performed, the resource owner will need to
+   wait until the request is granted by a party with sufficient
+   authorization rights.
 
 3.2.3.  Access Token Request
 
@@ -772,19 +779,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    the following error codes are specific for the out-of-band
    verification code grant:
 
-   authorization_pending
-      The authorization request is still pending as the authorization
-      ceremony has not yet completed.  The client should repeat the
-      Access Token Request to the token endpoint.
-
-
-
 
 
 Hanson                    Expires 17 April 2023                [Page 14]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   authorization_pending
+      The authorization request is still pending as the authorization
+      ceremony has not yet completed.  The client should repeat the
+      Access Token Request to the token endpoint.
 
    slow_down
       The client is polling too quickly and should back off at a
@@ -830,17 +835,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    recovery_code
       REQUIRED.  The recovery code.
 
-   mfa_token
-      REQUIRED.  The MFA token received when initiating the
-      authorization session.
-
-
 
 
 Hanson                    Expires 17 April 2023                [Page 15]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   mfa_token
+      REQUIRED.  The MFA token received when initiating the
+      authorization session.
 
    client_id
       REQUIRED, if the client is not authenticating with the
@@ -884,10 +888,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC4627]  Crockford, D., "The application/json Media Type for
-              JavaScript Object Notation (JSON)", RFC 4627,
-              DOI 10.17487/RFC4627, July 2006,
-              <https://www.rfc-editor.org/info/rfc4627>.
 
 
 
@@ -897,6 +897,11 @@ Hanson                    Expires 17 April 2023                [Page 16]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
+
+   [RFC4627]  Crockford, D., "The application/json Media Type for
+              JavaScript Object Notation (JSON)", RFC 4627,
+              DOI 10.17487/RFC4627, July 2006,
+              <https://www.rfc-editor.org/info/rfc4627>.
 
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
@@ -918,11 +923,6 @@ Author's Address
    United States of America
    Email: jared.hanson@okta.com
    URI:   https://www.jaredhanson.me/
-
-
-
-
-
 
 
 
