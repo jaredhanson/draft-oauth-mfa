@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Standards Track                         13 October 2022
-Expires: 16 April 2023
+Intended status: Standards Track                         14 October 2022
+Expires: 17 April 2023
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2023.
+   This Internet-Draft will expire on 17 April 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 1]
+Hanson                    Expires 17 April 2023                 [Page 1]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 2]
+Hanson                    Expires 17 April 2023                 [Page 2]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -165,7 +165,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 3]
+Hanson                    Expires 17 April 2023                 [Page 3]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -221,7 +221,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 4]
+Hanson                    Expires 17 April 2023                 [Page 4]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -256,10 +256,10 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
                       Figure 1: Abstract Protocol Flow
 
-   The abstract strong authorization flow illustrated in Figure 1
-   describes the interaction between the resource owner, resource
-   server, client, and authorization server and includes the following
-   steps:
+   The abstract OAuth 2.0 multi-factor authorization flow illustrated in
+   Figure 1 describes the interaction between the resource owner,
+   client, authorization server, and resource server and includes the
+   following steps:
 
    (A)  The client obtains authorization from the resource owner.  The
         authorization can be obtained directly from the resource owner
@@ -277,7 +277,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 5]
+Hanson                    Expires 17 April 2023                 [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 6]
+Hanson                    Expires 17 April 2023                 [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 7]
+Hanson                    Expires 17 April 2023                 [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -445,7 +445,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 8]
+Hanson                    Expires 17 April 2023                 [Page 8]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -501,7 +501,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                 [Page 9]
+Hanson                    Expires 17 April 2023                 [Page 9]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -557,7 +557,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 10]
+Hanson                    Expires 17 April 2023                [Page 10]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -613,7 +613,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 11]
+Hanson                    Expires 17 April 2023                [Page 11]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -669,7 +669,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 12]
+Hanson                    Expires 17 April 2023                [Page 12]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -725,7 +725,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 13]
+Hanson                    Expires 17 April 2023                [Page 13]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -781,7 +781,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 14]
+Hanson                    Expires 17 April 2023                [Page 14]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -837,7 +837,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 15]
+Hanson                    Expires 17 April 2023                [Page 15]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -893,7 +893,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 16 April 2023                [Page 16]
+Hanson                    Expires 17 April 2023                [Page 16]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -949,4 +949,4 @@ Author's Address
 
 
 
-Hanson                    Expires 16 April 2023                [Page 17]
+Hanson                    Expires 17 April 2023                [Page 17]

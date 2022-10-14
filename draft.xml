@@ -115,8 +115,12 @@
           </dl>
         </section>
         
-        <section title="Protocol Flow">
-          <figure title='Abstract Protocol Flow' anchor='Figure-1'>
+        <section>
+          <name>Protocol Flow</name>
+          
+          <figure anchor="abstract-protocol-flow">
+            <name>Abstract Protocol Flow</name>
+            
             <artwork><![CDATA[
   +----------+
   | Resource |
@@ -148,9 +152,10 @@
   ]]></artwork>
           </figure>
           <t>
-            The abstract strong authorization flow illustrated in <xref target='Figure-1' />
-            describes the interaction between the resource owner, resource server, client, and
-            authorization server and includes the following steps:
+            The abstract OAuth 2.0 multi-factor authorization flow illustrated
+            in <xref target='abstract-protocol-flow'/> describes the interaction
+            between the resource owner, client, authorization server, and
+            resource server and includes the following steps:
           </t>
           <t>
             <list style='format (%C)'>
