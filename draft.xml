@@ -243,40 +243,8 @@
           
         <t>If the access token request is valid but not sufficiently authorized,
           the authorization server MAY issue an authorization challenge error
-          response as as described in <xref target="authorization-challenge-error-response"/>.</t>
-        
-        
-        <t>In addition to the response parameters defined in Section 5.2 of <xref target="RFC6749"/>,
-          the following parameters MUST be included in the response when the
-          error code is set to mfa_required:
-        
-          <list style="hanging">
-            <t hangText="mfa_token"> <vspace blankLines="1"/>
-              REQUIRED.  The MFA token used to continue the authorization session.</t>
-          </list>
-        </t>
-        <figure>
-          <preamble>
-            The following is a non-normative example token error response
-            indicating that strong authorization is required:
-          </preamble>
-          <artwork><![CDATA[
-HTTP/1.1 403 Forbidden
-Content-Type: application/json;charset=UTF-8
-Cache-Control: no-store
-Pragma: no-cache
-
-{
-  "error":"mfa_required",
-  "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
-    OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
-    xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
-    RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
-    yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
-    .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
-}
-]]></artwork>
-        </figure>
+          response as as described in
+          <xref target="authorization-challenge-error-response"/>.</t>
         
         <section anchor="authorization-challenge-error-response">
           <name>Authorization Challenge Error Response</name>
@@ -292,9 +260,38 @@ Pragma: no-cache
               another access token request MAY succeed if an additional
               authorization grant is presented.</dd>
           </dl>
+          
+          <t>In addition to the response parameters defined in
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>, the
+            following parameters MUST be included in the response when the
+            error code is set to <tt>"mfa_required"</tt>:</t>
+          
+          <dl newline="true">
+            <dt>mfa_token</dt>
+            <dd>MFA token value associated with the ongoing authorization
+              session.</dd>
+          </dl>
+          
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+  HTTP/1.1 403 Forbidden
+  Content-Type: application/json;charset=UTF-8
+  Cache-Control: no-store
+  Pragma: no-cache
+
+  {
+    "error":"mfa_required",
+    "mfa_token": "eyJhbGciOiJIUzI1NiIsImtpZCI6IjFlOWdkazcifQ.eyJpc3Mi
+      OiJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwic3ViIjoiMjQ4Mjg5NzYxMDA
+      xIiwiYXVkIjpbImh0dHA6Ly9zZXJ2ZXIuZXhhbXBsZS5jb20vdG9rZW4iLCJodH
+      RwOi8vc2VydmVyLmV4YW1wbGUuY29tL2F1dGhlbnRpY2F0b3JzIl0sIm1mYSI6W
+      yJvdHAiLCJvb2IiXSwiZXhwIjoxMzExMjgxOTcwLCJpYXQiOjEzMTEyODA5NzB9
+      .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
+  }
+]]></artwork>
+          </figure>
         </section>
-        
-        
       </section>
       
       <section title='MFA Challenge Endpoint' anchor="mfa-challenge-endpoint">
