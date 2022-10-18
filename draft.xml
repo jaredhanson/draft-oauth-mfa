@@ -318,18 +318,14 @@
             
           <dl newline="true">
             <dt>mfa_token</dt>
-            <dd>
-              REQUIRED. The MFA token received from the authorization server in
-              the authorization challenge error response.
-            </dd>
+            <dd>REQUIRED. The MFA token received from the authorization server
+              in the authorization challenge error response.</dd>
             <!-- TODO: Rename this to challenge_types_supported. -->
             <!-- TODO: Make this case sensitive? -->
             <dt>challenge_type</dt>
-            <dd>
-              OPTIONAL. Array of authorization challenge type strings that the
+            <dd>OPTIONAL. Array of authorization challenge type strings that the
               client supports, expressed as a list of space-delimited,
-              case-insensitive strings.
-            </dd>
+              case-insensitive strings.</dd>
             <!-- TODO: Clarify this -->
             <dt>authenticator_id</dt>
             <dd>
@@ -338,18 +334,16 @@
               associated with the resource owner.
             </dd>
             <dt>client_id</dt>
-            <dd>
-              REQUIRED, if the client is not authenticating with the
+            <dd>REQUIRED, if the client is not authenticating with the
               authorization server as described in
-              <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.
-            </dd>
+              <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.</dd>
           </dl>
             
-          <t>
-            If the client was issued client credentials (or assigned other
-            authentication requirements), the client MUST authenticate with the
-            authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
-          </t>
+          <t>If the client type is confidential or the client was issued client
+            credentials (or assigned other authentication requirements), the
+            client MUST authenticate with the authorization server as described
+            in <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.</t>
+          
           <figure>
             <preamble>
               For example, the client makes the following HTTPS request (line
