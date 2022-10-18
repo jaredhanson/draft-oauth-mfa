@@ -308,37 +308,43 @@
           a suitable authenticator through an out-of-band mechanism, it can
           obtain a strong authorization grant directly.</t>
         
-        <section title='Authorization Challenge Request'>
-          <t>
-            The client makes a request to the MFA challenge endpoint by sending
-            the following parameters using the <spanx style='verb'>application/x-www-form-urlencoded</spanx>
-            format with a character encoding of UTF-8 in the HTTP request entity-body:
-          </t>
-          <t>
-            <list style='hanging' hangIndent='6'>
-              <t hangText='mfa_token'>
-                <vspace />
-                REQUIRED. The MFA token received from the authorization server.
-              </t>
-              <t hangText='challenge_type'>
-                <vspace />
-                OPTIONAL. The MFA challenge type strings that the client supports.
-                The value of the challenge_type parameter is expressed as a list
-                of space-delimited, case-insensitive strings.
-              </t>
-              <t hangText='authenticator_id'>
-                <vspace />
-                OPTIONAL. The identifier of the authenticator to challenge.  The
-                authorization server MUST ensure that the authenticator is
-                associated with the resource owner.
-              </t>
-              <t hangText='client_id'>
-                <vspace />
-                REQUIRED, if the client is not authenticating with the
-                authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
-              </t>
-            </list>
-          </t>
+        <section>
+          <name>Authorization Challenge Request</name>
+          
+          <t>The client makes a request to the authorization challenge endpoint
+            by adding the following parameters using the
+            <tt>"application/x-www-form-urlencoded"</tt> format with a character
+            encoding of UTF-8 in the HTTP request entity-body:</t>
+            
+          <dl newline="true">
+            <dt>mfa_token</dt>
+            <dd>
+              REQUIRED. The MFA token received from the authorization server in
+              the authorization challenge error response.
+            </dd>
+            <!-- TODO: Rename this to challenge_types_supported. -->
+            <!-- TODO: Make this case sensitive? -->
+            <dt>challenge_type</dt>
+            <dd>
+              OPTIONAL. Array of authorization challenge type strings that the
+              client supports, expressed as a list of space-delimited,
+              case-insensitive strings.
+            </dd>
+            <!-- TODO: Clarify this -->
+            <dt>authenticator_id</dt>
+            <dd>
+              OPTIONAL. The identifier of the authenticator to challenge.  The
+              authorization server MUST ensure that the authenticator is
+              associated with the resource owner.
+            </dd>
+            <dt>client_id</dt>
+            <dd>
+              REQUIRED, if the client is not authenticating with the
+              authorization server as described in
+              <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.
+            </dd>
+          </dl>
+            
           <t>
             If the client was issued client credentials (or assigned other
             authentication requirements), the client MUST authenticate with the
