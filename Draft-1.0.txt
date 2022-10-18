@@ -67,8 +67,8 @@ Table of Contents
    2.  Protocol Endpoints  . . . . . . . . . . . . . . . . . . . . .   6
      2.1.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .   6
        2.1.1.  Authorization Challenge Error Response  . . . . . . .   6
-     2.2.  MFA Challenge Endpoint  . . . . . . . . . . . . . . . . .   7
-       2.2.1.  MFA Challenge Request . . . . . . . . . . . . . . . .   7
+     2.2.  Authorization Challenge Endpoint  . . . . . . . . . . . .   7
+       2.2.1.  Authorization Challenge Request . . . . . . . . . . .   7
        2.2.2.  MFA Challenge Response  . . . . . . . . . . . . . . .   8
        2.2.3.  MFA Challenge Error Response  . . . . . . . . . . . .   9
    3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  10
@@ -358,19 +358,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
          .IvjKKc54lHvAOCskyEUU8Ou_-8-oXKyFS5bbq-utZPA"
      }
 
-2.2.  MFA Challenge Endpoint
+2.2.  Authorization Challenge Endpoint
 
-   The MFA challenge endpoint is used by the client to obtain a strong
-   authorization challenge.  The answer to this challenge, typically
-   obtained by interacting with the resource owner, is a strong
-   authorization grant which can be used to obtain an access token by
-   presenting it at the token endpoint.
+   The authorization challenge endpoint is used by the client to obtain
+   an authorization challenge by presenting an MFA token.  The client
+   will typically interact directly with the resource owner to obtain an
+   authorization grant, which is used as a response to the authorization
+   challenge.
 
-   Use of the MFA challenge endpoint is OPTIONAL; if a client knows of a
-   suitable authenticator through an out-of-band mechanism, it can
-   obtain a strong authorization grant directly.
+   Use of the authorization challenge endpoint is OPTIONAL; if a client
+   knows of a suitable authenticator through an out-of-band mechanism,
+   it can obtain a strong authorization grant directly.
 
-2.2.1.  MFA Challenge Request
+2.2.1.  Authorization Challenge Request
 
    The client makes a request to the MFA challenge endpoint by sending
    the following parameters using the application/x-www-form-urlencoded

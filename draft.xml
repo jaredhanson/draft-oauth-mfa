@@ -294,21 +294,21 @@
         </section>
       </section>
       
-      <section title='MFA Challenge Endpoint' anchor="mfa-challenge-endpoint">
-        <t>
-          The MFA challenge endpoint is used by the client to obtain a strong
-          authorization challenge.  The answer to this challenge, typically
-          obtained by interacting with the resource owner, is a strong
-          authorization grant which can be used to obtain an access token by
-          presenting it at the token endpoint.
-        </t>
-        <t>
-          Use of the MFA challenge endpoint is OPTIONAL; if a client knows of
-          a suitable authenticator through an out-of-band mechanism, it can
-          obtain a strong authorization grant directly.
-        </t>
+      <section anchor="authz-challenge-endpoint">
+        <name>Authorization Challenge Endpoint</name>
         
-        <section title='MFA Challenge Request' anchor="token-req">
+        <t>The authorization challenge endpoint is used by the client to obtain
+          an authorization challenge by presenting an MFA token.  The client
+          will typically interact directly with the resource owner to obtain an
+          authorization grant, which is used as a response to the authorization
+          challenge.</t>
+        
+        <!-- TODO: Clarify this -->
+        <t>Use of the authorization challenge endpoint is OPTIONAL; if a client knows of
+          a suitable authenticator through an out-of-band mechanism, it can
+          obtain a strong authorization grant directly.</t>
+        
+        <section title='Authorization Challenge Request'>
           <t>
             The client makes a request to the MFA challenge endpoint by sending
             the following parameters using the <spanx style='verb'>application/x-www-form-urlencoded</spanx>
@@ -829,7 +829,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             <vspace/>
             OPTIONAL.
             URL of the authorization server's MFA challenge endpoint defined in
-            <xref target="mfa-challenge-endpoint"/>.
+            <xref target="authz-challenge-endpoint"/>.
           </t>
         </list>
       </t>
