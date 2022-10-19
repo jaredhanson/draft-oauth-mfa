@@ -361,31 +361,23 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           
           <t>The authorization server MUST:</t>
           
-          <t>
-            <list style='symbols'>
-              <t>
-                require client authentication for confidential clients or for
-                any client that was issued client credentials (or with other
-                authentication requirements),
-              </t>
-              <t>
-                authenticate the client if client authentication is included,
-              </t>
-              <t>
-                ensure the MFA token was issued to the authenticated
-                confidential client, or if the client is public, ensure the MFA
-                token was issued to <spanx style='verb'>client_id</spanx> in the
-                request,
-              </t>
-              <t>
-                verify that the MFA token is valid, and
-              </t>
-              <t>
-                restore the authorization session based on the claims in the MFA
-                token.
-              </t>
-            </list>
-          </t>
+          <ul>
+            <li>require client authentication for confidential clients or for
+              any client that was issued client credentials (or with other
+              authentication requirements),</li>
+                
+            <li>authenticate the client if client authentication is
+              included,</li>
+            
+            <li>ensure that the MFA token was issued to the authenticated
+              confidential client, or if the client is public, ensure that the
+              token was issued to <tt>"client_id"</tt> in the request,</li>
+                
+            <li>verify that the MFA token is valid, and</li>
+            
+            <li>restore the authorization session based on the state referenced
+              by or encoded into the MFA token.</li>
+          </ul>
         </section>
         
         <section title='MFA Challenge Response' anchor="token-res">

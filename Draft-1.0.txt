@@ -428,14 +428,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
    *  authenticate the client if client authentication is included,
 
-   *  ensure the MFA token was issued to the authenticated confidential
-      client, or if the client is public, ensure the MFA token was
-      issued to client_id in the request,
+   *  ensure that the MFA token was issued to the authenticated
+      confidential client, or if the client is public, ensure that the
+      token was issued to "client_id" in the request,
 
    *  verify that the MFA token is valid, and
 
-   *  restore the authorization session based on the claims in the MFA
-      token.
+   *  restore the authorization session based on the state referenced by
+      or encoded into the MFA token.
 
 
 
