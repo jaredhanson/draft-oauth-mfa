@@ -344,11 +344,11 @@
             client MUST authenticate with the authorization server as described
             in <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.</t>
           
+          <t>For example, the client makes the following HTTP request using
+            transport-layer security (with extra line breaks for display
+            purposes only):</t>
+          
           <figure>
-            <preamble>
-              For example, the client makes the following HTTPS request (line
-              breaks are for display purposes only)::
-            </preamble>
             <artwork><![CDATA[
 POST /challenge HTTP/1.1
 Host: server.example.com
@@ -358,9 +358,9 @@ Content-Type: application/x-www-form-urlencoded
 mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
 ]]></artwork>
           </figure>
-          <t>
-            The authorization server MUST:
-          </t>
+          
+          <t>The authorization server MUST:</t>
+          
           <t>
             <list style='symbols'>
               <t>
