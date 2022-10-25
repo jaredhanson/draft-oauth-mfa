@@ -350,12 +350,12 @@
           
           <figure>
             <artwork><![CDATA[
-POST /challenge HTTP/1.1
-Host: server.example.com
-Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-Content-Type: application/x-www-form-urlencoded
+  POST /challenge HTTP/1.1
+  Host: server.example.com
+  Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+  Content-Type: application/x-www-form-urlencoded
 
-mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
+  mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
 ]]></artwork>
           </figure>
           
@@ -388,8 +388,7 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             response to which would satisfy the authorization session, and
             constructs the response by adding the following parameters to the
             entity-body of the HTTP response using the <tt>"application/json"</tt>
-            format <xref target='RFC8259'/> with a 200 (OK) status code:
-          </t>
+            format <xref target='RFC8259'/> with a 200 (OK) status code:</t>
           
           <dl newline="true">
             <!-- TODO: Make challenge_type case sensitive, to match grant_type. -->
@@ -403,98 +402,62 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             <xref target="otp-authz-challenge"/>, the <tt>"oob"</tt> type in
             <xref target="oob-authz-challenge"/>, and the
             <tt>"recovery-code"</tt> type in TODO.</t>
-        </section>
-        
-        <section title='MFA Challenge Error Response' anchor="token-err-res">
-          <t>
-            If the MFA challenge request failed client authentication or is
-            invalid, the authorization server responds with an HTTP 400 (Bad
-            Request) status code (unless specified otherwise) and includes the
-            following parameters with the response:
-          </t>
-          <t>
-            <list style='hanging' hangIndent='6'>
-              <t hangText='error'>
-                <vspace />
-                REQUIRED. A single ASCII error code from the following:
-                
-                <list style='hanging' hangIndent='6'>
-                  <t hangText='invalid_request'>
-                    <vspace />
-                    The request is missing a required parameter, includes an
-                    unsupported parameter value (other than challenge type),
-                    repeats a parameter, includes multiple credentials, utilizes
-                    more than one mechanism for authenticating the client, or is
-                    otherwise malformed.
-                  </t>
-                  <t hangText='invalid_authenticator'>
-                    <vspace />
-                    The requested authenticator does not exist or is not associated
-                    with the resource owner.
-                  </t>
-                  <t hangText='invalid_client'>
-                    <vspace />
-                    Client authentication failed (e.g. unknown client, no client
-                    authentication included, or unsupported authentication
-                    method). The authorization server MAY return an HTTP 401
-                    (Unauthorized) status code to indicate which HTTP
-                    authentication schemes are supported. If the client
-                    attempted to authenticate via the <spanx style='verb'>Authorization</spanx>
-                    request header field, the authorization server MUST respond
-                    with an HTTP 401 (Unauthorized) status code, and include the
-                    <spanx style='verb'>WWW-Authenticate</spanx> response header
-                    field matching the authentication scheme used by the client.
-                  </t>
-                  <t hangText='expired_token'>
-                    <vspace />
-                    The provided MFA token is invalid, expired, or revoked.  The
-                    client will need to initiate a new authorization session.
-                  </t>
-                  <t hangText='unauthorized_client'>
-                    <vspace />
-                    The authenticated client is not authorized to recieve a strong
-                    authorization challenge.
-                  </t>
-                  <t hangText='unsupported_challenge_type'>
-                    <vspace />
-                    The challenge types supported by the client are not
-                    supported by the authorization server or not available to
-                    the resource owner.
-                  </t>
-                  <t hangText='association_required'>
-                    <vspace />
-                    The resource owner is not associated with any authenticator.
-                    The authorization session MAY be continued by completing
-                    authenticator association.
-                  </t>
-                  <t hangText='server_error'>
-                    <vspace />
-                    The authorization server encountered an unexpected condition
-                    that prevented it from fulfilling the request.
-                  </t>
-                  <t hangText='bad_gateway'>
-                    <vspace />
-                    The authorization server received an invalid response from
-                    an upstream server it accessed in attempting to fulfull the
-                    request.  This typically occurs when challenging an OOB
-                    authenticator and the gateway is down, for example SMS.
-                  </t>
-                </list>
-              </t>
-              <t hangText='error_description'>
-                <vspace />
-                OPTIONAL. A human-readable ASCII text providing additional
-                information, used to assist the client developer in
-                understanding the error that occurred.
-              </t>
-              <t hangText='error_uri'>
-                <vspace />
-                OPTIONAL. A URI identifying a human-readable web page with
-                information about the error, used to provide the client
-                developer with additional information about the error.
-              </t>
-            </list>
-          </t>
+            
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/json;charset=UTF-8
+  Cache-Control: no-store
+  Pragma: no-cache
+
+  {
+    "challenge_type":"otp"
+  }
+]]></artwork>
+          </figure>
+          
+          <t>If the authorization challenge request failed, the authorization
+            server responds with an error response as described in
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>.</t>
+            
+          <t>In addition to the error codes defined in
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>, the following
+            error codes are specified for use in authorization challenge
+            endpoint responses:</t>
+            
+          <dl newline="true">
+            <!-- TODO: Clarify this -->
+            <dt>invalid_authenticator</dt>
+            <dd>The requested authenticator does not exist or is not associated
+              with the resource owner.</dd>
+            <!-- TODO: Rename this to invalid_token to match invalid_grant and invalid_token from bearer scheme -->
+            <dt>expired_token</dt>
+            <dd>The provided MFA token is invalid, expired, revoked, or was
+              issued to another client.  The client MAY initiate a new
+              authorization session.</dd>
+            <!-- TODO: Rename this to unnegotiable_challenge_type?? -->
+            <dt>unsupported_challenge_type</dt>
+            <dd>The challenge types supported by the client are not supported by
+              the authorization server or not available to the resource owner.</dd>
+            <!-- TODO: Clarify this.  Possibly remove as redundant with unnegotiable
+               challenge type -->
+            <dt>association_required</dt>
+            <dd>The resource owner is not associated with any authenticator.
+              The authorization session MAY be continued by completing
+              authenticator association.</dd>
+            <!-- TODO: Move this to a different spec -->
+            <dt>server_error</dt>
+            <dd>The authorization server encountered an unexpected condition
+              that prevented it from fulfilling the request.</dd>
+            <!-- TODO: Clarify this, maybe move to another spec -->
+            <dt>bad_gateway</dt>
+            <dd>The authorization server received an invalid response from
+              an upstream server it accessed in attempting to fulfull the
+              request.  This typically occurs when challenging an OOB
+              authenticator and the gateway is down, for example SMS.</dd>
+          </dl>
+            
         </section>
       </section>
     </section>
