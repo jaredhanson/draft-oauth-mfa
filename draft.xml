@@ -380,13 +380,15 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
           </ul>
         </section>
         
-        <section title='MFA Challenge Response' anchor="token-res">
-          <t>
-            If the MFA challenge request is valid and authorized, the
-            authorization server selects an authorization mechanism that would
-            satisfy the authorization session, issues a challenge, and
+        <section>
+          <name>Authorization Challenge Response</name>
+          
+          <t>If the authorization challenge request is valid and authorized, the
+            authorization server selects an authorization challenge, the
+            response to which would satisfy the authorization session, and
             constructs the response by adding the following parameters to the
-            entity-body of the HTTP response with a 200 (OK) status code:
+            entity-body of the HTTP response using the <tt>"application/json"</tt>
+            format <xref target='RFC8259'/> with a 200 (OK) status code:
           </t>
           
           <dl newline="true">
@@ -401,13 +403,6 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
             <xref target="otp-authz-challenge"/>, the <tt>"oob"</tt> type in
             <xref target="oob-authz-challenge"/>, and the
             <tt>"recovery-code"</tt> type in TODO.</t>
-          <t>
-            The parameters are included in the entity body of the HTTP response
-            using the <spanx style='verb'>application/json</spanx> media type as
-            defined by <xref target='RFC4627'/>.  The response MAY include
-            additional parameters that are interpreted according to a challenge
-            type definition.
-          </t>
         </section>
         
         <section title='MFA Challenge Error Response' anchor="token-err-res">
@@ -831,8 +826,8 @@ mfa_token=eyJhbGciOiJ...&challenge_type=otp%20oob
     <references>
       <name>Normative References</name>
       <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
-      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4627.xml"/>
       <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6749.xml"/>
+      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8259.xml"/>
       <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-oauth-discovery.xml"/>
     </references>
   </back>

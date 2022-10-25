@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Standards Track                         19 October 2022
-Expires: 22 April 2023
+Intended status: Standards Track                         25 October 2022
+Expires: 28 April 2023
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 April 2023.
+   This Internet-Draft will expire on 28 April 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 1]
+Hanson                    Expires 28 April 2023                 [Page 1]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -69,7 +69,7 @@ Table of Contents
        2.1.1.  Authorization Challenge Error Response  . . . . . . .   6
      2.2.  Authorization Challenge Endpoint  . . . . . . . . . . . .   7
        2.2.1.  Authorization Challenge Request . . . . . . . . . . .   7
-       2.2.2.  MFA Challenge Response  . . . . . . . . . . . . . . .   9
+       2.2.2.  Authorization Challenge Response  . . . . . . . . . .   9
        2.2.3.  MFA Challenge Error Response  . . . . . . . . . . . .   9
    3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  11
      3.1.  OTP Credentials Grant . . . . . . . . . . . . . . . . . .  11
@@ -82,13 +82,13 @@ Table of Contents
        3.2.2.  User Interaction  . . . . . . . . . . . . . . . . . .  13
        3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  13
        3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  14
-     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  14
-       3.3.1.  User Interaction  . . . . . . . . . . . . . . . . . .  14
+     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  15
+       3.3.1.  User Interaction  . . . . . . . . . . . . . . . . . .  15
        3.3.2.  Access Token Request  . . . . . . . . . . . . . . . .  15
-       3.3.3.  Access Token Response . . . . . . . . . . . . . . . .  15
+       3.3.3.  Access Token Response . . . . . . . . . . . . . . . .  16
    4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  16
    5.  Normative References  . . . . . . . . . . . . . . . . . . . .  16
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  16
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  17
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 2]
+Hanson                    Expires 28 April 2023                 [Page 2]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -165,7 +165,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 3]
+Hanson                    Expires 28 April 2023                 [Page 3]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -221,7 +221,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 4]
+Hanson                    Expires 28 April 2023                 [Page 4]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -277,7 +277,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 5]
+Hanson                    Expires 28 April 2023                 [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -333,7 +333,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 6]
+Hanson                    Expires 28 April 2023                 [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -389,7 +389,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 7]
+Hanson                    Expires 28 April 2023                 [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
@@ -445,18 +445,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 22 April 2023                 [Page 8]
+Hanson                    Expires 28 April 2023                 [Page 8]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
-2.2.2.  MFA Challenge Response
+2.2.2.  Authorization Challenge Response
 
-   If the MFA challenge request is valid and authorized, the
-   authorization server selects an authorization mechanism that would
-   satisfy the authorization session, issues a challenge, and constructs
-   the response by adding the following parameters to the entity-body of
-   the HTTP response with a 200 (OK) status code:
+   If the authorization challenge request is valid and authorized, the
+   authorization server selects an authorization challenge, the response
+   to which would satisfy the authorization session, and constructs the
+   response by adding the following parameters to the entity-body of the
+   HTTP response using the "application/json" format [RFC8259] with a
+   200 (OK) status code:
 
    challenge_type
       REQUIRED.  The type of the authorization challenge issued.  Value
@@ -466,11 +467,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    challenge type.  This document defines the "otp" type in
    Section 3.1.1, the "oob" type in Section 3.2.1, and the "recovery-
    code" type in TODO.
-
-   The parameters are included in the entity body of the HTTP response
-   using the application/json media type as defined by [RFC4627].  The
-   response MAY include additional parameters that are interpreted
-   according to a challenge type definition.
 
 2.2.3.  MFA Challenge Error Response
 
@@ -493,19 +489,28 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
                The requested authenticator does not exist or is not
                associated with the resource owner.
 
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                    Expires 28 April 2023                 [Page 9]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
          invalid_client
                Client authentication failed (e.g. unknown client, no
                client authentication included, or unsupported
                authentication method).  The authorization server MAY
                return an HTTP 401 (Unauthorized) status code to indicate
-
-
-
-Hanson                    Expires 22 April 2023                 [Page 9]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
-
                which HTTP authentication schemes are supported.  If the
                client attempted to authenticate via the Authorization
                request header field, the authorization server MUST
@@ -548,19 +553,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
          information, used to assist the client developer in
          understanding the error that occurred.
 
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 10]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
    error_uri
          OPTIONAL.  A URI identifying a human-readable web page with
          information about the error, used to provide the client
          developer with additional information about the error.
-
-
-
-
-
-Hanson                    Expires 22 April 2023                [Page 10]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
 3.  Obtaining Authorization
 
@@ -603,6 +608,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
       REQUIRED.  The MFA token received when initiating the
       authorization session.
 
+
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 11]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
    client_id
       REQUIRED, if the client is not authenticating with the
       authorization server as described in Section 3.2.1 of [RFC6749].
@@ -610,13 +625,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    If the client was issued client credentials (or assigned other
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
-
-
-
-Hanson                    Expires 22 April 2023                [Page 11]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
 3.1.4.  Access Token Response
 
@@ -654,6 +662,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    challenge_type
       REQUIRED.  Value MUST be set to "oob".
 
+
+
+
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 12]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
    oob_code
       REQUIRED.  The out-of-band transaction code generated by the
       authorization server.  The out-of-band transaction code MUST
@@ -664,15 +684,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    binding_method
       OPTIONAL.  The method used to bind the out-of-band channel with
       the primary channel.  The following methods are defined:
-
-
-
-
-
-Hanson                    Expires 22 April 2023                [Page 12]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
       prompt
             The resource owner should be prompted to enter a code
@@ -712,6 +723,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
       type/mfa-oob".
 
+
+
+Hanson                    Expires 28 April 2023                [Page 13]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
    oob_code
       REQUIRED.  The out-of-band verification code.
 
@@ -722,13 +740,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    mfa_token
       REQUIRED.  The MFA token received when initiating the
       authorization session.
-
-
-
-Hanson                    Expires 22 April 2023                [Page 13]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
    client_id
       REQUIRED, if the client is not authenticating with the
@@ -766,6 +777,15 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    access_denied
       The resource owner or authorization server denied the request.
 
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 14]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
 3.3.  Recovery Code Grant
 
    Recovery codes are a physical or electronic set of secrets shared
@@ -778,13 +798,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    A user typically signals to the client that they wish to enter a
    recovery flow after realizing that an authenticator device has been
    lost or is malfunctioning.
-
-
-
-Hanson                    Expires 22 April 2023                [Page 14]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
    Upon receiving this signal from the user, the client prompts or
    otherwise interacts with the resource owner to obtain a recovery
@@ -818,6 +831,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
 
+
+
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 15]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
+
 3.3.3.  Access Token Response
 
    If the access token request is valid and authorized, the
@@ -834,13 +858,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
       OPTIONAL.  A newly issued recovery code, in which case the client
       MUST discard the old recovery code and replace it with the new
       recovery code.
-
-
-
-Hanson                    Expires 22 April 2023                [Page 15]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
 4.  Discovery Metadata
 
@@ -859,14 +876,27 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC4627]  Crockford, D., "The application/json Media Type for
-              JavaScript Object Notation (JSON)", RFC 4627,
-              DOI 10.17487/RFC4627, July 2006,
-              <https://www.rfc-editor.org/info/rfc4627>.
-
    [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <https://www.rfc-editor.org/info/rfc6749>.
+
+   [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, RFC 8259,
+              DOI 10.17487/RFC8259, December 2017,
+              <https://www.rfc-editor.org/info/rfc8259>.
+
+
+
+
+
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 16]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+
 
    [I-D.ietf-oauth-discovery]
               Jones, M. B., Sakimura, N., and J. Bradley, "OAuth 2.0
@@ -893,4 +923,30 @@ Author's Address
 
 
 
-Hanson                    Expires 22 April 2023                [Page 16]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hanson                    Expires 28 April 2023                [Page 17]
