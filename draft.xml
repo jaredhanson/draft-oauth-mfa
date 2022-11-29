@@ -401,7 +401,8 @@
             challenge type.  This document defines the <tt>"otp"</tt> type in
             <xref target="otp-authz-challenge"/>, the <tt>"oob"</tt> type in
             <xref target="oob-authz-challenge"/>, and the
-            <tt>"recovery-code"</tt> type in TODO.</t>
+            <tt>"recovery-code"</tt> type in
+            <xref target="recovery-code-authz-challenge"/>.</t>
             
           <t>For example:</t>
           <figure>
@@ -482,6 +483,9 @@
             <dt>challenge_type</dt>
             <dd>REQUIRED.  Value MUST be set to <tt>"otp"</tt>.</dd>
           </dl>
+          
+          <t>No additional parameters are specified for the OTP authorization
+            challenge type.</t>
         </section>
         
         <section title="User Interaction">
@@ -694,6 +698,22 @@
           codes are typically used in the event another authenticator device
           is lost or malfunctions.
         </t>
+        
+        <section anchor="recovery-code-authz-challenge">
+          <name>Authorization Challenge</name>
+          
+          <t>If the authorization server requires a recovery code as an
+            authorization grant, it responds with a recovery code authorization
+            challenge containing the following parameters:</t>
+          
+          <dl newline="true">
+            <dt>challenge_type</dt>
+            <dd>REQUIRED.  Value MUST be set to <tt>"recovery-code"</tt>.</dd>
+          </dl>
+          
+          <t>No additional parameters are specified for the recovery code
+            authorization challenge type.</t>
+        </section>
         
         <section title="User Interaction">
           <t>
