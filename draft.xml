@@ -92,129 +92,127 @@
             "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
         </section>
         
-        <section>
-          <name>Terminology</name>
-          
-          <t>This specification also defines the following terms:</t>
-          
-          <dl newline="true">
-            <dt>Authorization Challenge</dt>
-            <dd>A challenge issued by an authorization server to a client
-              requesting an additional authorization grant that is required in
-              order to issue an access token.</dd>
-              
-            <dt>Authorization Session</dt>
-            <dd>A sequence of access token requests to the token endpoint, each
-              presenting an authorization grant.  The sequence MAY involve
-              requests to additional endpoints, as needed by specific grant
-              types.</dd>
-            
-            <dt>MFA Token</dt>
-            <dd>A short lived token representing an authorization session, used
-              to keep state during an authorization session.</dd>
-          </dl>
-        </section>
+      <section>
+        <name>Terminology</name>
         
-        <section>
-          <name>Protocol Flow</name>
-          
-          <figure anchor="abstract-protocol-flow">
-            <name>Abstract Protocol Flow</name>
+        <t>This specification also defines the following terms:</t>
+        
+        <dl newline="true">
+          <dt>Authorization Challenge</dt>
+          <dd>A challenge issued by an authorization server to a client
+            requesting an additional authorization grant that is required in
+            order to issue an access token.</dd>
             
-            <artwork><![CDATA[
-  +-------------+
-  |  Resource   |
-  |    Owner    |
-  |             |
-  +-------------+
-    |  ^   |  ^
-    |  |   |  |
-   (A)(B) (E)(F)
-    |  |   |  |
-    v  |   v  |
-  +-------------+                                     +---------------+
-  |             |--(C)--- Authorization Grant ------->|               |
-  |             |                                     |               |
-  |             |<-(D)- Authorization Challenge ------|               |
-  |             |                                     | Authorization |
-  |             |--(G)-- Additional Authz Grant ----->|    Server     |
-  |             |             & MFA Token             |               |
-  |             |                                     |               |
-  |   Client    |<-(H)------- Access Token -----------|               |
-  |             |                                     +---------------+
-  |             |
-  |             |                                     +---------------+
-  |             |--(I)------- Access Token ---------->|               |
-  |             |                                     |   Resource    |
-  |             |<-(J)---- Protected Resource --------|    Server     |
-  |             |                                     |               |
-  +-------------+                                     +---------------+
+          <dt>Authorization Session</dt>
+          <dd>A sequence of access token requests to the token endpoint, each
+            presenting an authorization grant.  The sequence MAY involve
+            requests to additional endpoints, as needed by specific grant
+            types.</dd>
+          
+          <dt>MFA Token</dt>
+          <dd>A short lived token representing an authorization session, used
+            to keep state during an authorization session.</dd>
+        </dl>
+      </section>
+        
+      <section>
+        <name>Protocol Flow</name>
+        
+        <figure anchor="abstract-protocol-flow">
+          <name>Abstract Protocol Flow</name>
+          
+          <artwork><![CDATA[
++-------------+
+|  Resource   |
+|    Owner    |
+|             |
++-------------+
+  |  ^   |  ^
+  |  |   |  |
+ (A)(B) (E)(F)
+  |  |   |  |
+  v  |   v  |
++-------------+                                     +---------------+
+|             |--(C)--- Authorization Grant ------->|               |
+|             |                                     |               |
+|             |<-(D)- Authorization Challenge ------|               |
+|             |                                     | Authorization |
+|             |--(G)-- Additional Authz Grant ----->|    Server     |
+|             |             & MFA Token             |               |
+|             |                                     |               |
+|   Client    |<-(H)------- Access Token -----------|               |
+|             |                                     +---------------+
+|             |
+|             |                                     +---------------+
+|             |--(I)------- Access Token ---------->|               |
+|             |                                     |   Resource    |
+|             |<-(J)---- Protected Resource --------|    Server     |
+|             |                                     |               |
++-------------+                                     +---------------+
 ]]></artwork>
-          </figure>
-          
-          <t>
-            The abstract OAuth 2.0 multi-factor authorization flow illustrated
-            in <xref target="abstract-protocol-flow"/> describes the interaction
-            between the resource owner, client, authorization server, and
-            resource server and includes the following steps:
-          </t>
-          
-          <ol type='(%C)'>
-            <li>The client requests authorization from the resource owner.  The
-              authorization request can be made directly to the resource owner
-              (as shown), or indirectly via the authorization server as an
-              intermediary.</li>
-            
-            <li>The client receives an authorization grant, which is a
-              credential representing the resource owner's authorization.  The
-              authorization grant type depends on the method used by the client
-              to request authorization and the types supported by the
-              authorization server.</li>
-            
-            <li>The client requests an access token by authenticating with the
-              authorization server and presenting the authorization grant.</li>
-            
-            <li>The authorization server authenticates the client and validates
-              the authorization grant, and if an additional authorization grant
-              is required, issues an authorization challenge.</li>
-            
-            <li>The client requests additional authorization from the resource
-              owner.  The authorization request is made directly to the resource
-              owner.</li>
-            
-            <li>The client receives an additional authorization grant.  The
-              authorization grant type depends on the method used by the client
-              to request authorization and the types supported by the
-              authorization server.</li>
-            
-            <li>The client requests an access token by authenticating with the
-              authorization server and presenting the additional authorization
-              grant along with the MFA token received in the authorization
-              challenge.</li>
-            
-            <li>The authorization server authenticates the client and validates
-              the authorization grant and MFA token, and if both are valid,
-              issues an access token.</li>
-            
-            <li>The client requests the protected resource from the resource
-              server and authenticates by presenting the access token.</li>
-            
-            <li>The resource server validates the access token, and if valid,
-              serves the request.</li>
-          </ol>
-        </section>
+        </figure>
         
-        <section>
-          <name>Authorization Grants</name>
+        <t>The abstract OAuth 2.0 multi-factor authorization flow illustrated
+          in <xref target="abstract-protocol-flow"/> describes the interaction
+          between the resource owner, client, authorization server, and
+          resource server and includes the following steps:</t>
+        
+        <ol type='(%C)'>
+          <li>The client requests authorization from the resource owner.  The
+            authorization request can be made directly to the resource owner
+            (as shown), or indirectly via the authorization server as an
+            intermediary.</li>
           
-          <t>An authorization grant is a credential representing the resource
-            owner's authorization (to access its protected resources) used by
-            the client to obtain an access token.  This specification defines
-            four grant types -- one-time password, out-of-band, and recovery
-            code -- that can be used as additional authorization grants within
-            an authorization session.</t>
+          <li>The client receives an authorization grant, which is a
+            credential representing the resource owner's authorization.  The
+            authorization grant type depends on the method used by the client
+            to request authorization and the types supported by the
+            authorization server.</li>
           
-        </section>
+          <li>The client requests an access token by authenticating with the
+            authorization server and presenting the authorization grant.</li>
+          
+          <li>The authorization server authenticates the client and validates
+            the authorization grant, and if an additional authorization grant
+            is required, issues an authorization challenge.</li>
+          
+          <li>The client requests additional authorization from the resource
+            owner.  The authorization request is made directly to the resource
+            owner.</li>
+          
+          <li>The client receives an additional authorization grant.  The
+            authorization grant type depends on the method used by the client
+            to request authorization and the types supported by the
+            authorization server.</li>
+          
+          <li>The client requests an access token by authenticating with the
+            authorization server and presenting the additional authorization
+            grant along with the MFA token received in the authorization
+            challenge.</li>
+          
+          <li>The authorization server authenticates the client and validates
+            the authorization grant and MFA token, and if both are valid,
+            issues an access token.</li>
+          
+          <li>The client requests the protected resource from the resource
+            server and authenticates by presenting the access token.</li>
+          
+          <li>The resource server validates the access token, and if valid,
+            serves the request.</li>
+        </ol>
+      </section>
+        
+      <section>
+        <name>Authorization Grants</name>
+        
+        <t>An authorization grant is a credential representing the resource
+          owner's authorization (to access its protected resources) used by
+          the client to obtain an access token.  This specification defines
+          four grant types -- one-time password, out-of-band, and recovery
+          code -- that can be used as additional authorization grants within
+          an authorization session.</t>
+        
+      </section>
     </section>
     
     <section>
