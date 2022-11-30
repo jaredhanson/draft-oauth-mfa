@@ -233,6 +233,29 @@
             exposing a long-term password alone to the client when the resulting
             access token or refresh token are also short-lived.</t>
         </section>
+        
+        <section>
+          <name>Out-of-Band Authorization</name>
+          
+          <t>The out-of-band (OOB) authorization grant allows authorization to
+            be obtained via a secondary channel.  Once authorized, the grant can
+            be used to obtain an access token.  Use of a secondary channel
+            supports several use cases.</t>
+            
+          <t>The out-of-band authorization grant can be used with an out-of-band
+            authenticator to add an additional factor of authentication.  An
+            out-of-band authenticator is a physical device that is uniquely
+            addressable and can communicate with the authorization server over a
+            secondary channel.  Common examples would be a mobile phone using
+            SMS as a secondary channel, or a software application installed on a
+            device using push notifications as a secondary channel.</t>
+          
+          <t>The out-of-band authorization grant can also facilitate more
+            complex authorization processes.  For example, out-of-band
+            authorization can be used to perform multi-party authorization, in
+            which two or more resource owners are needed in order to grant
+            access.</t>
+        </section>
       </section>
     </section>
     
