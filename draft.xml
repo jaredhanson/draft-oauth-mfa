@@ -203,6 +203,18 @@
               serves the request.</li>
           </ol>
         </section>
+        
+        <section>
+          <name>Authorization Grants</name>
+          
+          <t>An authorization grant is a credential representing the resource
+            owner's authorization (to access its protected resources) used by
+            the client to obtain an access token.  This specification defines
+            four grant types -- one-time password, out-of-band, and recovery
+            code -- that can be used as additional authorization grants within
+            an authorization session.</t>
+          
+        </section>
     </section>
     
     <section>
@@ -458,7 +470,6 @@
               request.  This typically occurs when challenging an OOB
               authenticator and the gateway is down, for example SMS.</dd>
           </dl>
-            
         </section>
       </section>
     </section>
