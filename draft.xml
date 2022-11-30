@@ -208,10 +208,31 @@
         <t>An authorization grant is a credential representing the resource
           owner's authorization (to access its protected resources) used by
           the client to obtain an access token.  This specification defines
-          four grant types -- one-time password, out-of-band, and recovery
-          code -- that can be used as additional authorization grants within
-          an authorization session.</t>
+          three grant types -- one-time password credentials, out-of-band, and
+          recovery code -- that can be used as additional authorization grants
+          within an authorization session.</t>
         
+        <section>
+          <name>One-Time Password Credentials</name>
+          
+          <t>The one-time password (OTP) credentials can be used as an
+            authorization grant to obtain an access token.  An OTP is generated
+            by a hardware device or a software application installed on a
+            device such as a mobile phone.  These devices have an embedded
+            secret which used as a seed for generating OTPs.  An OTP is
+            single-use and proves control of the device.</t>
+          
+          <t>When used in addition to another grant type (such as resource owner
+            password credentials), one-time password credentials add an
+            additional factor of authentication.</t>
+            
+          <t>Even though this grant type requires direct client access to the
+            resource owner credentials, the resource owner credentials are used
+            for a single request and are exchanged for an access token.
+            Furthermore, the single-use nature of an OTP limits the impact of
+            exposing a long-term password alone to the client when the resulting
+            access token or refresh token are also short-lived.</t>
+        </section>
       </section>
     </section>
     
