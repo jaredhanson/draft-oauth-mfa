@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Standards Track                         25 October 2022
-Expires: 28 April 2023
+Intended status: Standards Track                         1 December 2022
+Expires: 4 June 2023
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 April 2023.
+   This Internet-Draft will expire on 4 June 2023.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 1]
+Hanson                     Expires 4 June 2023                  [Page 1]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 Table of Contents
@@ -64,30 +64,35 @@ Table of Contents
      1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   4
      1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
      1.3.  Protocol Flow . . . . . . . . . . . . . . . . . . . . . .   4
-   2.  Protocol Endpoints  . . . . . . . . . . . . . . . . . . . . .   6
-     2.1.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .   7
-       2.1.1.  Authorization Challenge Error Response  . . . . . . .   7
-     2.2.  Authorization Challenge Endpoint  . . . . . . . . . . . .   8
-       2.2.1.  Authorization Challenge Request . . . . . . . . . . .   8
-       2.2.2.  Authorization Challenge Response  . . . . . . . . . .   9
-   3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  11
-     3.1.  OTP Credentials Grant . . . . . . . . . . . . . . . . . .  11
-       3.1.1.  Authorization Challenge . . . . . . . . . . . . . . .  11
-       3.1.2.  User Interaction  . . . . . . . . . . . . . . . . . .  11
-       3.1.3.  Access Token Request  . . . . . . . . . . . . . . . .  11
-       3.1.4.  Access Token Response . . . . . . . . . . . . . . . .  12
-     3.2.  Out-of-Band Verification Code Grant . . . . . . . . . . .  12
-       3.2.1.  Authorization Challenge . . . . . . . . . . . . . . .  12
-       3.2.2.  User Interaction  . . . . . . . . . . . . . . . . . .  13
-       3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  13
-       3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  14
-     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  15
-       3.3.1.  User Interaction  . . . . . . . . . . . . . . . . . .  15
-       3.3.2.  Access Token Request  . . . . . . . . . . . . . . . .  15
-       3.3.3.  Access Token Response . . . . . . . . . . . . . . . .  16
-   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  16
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .  16
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  17
+     1.4.  Authorization Grants  . . . . . . . . . . . . . . . . . .   6
+       1.4.1.  One-Time Password Credentials . . . . . . . . . . . .   6
+       1.4.2.  Out-of-Band Authorization . . . . . . . . . . . . . .   7
+       1.4.3.  Recovery Code . . . . . . . . . . . . . . . . . . . .   7
+   2.  Protocol Endpoints  . . . . . . . . . . . . . . . . . . . . .   7
+     2.1.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .   8
+       2.1.1.  Authorization Challenge Error Response  . . . . . . .   8
+     2.2.  Authorization Challenge Endpoint  . . . . . . . . . . . .   9
+       2.2.1.  Authorization Challenge Request . . . . . . . . . . .   9
+       2.2.2.  Authorization Challenge Response  . . . . . . . . . .  10
+   3.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  12
+     3.1.  OTP Credentials Grant . . . . . . . . . . . . . . . . . .  12
+       3.1.1.  Authorization Challenge . . . . . . . . . . . . . . .  12
+       3.1.2.  User Interaction  . . . . . . . . . . . . . . . . . .  12
+       3.1.3.  Access Token Request  . . . . . . . . . . . . . . . .  13
+       3.1.4.  Access Token Response . . . . . . . . . . . . . . . .  13
+     3.2.  Out-of-Band Verification Code Grant . . . . . . . . . . .  13
+       3.2.1.  Authorization Challenge . . . . . . . . . . . . . . .  14
+       3.2.2.  User Interaction  . . . . . . . . . . . . . . . . . .  14
+       3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  15
+       3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  15
+     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  16
+       3.3.1.  Authorization Challenge . . . . . . . . . . . . . . .  16
+       3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  16
+       3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  17
+       3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  17
+   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  17
+   5.  Normative References  . . . . . . . . . . . . . . . . . . . .  18
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
 
@@ -104,14 +109,9 @@ Table of Contents
 
 
 
-
-
-
-
-
-Hanson                    Expires 28 April 2023                 [Page 2]
+Hanson                     Expires 4 June 2023                  [Page 2]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    OAuth 2.0 [RFC6749] is an authorization framework that enables a
@@ -165,9 +165,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 3]
+Hanson                     Expires 4 June 2023                  [Page 3]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 1.1.  Notational Conventions
@@ -221,9 +221,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 4]
+Hanson                     Expires 4 June 2023                  [Page 4]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    +-------------+
@@ -254,7 +254,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    |             |                                     |               |
    +-------------+                                     +---------------+
 
-                    Figure 1: Abstract Protocol Flow
+                      Figure 1: Abstract Protocol Flow
 
    The abstract OAuth 2.0 multi-factor authorization flow illustrated in
    Figure 1 describes the interaction between the resource owner,
@@ -277,9 +277,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 5]
+Hanson                     Expires 4 June 2023                  [Page 5]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    (D)  The authorization server authenticates the client and validates
@@ -310,6 +310,72 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    (J)  The resource server validates the access token, and if valid,
         serves the request.
 
+1.4.  Authorization Grants
+
+   An authorization grant is a credential representing the resource
+   owner's authorization (to access its protected resources) used by the
+   client to obtain an access token.  This specification defines three
+   grant types -- one-time password credentials, out-of-band, and
+   recovery code -- that can be used as additional authorization grants
+   within an authorization session.
+
+1.4.1.  One-Time Password Credentials
+
+   The one-time password (OTP) credentials can be used as an
+   authorization grant to obtain an access token.  An OTP is generated
+   by a hardware device or a software application installed on a device
+   such as a mobile phone.  These devices have an embedded secret which
+   used as a seed for generating OTPs.  An OTP is single-use and proves
+   control of the device.
+
+
+
+
+
+
+Hanson                     Expires 4 June 2023                  [Page 6]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
+   When used in addition to another grant type (such as resource owner
+   password credentials), one-time password credentials add an
+   additional factor of authentication.
+
+   Even though this grant type requires direct client access to the
+   resource owner credentials, the resource owner credentials are used
+   for a single request and are exchanged for an access token.
+   Furthermore, the single-use nature of an OTP limits the impact of
+   exposing a long-term password alone to the client when the resulting
+   access token or refresh token are also short-lived.
+
+1.4.2.  Out-of-Band Authorization
+
+   The out-of-band (OOB) authorization grant allows authorization to be
+   obtained via a secondary channel.  Once authorized, the grant can be
+   used to obtain an access token.  Use of a secondary channel supports
+   several use cases.
+
+   The out-of-band authorization grant can be used with an out-of-band
+   authenticator to add an additional factor of authentication.  An out-
+   of-band authenticator is a physical device that is uniquely
+   addressable and can communicate with the authorization server over a
+   secondary channel.  Common examples would be a mobile phone using SMS
+   as a secondary channel, or a software application installed on a
+   device using push notifications as a secondary channel.
+
+   The out-of-band authorization grant can also facilitate more complex
+   authorization processes.  For example, out-of-band authorization can
+   be used to perform multi-party authorization, in which two or more
+   resource owners are needed in order to grant access.
+
+1.4.3.  Recovery Code
+
+   The recovery code is numeric or character string from a set of
+   secrets shared between the resource owner and the authorization
+   server.  These secrets are typically used by the resource owner in
+   the event another authenticator is lost or malfunctions.
+
 2.  Protocol Endpoints
 
    The multi-factor authorization process utilizes two authorization
@@ -320,23 +386,20 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
       This endpoint will be called multiple times within an
       authorization session.
 
+
+
+
+Hanson                     Expires 4 June 2023                  [Page 7]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    *  Authorization challenge endpoint - used by the client to obtain an
       authorization challenge, the response to which can be used as an
       authorization grant.
 
    Not every authorization grant type utilizes both endpoints.
    Extension grant types MAY define additional endpoints as needed.
-
-
-
-
-
-
-
-Hanson                    Expires 28 April 2023                 [Page 6]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
 2.1.  Token Endpoint
 
@@ -382,16 +445,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-
-
-
-
-
-
-
-Hanson                    Expires 28 April 2023                 [Page 7]
+Hanson                     Expires 4 June 2023                  [Page 8]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
      HTTP/1.1 403 Forbidden
@@ -445,9 +501,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 8]
+Hanson                     Expires 4 June 2023                  [Page 9]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    client_id
@@ -501,9 +557,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-Hanson                    Expires 28 April 2023                 [Page 9]
+Hanson                     Expires 4 June 2023                 [Page 10]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    challenge_type
@@ -513,7 +569,8 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    All additional parameters are specified by the authorization
    challenge type.  This document defines the "otp" type in
    Section 3.1.1, the "oob" type in Section 3.2.1, and the "recovery-
-   code" type in TODO.
+   code" type in Section 3.3.1.  Other specifications may define
+   additional challenge types.
 
    For example:
 
@@ -523,7 +580,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
      Pragma: no-cache
 
      {
-       "challenge_type":"otp"
+       "challenge_type":"example"
      }
 
    If the authorization challenge request failed, the authorization
@@ -556,10 +613,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
 
 
-
-Hanson                    Expires 28 April 2023                [Page 10]
+Hanson                     Expires 4 June 2023                 [Page 11]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    server_error
@@ -583,17 +639,40 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 3.1.1.  Authorization Challenge
 
    If the authorization server requires an OTP credential as an
-   authorization grant, it responds with an OTP authorization challenge
-   containing the following parameters:
+   additional authorization grant, it responds with an OTP authorization
+   challenge type containing the following parameters:
 
    challenge_type
       REQUIRED.  Value MUST be set to "otp".
 
+   No additional parameters are specified for the OTP authorization
+   challenge type.
+
+   For example:
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "challenge_type":"otp"
+     }
+
 3.1.2.  User Interaction
 
    After receiving an OTP challenge, the client prompts or otherwise
-   interacts with the resource owner to obtain a one-time password
-   generated by a device in the possession of the resource owner.
+   interacts with the resource owner to obtain an OTP generated by a
+   device in the possession of the resource owner.
+
+
+
+
+
+Hanson                     Expires 4 June 2023                 [Page 12]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
 3.1.3.  Access Token Request
 
@@ -608,15 +687,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
    otp
       REQUIRED.  The one-time password.
-
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 11]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
    mfa_token
       REQUIRED.  The MFA token received when initiating the
@@ -653,6 +723,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    user, in addition to the resource owner, before an action is allowed
    to take place.
 
+
+
+Hanson                     Expires 4 June 2023                 [Page 13]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    Out-of-band mechanisms are intentionally open-ended, to allow for
    flexibility in how authorization is obtained.  The details of any
    out-out-band mechanism are beyond the scope of this specification.
@@ -665,14 +742,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
 
    challenge_type
       REQUIRED.  Value MUST be set to "oob".
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 12]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
    oob_code
       REQUIRED.  The out-of-band transaction code generated by the
@@ -705,6 +774,18 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    owner or other party will depend on the specific out-of-band
    mechanism.
 
+
+
+
+
+
+
+
+Hanson                     Expires 4 June 2023                 [Page 14]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    For example, if confirmation is being obtained via an out-of-band
    authenticator, the resource owner will need to perform an
    authorization gesture on the device in her posession.  If multi-party
@@ -722,13 +803,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    grant_type
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
       type/mfa-oob".
-
-
-
-Hanson                    Expires 28 April 2023                [Page 13]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
 
    oob_code
       REQUIRED.  The out-of-band verification code.
@@ -761,6 +835,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    the following error codes are specific for the out-of-band
    verification code grant:
 
+
+
+Hanson                     Expires 4 June 2023                 [Page 15]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    authorization_pending
       The authorization request is still pending as the authorization
       ceremony has not yet completed.  The client should repeat the
@@ -777,15 +858,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    access_denied
       The resource owner or authorization server denied the request.
 
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 14]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
-
 3.3.  Recovery Code Grant
 
    Recovery codes are a physical or electronic set of secrets shared
@@ -793,7 +865,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    codes are typically used in the event another authenticator device is
    lost or malfunctions.
 
-3.3.1.  User Interaction
+3.3.1.  Authorization Challenge
+
+   If the authorization server requires a recovery code as an
+   authorization grant, it responds with a recovery code authorization
+   challenge containing the following parameters:
+
+   challenge_type
+      REQUIRED.  Value MUST be set to "recovery-code".
+
+   No additional parameters are specified for the recovery code
+   authorization challenge type.
+
+3.3.2.  User Interaction
 
    A user typically signals to the client that they wish to enter a
    recovery flow after realizing that an authenticator device has been
@@ -805,7 +889,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    posession, having been previously generated and delivered when
    enrolling an authenticator device.
 
-3.3.2.  Access Token Request
+
+
+
+
+Hanson                     Expires 4 June 2023                 [Page 16]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
+3.3.3.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -831,18 +924,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
 
-
-
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 15]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
-
-3.3.3.  Access Token Response
+3.3.4.  Access Token Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
@@ -865,6 +947,13 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
    OAuth 2.0 Authorization Server Metadata [I-D.ietf-oauth-discovery]
    with the following metadata:
 
+
+
+Hanson                     Expires 4 June 2023                 [Page 17]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    mfa_challenge_endpoint
       OPTIONAL.  URL of the authorization server's MFA challenge
       endpoint defined in Section 2.2.
@@ -885,21 +974,8 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-
-
-
-
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 16]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization      October 2022
-
-
    [I-D.ietf-oauth-discovery]
-              Jones, M. B., Sakimura, N., and J. Bradley, "OAuth 2.0
+              Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
               Authorization Server Metadata", Work in Progress,
               Internet-Draft, draft-ietf-oauth-discovery-10, 4 March
               2018, <https://www.ietf.org/archive/id/draft-ietf-oauth-
@@ -929,24 +1005,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hanson                    Expires 28 April 2023                [Page 17]
+Hanson                     Expires 4 June 2023                 [Page 18]
