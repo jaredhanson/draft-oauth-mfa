@@ -659,7 +659,9 @@
         </section>
       </section>
       
-      <section title="Out-of-Band Verification Code Grant">
+      <section>
+        <name>Out-of-Band Authorization Grant</name>
+        
         <t>
           An out-of-band verification code is used to obtain authorization via
           an out-of-band authorization ceremony.  Such ceremonys may include
@@ -687,11 +689,12 @@
         <section anchor="oob-authz-challenge">
           <name>Authorization Challenge</name>
           
-          <t>
-            The authorization server orchestrates an out-of-band authorization
-            interaction, and responds with a challenge containing the following
-            parameters:
+          <t>If the authorization server requires out-of-band authorization as
+            an additional authorization grant, it responds with an OOB
+            authorization challenge type containing the following
+            parameters:</t>
           
+          <t>
             <list style="hanging">
               <t hangText="challenge_type"><vspace blankLines="1"/>
                 REQUIRED.  Value MUST be set to "oob".</t>
