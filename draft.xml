@@ -621,15 +621,41 @@
   &otp=123456&mfa_token=eyJhbGciOiJ...
 ]]></artwork>
           </figure>
+          
+          <t>The authorization server MUST:</t>
+          
+          <ul>
+            <li>require client authentication for confidential clients or for
+              any client that was issued client credentials (or with other
+              authentication requirements),</li>
+                
+            <li>authenticate the client if client authentication is
+              included,</li>
+            
+            <li>ensure that the MFA token was issued to the authenticated
+              confidential client, or if the client is public, ensure that the
+              token was issued to <tt>"client_id"</tt> in the request,</li>
+                
+            <li>verify that the MFA token is valid,</li>
+            
+            <li>restore the authorization session based on the state referenced
+              by or encoded into the MFA token, and</li>
+              
+            <li>validate the one-time password credentials using its existing
+              OTP validation algorithm.</li>
+          </ul>
         </section>
         
-        <section title="Access Token Response">
+        <section>
+          <name>Access Token Response</name>
+          
           <t>If the access token request is valid and authorized, the
             authorization server issues an access token and optional refresh
-            token as described in in Section 5.1 of <xref target="RFC6749"/>.
-            If the request failed client authentication or is invalid, the
+            token as described in in
+            <xref target="RFC6749" section="5.1">OAuth 2.0</xref>.  If the
+            request failed client authentication or is invalid, the
             authorization server returns an error response as described in
-            Section 5.2 of <xref target="RFC6749"/>.</t>
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>.</t>
         </section>
       </section>
       
