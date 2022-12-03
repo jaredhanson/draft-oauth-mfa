@@ -735,22 +735,14 @@
           </dl>
         </section>
         
-        <section title="User Interaction">
-          <t>
-            After receiving an out-of-band challenge, the client prompts or
+        <section>
+          <name>User Interaction</name>
+          
+          <t>After receiving an out-of-band challenge, the client prompts or
             otherwise interacts with the resource owner to inform them of the
-            ongoing authorization ceremony.  Any necessary action by the
-            resource owner or other party will depend on the specific
-            out-of-band mechanism.
-          </t>
-          <t>
-            For example, if confirmation is being obtained via an out-of-band
-            authenticator, the resource owner will need to perform an
-            authorization gesture on the device in her posession.  If
-            multi-party authorization is being performed, the resource owner
-            will need to wait until the request is granted by a party with
-            sufficient authorization rights.
-          </t>
+            ongoing authorization operation.  Any necessary actions by the
+            resource owner or other party on the secondary channel are out of scope
+            of this specification.</t>
         </section>
         
         <section title="Access Token Request">
