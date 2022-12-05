@@ -867,6 +867,24 @@
               a new authorization session but SHOULD wait for user interaction
               before restarting to avoid unnecessary polling.</dd>
           </dl>
+          
+          <t>The <tt>"authorization_pending"</tt> and <tt>"slow_down"</tt> error
+            codes define particularly unique behavior, as they indicate that the
+            OAuth client should continue to poll the token endpoint by repeating
+            the token request (implementing the precise behavior defined above).
+            If the client receives an error response with any other error code,
+            it MUST stop polling and SHOULD react accordingly, for example, by
+            displaying an error to the user.</t>
+          
+          <t>On encountering a connection timeout, clients MUST unilaterally
+            reduce their polling frequency before retrying.  The use of an
+            exponential backoff algorithm to achieve this, such as doubling the
+            polling interval on each such connection timeout, is
+            RECOMMENDED.</t>
+        
+          <t>The error codes and client behavior specified in this section are
+            intentionally identical to those defined by OAuth 2.0 Device
+            Authorization Grant <xref target="RFC8628"/>.</t>
         </section>
       </section>
       
@@ -990,6 +1008,10 @@
       <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6749.xml"/>
       <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8259.xml"/>
       <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-oauth-discovery.xml"/>
+    </references>
+    <references>
+      <name>Informative References</name>
+      <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8628.xml"/>
     </references>
   </back>
 </rfc>
