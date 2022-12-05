@@ -798,6 +798,32 @@
   &binding_code=123456&mfa_token=eyJhbGciOiJ...
 ]]></artwork>
           </figure>
+          
+          <t>The authorization server MUST:</t>
+          
+          <ul>
+            <li>require client authentication for confidential clients or for
+              any client that was issued client credentials (or with other
+              authentication requirements),</li>
+                
+            <li>authenticate the client if client authentication is
+              included,</li>
+            
+            <li>ensure that the MFA token was issued to the authenticated
+              confidential client, or if the client is public, ensure that the
+              token was issued to <tt>"client_id"</tt> in the request,</li>
+                
+            <li>verify that the MFA token is valid,</li>
+            
+            <li>restore the authorization session based on the state referenced
+              by or encoded into the MFA token,</li>
+              
+            <li>validate the out-of-band transaction code using its existing OOB
+              validation algorithm, and</li>
+              
+            <li>if required, validate the binding code using its existing OOB
+              validation algorithm.</li>
+          </ul>
         </section>
         
         <section title="Access Token Response">
