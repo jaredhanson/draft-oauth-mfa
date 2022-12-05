@@ -83,16 +83,18 @@ Table of Contents
      3.2.  Out-of-Band Authorization Grant . . . . . . . . . . . . .  14
        3.2.1.  Authorization Challenge . . . . . . . . . . . . . . .  14
        3.2.2.  User Interaction  . . . . . . . . . . . . . . . . . .  15
-       3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  15
+       3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  16
        3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  17
-     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  17
+     3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  18
        3.3.1.  Authorization Challenge . . . . . . . . . . . . . . .  18
-       3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  18
-       3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  18
+       3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  19
+       3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  19
        3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  19
-   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  19
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .  19
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  20
+   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  20
+   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     5.1.  Normative References  . . . . . . . . . . . . . . . . . .  20
+     5.2.  Informative References  . . . . . . . . . . . . . . . . .  20
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -103,8 +105,6 @@ Table of Contents
    (something you have), and inherence (something you are).  Strong
    authorization factors include transaction confirmation and multi-
    party authorization.
-
-
 
 
 
@@ -815,6 +815,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       SHOULD wait between polling requests to the token endpoint.  If no
       value is provided, clients MUST use 5 as the default.
 
+   For example:
+
+     HTTP/1.1 200 OK
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "challenge_type":"oob"
+     }
+
 3.2.2.  User Interaction
 
    After receiving an out-of-band challenge, the client prompts or
@@ -822,6 +833,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    ongoing authorization operation.  Any necessary actions by the
    resource owner or other party on the secondary channel are out of
    scope of this specification.
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 15]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
 3.2.3.  Access Token Request
 
@@ -833,14 +852,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    grant_type
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
       type/mfa-oob".
-
-
-
-
-Hanson                     Expires 8 June 2023                 [Page 15]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
 
    oob_code
       REQUIRED.  The out-of-band transaction code, "oob_code" from the
@@ -879,6 +890,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
    The authorization server MUST:
 
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 16]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
    *  require client authentication for confidential clients or for any
       client that was issued client credentials (or with other
       authentication requirements),
@@ -891,15 +910,8 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
    *  verify that the MFA token is valid,
 
-
-
-Hanson                     Expires 8 June 2023                 [Page 16]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    *  restore the authorization session based on the state referenced by
-      or encoded into the MFA token, and
+      or encoded into the MFA token,
 
    *  validate the out-of-band transaction code using its existing OOB
       validation algorithm, and
@@ -911,41 +923,29 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
-   token as described in in Section 5.1 of [RFC6749].  If the request
-   failed client authentication or is invalid, the authorization server
-   returns an error response as described in Section 5.2 of [RFC6749].
+   token as described in in Section 5.1 of OAuth 2.0 [RFC6749].  If the
+   request failed client authentication or is invalid, the authorization
+   server returns an error response as described in Section 5.2 of OAuth
+   2.0 [RFC6749].
 
-   In addition to the error codes defined in Section 5.2 of [RFC6749],
-   the following error codes are specific for the out-of-band
-   verification code grant:
+   In addition to the error codes defined in Section 5.2 of OAuth 2.0
+   [RFC6749], the following error codes are specific for the out-of-band
+   authorization grant in token endpoint responses:
 
    authorization_pending
-      The authorization request is still pending as the authorization
-      ceremony has not yet completed.  The client should repeat the
-      Access Token Request to the token endpoint.
+      The authorization request is still pending as the out-of-band
+      authorization operation has not yet completed.  The client SHOULD
+      repeat the access token request to the token endpoint (a process
+      known as polling).  Before each new request, the client MUST wait
+      at least the number of seconds specified by the "interval"
+      parameter of the authorization challenge (see Section 3.2.1), or 5
+      seconds if none was provided, and respect any increase in the
+      polling interval required by the "slow_down" error.
 
    slow_down
-      The client is polling too quickly and should back off at a
-      reasonable rate.
-
-   expired_token
-      The "oob_code" or "mfa_token" has expired.  The client will need
-      to initiate a new authorization session.
-
-   access_denied
-      The resource owner or authorization server denied the request.
-
-3.3.  Recovery Code Grant
-
-   Recovery codes are a physical or electronic set of secrets shared
-   between the resource owner and the authorization server.  Recovery
-   codes are typically used in the event another authenticator device is
-   lost or malfunctions.
-
-
-
-
-
+      A variant of "authorization_pending", the authorization request is
+      still pending and polling should continue, but the interval MUST
+      be increased by 5 seconds for this and all subsequent requests.
 
 
 
@@ -953,6 +953,39 @@ Hanson                     Expires 8 June 2023                 [Page 17]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
+
+   access_denied
+      The authorization request was denied.
+
+   expired_token
+      The "oob_code" or "mfa_token" has expired, and the authorization
+      session has concluded.  The client MAY commence a new
+      authorization session but SHOULD wait for user interaction before
+      restarting to avoid unnecessary polling.
+
+   The "authorization_pending" and "slow_down" error codes define
+   particularly unique behavior, as they indicate that the OAuth client
+   should continue to poll the token endpoint by repeating the token
+   request (implementing the precise behavior defined above).  If the
+   client receives an error response with any other error code, it MUST
+   stop polling and SHOULD react accordingly, for example, by displaying
+   an error to the user.
+
+   On encountering a connection timeout, clients MUST unilaterally
+   reduce their polling frequency before retrying.  The use of an
+   exponential backoff algorithm to achieve this, such as doubling the
+   polling interval on each such connection timeout, is RECOMMENDED.
+
+   The error codes and client behavior specified in this section are
+   intentionally identical to those defined by OAuth 2.0 Device
+   Authorization Grant [RFC8628].
+
+3.3.  Recovery Code Grant
+
+   Recovery codes are a physical or electronic set of secrets shared
+   between the resource owner and the authorization server.  Recovery
+   codes are typically used in the event another authenticator device is
+   lost or malfunctions.
 
 3.3.1.  Authorization Challenge
 
@@ -965,6 +998,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
    No additional parameters are specified for the recovery code
    authorization challenge type.
+
+
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 18]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
 3.3.2.  User Interaction
 
@@ -1000,16 +1044,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       REQUIRED, if the client is not authenticating with the
       authorization server as described in Section 3.2.1 of [RFC6749].
 
-
-
-
-
-
-Hanson                     Expires 8 June 2023                 [Page 18]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    If the client was issued client credentials (or assigned other
    authentication requirements), the client MUST authenticate with the
    authorization server as described in Section 3.2.1 of [RFC6749].
@@ -1021,6 +1055,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    token as described in in Section 5.1 of [RFC6749].  If the request
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
+
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 19]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
    In addition to the parameters defined in Section 5.1 of [RFC6749],
    the following additional parameters are specific for the recovery
@@ -1041,7 +1085,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       OPTIONAL.  URL of the authorization server's MFA challenge
       endpoint defined in Section 2.2.
 
-5.  Normative References
+5.  References
+
+5.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1057,21 +1103,29 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-
-
-
-
-Hanson                     Expires 8 June 2023                 [Page 19]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    [I-D.ietf-oauth-discovery]
               Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
               Authorization Server Metadata", Work in Progress,
               Internet-Draft, draft-ietf-oauth-discovery-10, 4 March
               2018, <https://www.ietf.org/archive/id/draft-ietf-oauth-
               discovery-10.txt>.
+
+5.2.  Informative References
+
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 20]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
+   [RFC8628]  Denniss, W., Bradley, J., Jones, M., and H. Tschofenig,
+              "OAuth 2.0 Device Authorization Grant", RFC 8628,
+              DOI 10.17487/RFC8628, August 2019,
+              <https://www.rfc-editor.org/info/rfc8628>.
 
 Author's Address
 
@@ -1117,4 +1171,6 @@ Author's Address
 
 
 
-Hanson                     Expires 8 June 2023                 [Page 20]
+
+
+Hanson                     Expires 8 June 2023                 [Page 21]

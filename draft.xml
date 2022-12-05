@@ -733,6 +733,24 @@
               SHOULD wait between polling requests to the token endpoint.  If no
               value is provided, clients MUST use 5 as the default.</dd>
           </dl>
+          
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/json;charset=UTF-8
+  Cache-Control: no-store
+  Pragma: no-cache
+
+  {
+    "challenge_type":"oob",
+    "oob_code":"GmRhmhcxhwAzkoEqiMEg_DnyEysNkuNhszIySk9eS",
+    "binding_method":"prompt",
+    "expires_in":300,
+    "interval":5
+  }
+]]></artwork>
+          </figure>
         </section>
         
         <section>
