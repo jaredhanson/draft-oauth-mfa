@@ -84,15 +84,15 @@ Table of Contents
        3.2.1.  Authorization Challenge . . . . . . . . . . . . . . .  14
        3.2.2.  User Interaction  . . . . . . . . . . . . . . . . . .  15
        3.2.3.  Access Token Request  . . . . . . . . . . . . . . . .  15
-       3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  16
+       3.2.4.  Access Token Response . . . . . . . . . . . . . . . .  17
      3.3.  Recovery Code Grant . . . . . . . . . . . . . . . . . . .  17
-       3.3.1.  Authorization Challenge . . . . . . . . . . . . . . .  17
-       3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  17
-       3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  17
-       3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  18
-   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  18
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .  18
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  19
+       3.3.1.  Authorization Challenge . . . . . . . . . . . . . . .  18
+       3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  18
+       3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  18
+       3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  19
+   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  19
+   5.  Normative References  . . . . . . . . . . . . . . . . . . . .  19
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -843,23 +843,69 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
    oob_code
-      REQUIRED.  The out-of-band verification code.
+      REQUIRED.  The out-of-band transaction code, "oob_code" from the
+      authorization challenge, defined in Section 3.2.1.
 
    binding_code
-      REQUIRED, if the binding method of the out-of-band challenge is
-      set to prompt.
+      REQUIRED, if the binding method of the authorization challenge
+      defined in Section 3.2.1is set to "prompt".
 
    mfa_token
-      REQUIRED.  The MFA token received when initiating the
-      authorization session.
+      REQUIRED.  The MFA token, "mfa_token" from the prior authorization
+      challenge error response, defined in Section 2.1.1.
 
    client_id
       REQUIRED, if the client is not authenticating with the
-      authorization server as described in Section 3.2.1 of [RFC6749].
+      authorization server as described in Section 3.2.1 of OAuth 2.0
+      [RFC6749].
 
-   If the client was issued client credentials (or assigned other
-   authentication requirements), the client MUST authenticate with the
-   authorization server as described in Section 3.2.1 of [RFC6749].
+   If the client type is confidential or the client was issued client
+   credentials (or assigned other authentication requirements), the
+   client MUST authenticate with the authorization server as described
+   in Section 3.2.1 of OAuth 2.0 [RFC6749].
+
+   For example, the client makes the following HTTP request using
+   transport-layer security (with extra line breaks for display purposes
+   only):
+
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fmfa-oob
+     &oob_code=GmRhmhcxhwAzkoEqiMEg_DnyEysNkuNhszIySk9eS
+     &binding_code=123456&mfa_token=eyJhbGciOiJ...
+
+   The authorization server MUST:
+
+   *  require client authentication for confidential clients or for any
+      client that was issued client credentials (or with other
+      authentication requirements),
+
+   *  authenticate the client if client authentication is included,
+
+   *  ensure that the MFA token was issued to the authenticated
+      confidential client, or if the client is public, ensure that the
+      token was issued to "client_id" in the request,
+
+   *  verify that the MFA token is valid,
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 16]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
+   *  restore the authorization session based on the state referenced by
+      or encoded into the MFA token, and
+
+   *  validate the out-of-band transaction code using its existing OOB
+      validation algorithm, and
+
+   *  if required, validate the binding code using its existing OOB
+      validation algorithm.
 
 3.2.4.  Access Token Response
 
@@ -889,21 +935,24 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    access_denied
       The resource owner or authorization server denied the request.
 
-
-
-
-
-Hanson                     Expires 8 June 2023                 [Page 16]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
 3.3.  Recovery Code Grant
 
    Recovery codes are a physical or electronic set of secrets shared
    between the resource owner and the authorization server.  Recovery
    codes are typically used in the event another authenticator device is
    lost or malfunctions.
+
+
+
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 17]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
 3.3.1.  Authorization Challenge
 
@@ -947,16 +996,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       REQUIRED.  The MFA token received when initiating the
       authorization session.
 
-
-
-Hanson                     Expires 8 June 2023                 [Page 17]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    client_id
       REQUIRED, if the client is not authenticating with the
       authorization server as described in Section 3.2.1 of [RFC6749].
+
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 18]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
    If the client was issued client credentials (or assigned other
    authentication requirements), the client MUST authenticate with the
@@ -1000,20 +1052,19 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
               RFC 6749, DOI 10.17487/RFC6749, October 2012,
               <https://www.rfc-editor.org/info/rfc6749>.
 
-
-
-
-
-
-Hanson                     Expires 8 June 2023                 [Page 18]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", STD 90, RFC 8259,
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 19]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
    [I-D.ietf-oauth-discovery]
               Jones, M., Sakimura, N., and J. Bradley, "OAuth 2.0
@@ -1061,4 +1112,9 @@ Author's Address
 
 
 
-Hanson                     Expires 8 June 2023                 [Page 19]
+
+
+
+
+
+Hanson                     Expires 8 June 2023                 [Page 20]

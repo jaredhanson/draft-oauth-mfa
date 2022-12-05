@@ -829,32 +829,44 @@
         <section title="Access Token Response">
           <t>If the access token request is valid and authorized, the
             authorization server issues an access token and optional refresh
-            token as described in in Section 5.1 of <xref target="RFC6749"/>.
-            If the request failed client authentication or is invalid, the
+            token as described in in
+            <xref target="RFC6749" section="5.1">OAuth 2.0</xref>.  If the
+            request failed client authentication or is invalid, the
             authorization server returns an error response as described in
-            Section 5.2 of <xref target="RFC6749"/>.</t>
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>.</t>
             
-          <t>
-            In addition to the error codes defined in Section 5.2 of <xref target="RFC6749"/>,
-            the following error codes are specific for the out-of-band
-            verification code grant:
-        
-            <list style="hanging"> 
-              <t hangText="authorization_pending"> <vspace blankLines="1"/>
-                The authorization request is still pending as the authorization
-                ceremony has not yet completed.  The client should repeat the
-                Access Token Request to the token endpoint.</t>
-              <t hangText="slow_down"> <vspace blankLines="1"/>
-                The client is polling too quickly and should back off at a
-                reasonable rate.</t>
-              <t hangText="expired_token"> <vspace blankLines="1"/>
-                The "oob_code" or "mfa_token" has expired.  The client will need
-                to initiate a new authorization session.</t>
-              <t hangText="access_denied"> <vspace blankLines="1"/>
-                The resource owner or authorization server denied the
-                request.</t>
-            </list> 
-          </t>
+          <t>In addition to the error codes defined in
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>, the following
+            error codes are specific for the out-of-band authorization grant in
+            token endpoint responses:</t>
+          
+          <dl newline="true">
+            <dt>authorization_pending</dt>
+            <dd>The authorization request is still pending as the out-of-band
+              authorization operation has not yet completed.  The client SHOULD
+              repeat the access token request to the token endpoint (a process
+              known as polling).  Before each new request, the client MUST wait
+              at least the number of seconds specified by the
+              <tt>"interval"</tt> parameter of the authorization challenge (see
+              <xref target="oob-authz-challenge"/>), or 5 seconds if none was
+              provided, and respect any increase in the polling interval
+              required by the <tt>"slow_down"</tt> error.</dd>
+              
+            <dt>slow_down</dt>
+            <dd>A variant of <tt>"authorization_pending"</tt>, the authorization
+              request is still pending and polling should continue, but the
+              interval MUST be increased by 5 seconds for this and all
+              subsequent requests.</dd>
+              
+            <dt>access_denied</dt>
+            <dd>The authorization request was denied.</dd>
+            
+            <dt>expired_token</dt>
+            <dd>The <tt>"oob_code"</tt> or <tt>"mfa_token"</tt> has expired, and
+              the authorization session has concluded.  The client MAY commence
+              a new authorization session but SHOULD wait for user interaction
+              before restarting to avoid unnecessary polling.</dd>
+          </dl>
         </section>
       </section>
       
