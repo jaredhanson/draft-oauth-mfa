@@ -746,34 +746,37 @@
         </section>
         
         <section title="Access Token Request">
-          <t>
-            The client makes a request to the token endpoint by adding the
-            following parameters using the "application/x-www-form-urlencoded"
-            format per Appendix B with a character encoding of UTF-8 in the HTTP
-            request entity-body:
+          <t>The client makes a request to the token endpoint by adding the
+            following parameters using the
+            <tt>"application/x-www-form-urlencoded"</tt> format with a character
+            encoding of UTF-8 in the HTTP request entity-body:</t>
           
-            <list style="hanging">
-              <t hangText="grant_type"><vspace blankLines="1"/>
-                REQUIRED.  Value MUST be set to
-                "http://auth0.com/oauth/grant-type/mfa-oob".</t>
-
-              <t hangText="oob_code"> <vspace blankLines="1"/>
-                REQUIRED.  The out-of-band verification code.</t>
-                
-              <t hangText="binding_code"> <vspace blankLines="1"/>
-                REQUIRED, if the binding method of the out-of-band challenge
-                is set to prompt.</t>
-
-              <t hangText="mfa_token"> <vspace blankLines="1"/>
-                REQUIRED.  The MFA token received when initiating the
-                authorization session.</t>
-                
-              <t hangText='client_id'> <vspace blankLines="1"/>
-                REQUIRED, if the client is not authenticating with the
-                authorization server as described in Section 3.2.1 of <xref target="RFC6749"/>.
-              </t>
-            </list>
-          </t>
+          <dl newline="true">
+            <dt>grant_type</dt>
+            <dd>REQUIRED.  Value MUST be set to
+              <tt>"http://auth0.com/oauth/grant-type/mfa-oob"</tt>.</dd>
+              
+            <dt>oob_code</dt>
+            <dd>REQUIRED.  The out-of-band transaction code, "oob_code" from
+              the authorization challenge, defined in
+              <xref target="oob-authz-challenge"/>.</dd>
+              
+            <dt>binding_code</dt>
+            <dd>REQUIRED, if the binding method of the authorization challenge
+              defined in <xref target="oob-authz-challenge"/>is set to
+              <tt>"prompt"</tt>.</dd>
+              
+            <dt>mfa_token</dt>
+            <dd>REQUIRED.  The MFA token, <tt>"mfa_token"</tt> from the prior
+              authorization challenge error response, defined in 
+              <xref target="authorization-challenge-error-response"/>.</dd>
+            
+            <dt>client_id</dt>
+            <dd>REQUIRED, if the client is not authenticating with the
+              authorization server as described in
+              <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.</dd>
+          </dl>
+          
           <t>
             If the client was issued client credentials (or assigned other
             authentication requirements), the client MUST authenticate with the
