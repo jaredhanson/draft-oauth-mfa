@@ -953,6 +953,20 @@
           
           <t>No additional parameters are specified for the recovery code
             authorization challenge type.</t>
+            
+          <t>For example:</t>
+          <figure>
+            <artwork><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/json;charset=UTF-8
+  Cache-Control: no-store
+  Pragma: no-cache
+
+  {
+    "challenge_type":"recovery-code"
+  }
+]]></artwork>
+          </figure>
         </section>
         
         <section title="User Interaction">
