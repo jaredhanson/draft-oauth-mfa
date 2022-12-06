@@ -789,7 +789,9 @@
             of this specification.</t>
         </section>
         
-        <section title="Access Token Request">
+        <section>
+          <name>Access Token Request</name>
+          
           <t>The client makes a request to the token endpoint by adding the
             following parameters using the
             <tt>"application/x-www-form-urlencoded"</tt> format with a character
@@ -870,7 +872,9 @@
           </ul>
         </section>
         
-        <section title="Access Token Response">
+        <section>
+          <name>Access Token Response</name>
+          
           <t>If the access token request is valid and authorized, the
             authorization server issues an access token and optional refresh
             token as described in in
@@ -932,7 +936,9 @@
         </section>
       </section>
       
-      <section title="Recovery Code Grant">
+      <section>
+        <name>Recovery Code Grant</name>
+        
         <t>Recovery codes are a physical or electronic set of secrets shared
           between the resource owner and the authorization server.  Recovery
           codes are typically used in the event another authenticator device
@@ -969,19 +975,24 @@
           </figure>
         </section>
         
-        <section title="User Interaction">
-          <t>
-            A user typically signals to the client that they wish to enter a
-            recovery flow after realizing that an authenticator device has been
-            lost or is malfunctioning.
-          </t>
-          <t>
-            Upon receiving this signal from the user, the client prompts or
+        <section>
+          <name>User Interaction</name>
+          
+          <t>After receiving a recovery code challenge, the client prompts or
             otherwise interacts with the resource owner to obtain a recovery
             code.  Such codes are typically already in the resource owner's
-            posession, having been previously generated and delivered when
-            enrolling an authenticator device.
-          </t>
+            posession, having been previously distributed to the resource
+            owner.</t>
+            
+          <t>Recovery codes are typically necessary upon the resource owner
+            realizing that other authenticators have been lost or are
+            malfunctioning (for instance, when attempting to satisfy a
+            non-recovery code authorization challenge).  In such an event, the
+            client SHOULD provide the resource owner a means of directly
+            entering a recovery flow.  Such a flow is end-user initiated, rather
+            than authorization server initiated through an authorization
+            challenge as described in
+            <xref target="recovery-code-authz-challenge"/>.</t>
         </section>
         
         <section title="Access Token Request">
