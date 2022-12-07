@@ -1068,9 +1068,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 3.3.2.  User Interaction
 
-   A user typically signals to the client that they wish to enter a
-   recovery flow after realizing that an authenticator device has been
-   lost or is malfunctioning.
+   A resource owner typically signals to the client that they wish to
+   enter a recovery flow after realizing that other authenticators have
+   been lost or are malfunctioning.
 
    Upon receiving this signal from the user, the client prompts or
    otherwise interacts with the resource owner to obtain a recovery
