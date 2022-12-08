@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Standards Track                         6 December 2022
-Expires: 9 June 2023
+Intended status: Standards Track                         7 December 2022
+Expires: 10 June 2023
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 June 2023.
+   This Internet-Draft will expire on 10 June 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 1]
+Hanson                    Expires 10 June 2023                  [Page 1]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -89,11 +89,11 @@ Table of Contents
        3.3.1.  Authorization Challenge . . . . . . . . . . . . . . .  19
        3.3.2.  User Interaction  . . . . . . . . . . . . . . . . . .  20
        3.3.3.  Access Token Request  . . . . . . . . . . . . . . . .  20
-       3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  20
-   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  21
-   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
-     5.1.  Normative References  . . . . . . . . . . . . . . . . . .  21
-     5.2.  Informative References  . . . . . . . . . . . . . . . . .  21
+       3.3.4.  Access Token Response . . . . . . . . . . . . . . . .  21
+   4.  Discovery Metadata  . . . . . . . . . . . . . . . . . . . . .  22
+   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     5.1.  Normative References  . . . . . . . . . . . . . . . . . .  22
+     5.2.  Informative References  . . . . . . . . . . . . . . . . .  22
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 2]
+Hanson                    Expires 10 June 2023                  [Page 2]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -165,7 +165,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 3]
+Hanson                    Expires 10 June 2023                  [Page 3]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -221,7 +221,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 4]
+Hanson                    Expires 10 June 2023                  [Page 4]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -277,7 +277,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 5]
+Hanson                    Expires 10 June 2023                  [Page 5]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -333,7 +333,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 6]
+Hanson                    Expires 10 June 2023                  [Page 6]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -389,7 +389,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 7]
+Hanson                    Expires 10 June 2023                  [Page 7]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -445,7 +445,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 8]
+Hanson                    Expires 10 June 2023                  [Page 8]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -501,7 +501,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                  [Page 9]
+Hanson                    Expires 10 June 2023                  [Page 9]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -557,7 +557,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 10]
+Hanson                    Expires 10 June 2023                 [Page 10]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -613,7 +613,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 11]
+Hanson                    Expires 10 June 2023                 [Page 11]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -669,7 +669,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 12]
+Hanson                    Expires 10 June 2023                 [Page 12]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -725,7 +725,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 13]
+Hanson                    Expires 10 June 2023                 [Page 13]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -781,7 +781,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 14]
+Hanson                    Expires 10 June 2023                 [Page 14]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -837,7 +837,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 15]
+Hanson                    Expires 10 June 2023                 [Page 15]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -893,7 +893,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 16]
+Hanson                    Expires 10 June 2023                 [Page 16]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -949,7 +949,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 17]
+Hanson                    Expires 10 June 2023                 [Page 17]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 18]
+Hanson                    Expires 10 June 2023                 [Page 18]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
@@ -1061,29 +1061,33 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 19]
+Hanson                    Expires 10 June 2023                 [Page 19]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 3.3.2.  User Interaction
 
-   A resource owner typically signals to the client that they wish to
-   enter a recovery flow after realizing that other authenticators have
-   been lost or are malfunctioning.
-
-   Upon receiving this signal from the user, the client prompts or
+   After receiving a recovery code challenge, the client prompts or
    otherwise interacts with the resource owner to obtain a recovery
    code.  Such codes are typically already in the resource owner's
-   posession, having been previously generated and delivered when
-   enrolling an authenticator device.
+   posession, having been previously distributed to the resource owner.
+
+   Recovery codes are typically necessary upon the resource owner
+   realizing that other authenticators have been lost or are
+   malfunctioning (for instance, when attempting to satisfy a non-
+   recovery code authorization challenge).  In such an event, the client
+   SHOULD provide the resource owner a means of directly entering a
+   recovery flow.  Such a flow is end-user initiated, rather than
+   authorization server initiated through an authorization challenge as
+   described in Section 3.3.1.
 
 3.3.3.  Access Token Request
 
    The client makes a request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
-   format per Appendix B with a character encoding of UTF-8 in the HTTP
-   request entity-body:
+   format with a character encoding of UTF-8 in the HTTP request entity-
+   body:
 
    grant_type
       REQUIRED.  Value MUST be set to "http://auth0.com/oauth/grant-
@@ -1093,16 +1097,59 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       REQUIRED.  The recovery code.
 
    mfa_token
-      REQUIRED.  The MFA token received when initiating the
-      authorization session.
+      REQUIRED.  The MFA token, "mfa_token" from the prior authorization
+      challenge error response, defined in Section 2.1.1.
 
    client_id
       REQUIRED, if the client is not authenticating with the
-      authorization server as described in Section 3.2.1 of [RFC6749].
+      authorization server as described in Section 3.2.1 of OAuth 2.0
+      [RFC6749].
 
-   If the client was issued client credentials (or assigned other
-   authentication requirements), the client MUST authenticate with the
-   authorization server as described in Section 3.2.1 of [RFC6749].
+   If the client type is confidential or the client was issued client
+   credentials (or assigned other authentication requirements), the
+   client MUST authenticate with the authorization server as described
+   in Section 3.2.1 of OAuth 2.0 [RFC6749].
+
+   For example, the client makes the following HTTP request using
+   transport-layer security (with extra line breaks for display purposes
+   only):
+
+
+
+
+Hanson                    Expires 10 June 2023                 [Page 20]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
+
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=
+      http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fmfa-recovery-code
+     &recovery_code=WDJB-MJHT&mfa_token=eyJhbGciOiJ...
+
+   The authorization server MUST:
+
+   *  require client authentication for confidential clients or for any
+      client that was issued client credentials (or with other
+      authentication requirements),
+
+   *  authenticate the client if client authentication is included,
+
+   *  ensure that the MFA token was issued to the authenticated
+      confidential client, or if the client is public, ensure that the
+      token was issued to "client_id" in the request,
+
+   *  verify that the MFA token is valid,
+
+   *  restore the authorization session based on the state referenced by
+      or encoded into the MFA token, and
+
+   *  validate the one-time password credentials using its existing OTP
+      validation algorithm.
 
 3.3.4.  Access Token Response
 
@@ -1112,16 +1159,6 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    failed client authentication or is invalid, the authorization server
    returns an error response as described in Section 5.2 of [RFC6749].
 
-
-
-
-
-
-Hanson                     Expires 9 June 2023                 [Page 20]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    In addition to the parameters defined in Section 5.1 of [RFC6749],
    the following additional parameters are specific for the recovery
    code grant:
@@ -1130,6 +1167,16 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
       OPTIONAL.  A newly issued recovery code, in which case the client
       MUST discard the old recovery code and replace it with the new
       recovery code.
+
+
+
+
+
+
+Hanson                    Expires 10 June 2023                 [Page 21]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
 4.  Discovery Metadata
 
@@ -1168,22 +1215,24 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 5.2.  Informative References
 
-
-
-
-
-
-Hanson                     Expires 9 June 2023                 [Page 21]
-
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
-
-
    [RFC8628]  Denniss, W., Bradley, J., Jones, M., and H. Tschofenig,
               "OAuth 2.0 Device Authorization Grant", RFC 8628,
               DOI 10.17487/RFC8628, August 2019,
               <https://www.rfc-editor.org/info/rfc8628>.
 
 Author's Address
+
+
+
+
+
+
+
+
+Hanson                    Expires 10 June 2023                 [Page 22]
+
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+
 
    Jared Hanson
    Okta
@@ -1229,4 +1278,11 @@ Author's Address
 
 
 
-Hanson                     Expires 9 June 2023                 [Page 22]
+
+
+
+
+
+
+
+Hanson                    Expires 10 June 2023                 [Page 23]

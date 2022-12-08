@@ -1026,6 +1026,46 @@
             credentials (or assigned other authentication requirements), the
             client MUST authenticate with the authorization server as described
             in <xref target="RFC6749" section="3.2.1">OAuth 2.0</xref>.</t>
+            
+          <t>For example, the client makes the following HTTP request using
+            transport-layer security (with extra line breaks for display
+            purposes only):</t>
+      
+          <figure>
+            <artwork><![CDATA[
+  POST /token HTTP/1.1
+  Host: server.example.com
+  Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+  Content-Type: application/x-www-form-urlencoded
+
+  grant_type=
+   http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fmfa-recovery-code
+  &recovery_code=WDJB-MJHT&mfa_token=eyJhbGciOiJ...
+]]></artwork>
+          </figure>
+        
+          <t>The authorization server MUST:</t>
+        
+          <ul>
+            <li>require client authentication for confidential clients or for
+              any client that was issued client credentials (or with other
+              authentication requirements),</li>
+              
+            <li>authenticate the client if client authentication is
+              included,</li>
+          
+            <li>ensure that the MFA token was issued to the authenticated
+              confidential client, or if the client is public, ensure that the
+              token was issued to <tt>"client_id"</tt> in the request,</li>
+              
+            <li>verify that the MFA token is valid,</li>
+          
+            <li>restore the authorization session based on the state referenced
+              by or encoded into the MFA token, and</li>
+            
+            <li>validate the recovery code using its existing recovery code
+              validation algorithm.</li>
+          </ul>
         </section>
         
         <section title="Access Token Response">
