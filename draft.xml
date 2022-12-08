@@ -1068,26 +1068,28 @@
           </ul>
         </section>
         
-        <section title="Access Token Response">
+        <section>
+          <name>Access Token Response</name>
+          
           <t>If the access token request is valid and authorized, the
             authorization server issues an access token and optional refresh
-            token as described in in Section 5.1 of <xref target="RFC6749"/>.
-            If the request failed client authentication or is invalid, the
+            token as described in in
+            <xref target="RFC6749" section="5.1">OAuth 2.0</xref>.  If the
+            request failed client authentication or is invalid, the
             authorization server returns an error response as described in
-            Section 5.2 of <xref target="RFC6749"/>.</t>
+            <xref target="RFC6749" section="5.2">OAuth 2.0</xref>.</t>
             
-          <t>
-            In addition to the parameters defined in Section 5.1 of <xref target="RFC6749"/>,
-            the following additional parameters are specific for the recovery
-            code grant:
-      
-            <list style="hanging">
-              <t hangText="recovery_code"> <vspace blankLines="1"/>
-                OPTIONAL.  A newly issued recovery code, in which case the
-                client MUST discard the old recovery code and replace it with
-                the new recovery code.</t>
-            </list>
-          </t>
+           <!-- TODO: Clarify this -->
+          <t>In addition to the parameters defined in
+            <xref target="RFC6749" section="5.1">OAuth 2.0</xref>, the following
+            additional parameters are specific for the recovery code grant:</t>
+          
+          <dl newline="true">
+            <dt>recovery_code</dt>
+            <dd>OPTIONAL.   A newly issued recovery code, in which case the
+              client MUST discard the old recovery code and replace it with the
+              new recovery code.</dd>
+          </dl>
         </section>
       </section>
       
