@@ -94,7 +94,7 @@ Table of Contents
    5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
      5.1.  Normative References  . . . . . . . . . . . . . . . . . .  22
      5.2.  Informative References  . . . . . . . . . . . . . . . . .  22
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  23
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
 
@@ -1160,15 +1160,15 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    server returns an error response as described in Section 5.2 of OAuth
    2.0 [RFC6749].
 
-   If the access token request is valid and authorized, the
-   authorization server issues an access token and optional refresh
-   token as described in in Section 5.1 of [RFC6749].  If the request
-   failed client authentication or is invalid, the authorization server
-   returns an error response as described in Section 5.2 of [RFC6749].
+   In addition to the parameters defined in Section 5.1 of OAuth 2.0
+   [RFC6749], the following additional parameters are specified for the
+   recovery code grant:
 
-   In addition to the parameters defined in Section 5.1 of [RFC6749],
-   the following additional parameters are specific for the recovery
-   code grant:
+   recovery_code
+      OPTIONAL.  A newly issued recovery code, in which case the client
+      MUST discard the old recovery code and replace it with the new
+      recovery code.
+
 
 
 
@@ -1177,11 +1177,6 @@ Hanson                    Expires 11 June 2023                 [Page 21]
 
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
-
-   recovery_code
-      OPTIONAL.  A newly issued recovery code, in which case the client
-      MUST discard the old recovery code and replace it with the new
-      recovery code.
 
 4.  Discovery Metadata
 
@@ -1225,6 +1220,11 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
               DOI 10.17487/RFC8628, August 2019,
               <https://www.rfc-editor.org/info/rfc8628>.
 
+Author's Address
+
+
+
+
 
 
 
@@ -1234,8 +1234,6 @@ Hanson                    Expires 11 June 2023                 [Page 22]
 Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
-Author's Address
-
    Jared Hanson
    Okta
    100 First Street
@@ -1243,6 +1241,8 @@ Author's Address
    United States of America
    Email: jared.hanson@okta.com
    URI:   https://www.jaredhanson.me/
+
+
 
 
 
