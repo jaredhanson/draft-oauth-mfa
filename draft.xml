@@ -219,7 +219,7 @@
             authorization grant to obtain an access token.  An OTP is generated
             by a hardware device or a software application installed on a
             device such as a mobile phone.  These devices have an embedded
-            secret which used as a seed for generating OTPs.  An OTP is
+            secret which is used as a seed for generating OTPs.  An OTP is
             single-use and proves control of the device.</t>
           
           <t>When used in addition to another grant type (such as resource owner
@@ -428,7 +428,7 @@
             <li>require client authentication for confidential clients or for
               any client that was issued client credentials (or with other
               authentication requirements),</li>
-                
+            
             <li>authenticate the client if client authentication is
               included,</li>
             
@@ -811,7 +811,7 @@
               
             <dt>binding_code</dt>
             <dd>REQUIRED, if the binding method of the authorization challenge
-              defined in <xref target="oob-authz-challenge"/>is set to
+              defined in <xref target="oob-authz-challenge"/> is set to
               <tt>"prompt"</tt>.</dd>
               
             <dt>mfa_token</dt>

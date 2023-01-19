@@ -4,8 +4,8 @@
 
 Web Authorization Protocol                                     J. Hanson
 Internet-Draft                                                      Okta
-Intended status: Standards Track                         8 December 2022
-Expires: 11 June 2023
+Intended status: Standards Track                         19 January 2023
+Expires: 23 July 2023
 
 
                   OAuth 2.0 Multi-Factor Authorization
@@ -33,11 +33,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 June 2023.
+   This Internet-Draft will expire on 23 July 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 1]
+Hanson                    Expires 23 July 2023                  [Page 1]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 2]
+Hanson                    Expires 23 July 2023                  [Page 2]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    OAuth 2.0 [RFC6749] is an authorization framework that enables a
@@ -165,9 +165,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 3]
+Hanson                    Expires 23 July 2023                  [Page 3]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
 1.1.  Notational Conventions
@@ -221,9 +221,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 4]
+Hanson                    Expires 23 July 2023                  [Page 4]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    +-------------+
@@ -277,9 +277,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 5]
+Hanson                    Expires 23 July 2023                  [Page 5]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    (D)  The authorization server authenticates the client and validates
@@ -325,17 +325,17 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
    authorization grant to obtain an access token.  An OTP is generated
    by a hardware device or a software application installed on a device
    such as a mobile phone.  These devices have an embedded secret which
-   used as a seed for generating OTPs.  An OTP is single-use and proves
-   control of the device.
+   is used as a seed for generating OTPs.  An OTP is single-use and
+   proves control of the device.
 
 
 
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 6]
+Hanson                    Expires 23 July 2023                  [Page 6]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    When used in addition to another grant type (such as resource owner
@@ -389,9 +389,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 7]
+Hanson                    Expires 23 July 2023                  [Page 7]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    *  Authorization challenge endpoint - used by the client to obtain an
@@ -445,9 +445,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 8]
+Hanson                    Expires 23 July 2023                  [Page 8]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
      HTTP/1.1 403 Forbidden
@@ -501,9 +501,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                  [Page 9]
+Hanson                    Expires 23 July 2023                  [Page 9]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    client_id
@@ -557,9 +557,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 10]
+Hanson                    Expires 23 July 2023                 [Page 10]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    challenge_type
@@ -613,9 +613,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 11]
+Hanson                    Expires 23 July 2023                 [Page 11]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    server_error
@@ -669,9 +669,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 12]
+Hanson                    Expires 23 July 2023                 [Page 12]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
 3.1.3.  Access Token Request
@@ -725,9 +725,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 13]
+Hanson                    Expires 23 July 2023                 [Page 13]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    *  ensure that the MFA token was issued to the authenticated
@@ -781,9 +781,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 14]
+Hanson                    Expires 23 July 2023                 [Page 14]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    challenge_type
@@ -837,9 +837,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 15]
+Hanson                    Expires 23 July 2023                 [Page 15]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    expires_in
@@ -893,14 +893,14 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 16]
+Hanson                    Expires 23 July 2023                 [Page 16]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    binding_code
       REQUIRED, if the binding method of the authorization challenge
-      defined in Section 3.2.1is set to "prompt".
+      defined in Section 3.2.1 is set to "prompt".
 
    mfa_token
       REQUIRED.  The MFA token, "mfa_token" from the prior authorization
@@ -949,9 +949,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 17]
+Hanson                    Expires 23 July 2023                 [Page 17]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    *  validate the out-of-band transaction code using its existing OOB
@@ -1005,9 +1005,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 18]
+Hanson                    Expires 23 July 2023                 [Page 18]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    The "authorization_pending" and "slow_down" error codes define
@@ -1061,9 +1061,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 19]
+Hanson                    Expires 23 July 2023                 [Page 19]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
 3.3.2.  User Interaction
@@ -1117,9 +1117,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 20]
+Hanson                    Expires 23 July 2023                 [Page 20]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
      POST /token HTTP/1.1
@@ -1173,9 +1173,9 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 21]
+Hanson                    Expires 23 July 2023                 [Page 21]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
 4.  Discovery Metadata
@@ -1229,9 +1229,9 @@ Author's Address
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 22]
+Hanson                    Expires 23 July 2023                 [Page 22]
 
-Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
+Internet-Draft    OAuth 2.0 Multi-Factor Authorization      January 2023
 
 
    Jared Hanson
@@ -1285,4 +1285,4 @@ Internet-Draft    OAuth 2.0 Multi-Factor Authorization     December 2022
 
 
 
-Hanson                    Expires 11 June 2023                 [Page 23]
+Hanson                    Expires 23 July 2023                 [Page 23]
